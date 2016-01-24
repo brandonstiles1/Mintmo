@@ -23,7 +23,7 @@
 
 [new-user]: ./wireframes/new_user.png
 [new-session]: ./wireframes/new_session.png
-[component-heirarchy]: ./wireframes/component_heirarchy.jpg
+[component-heirarchy]: ./wireframes/component_hierarchy.jpg
 [account-form]: ./wireframes/account_form.jpg
 [newsfeed-index]: ./wireframes/root_newsfeed_index.jpg
 [transactions-index]: ./wireframes/root_transactions.jpg
