@@ -1,4 +1,4 @@
-# FresherNote
+# Mintmo
 
 [Mintmo][heroku] **NB:** This should be a link to your production site
 
