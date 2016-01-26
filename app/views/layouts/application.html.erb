@@ -21,6 +21,8 @@
       </form>
     <% end %>
   </header>
+  <%= flash[:errors].join("<br>") unless flash[:errors].nil? %>
+  <%= flash[:message].join("<br>") unless flash[:message].nil? %>
 
 <%= yield %>
 

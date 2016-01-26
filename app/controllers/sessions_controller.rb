@@ -14,8 +14,8 @@ class SessionsController < ApplicationController
 
     if @user
       log_in_user!(@user)
-      flash[:message] = "Welcome back #{@user.user_name}!"
-      redirect_to "static_pages#root"
+      flash[:message] = ["Welcome back, #{@user.fname}!"]
+      redirect_to root_url
     else
       flash.now[:errors] = ["Err try that again, mate."]
       render :new
@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
 
   def redirect_logged_in_users
     if logged_in?
-      redirect_to bands_url
+      redirect_to root_url
     end
   end
 end
