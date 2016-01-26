@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
 
     if @user
       log_in_user!(@user)
-      flash[:message] = ["Welcome back, #{@user.fname}!"]
+      flash[:message] = ["Welcome back, #{@user.email}!"]
       redirect_to root_url
     else
       flash.now[:errors] = ["Err try that again, mate."]
