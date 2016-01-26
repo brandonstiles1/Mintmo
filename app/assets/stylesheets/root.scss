@@ -1,0 +1,88 @@
+// ROOT HEADER
+.root-header {
+  background: #3c3c3c;
+  color: #ccc;
+  font-size: 14px;
+  height: 42px;
+}
+
+.root-header a {
+  display: block;
+  padding: 10px 20px;
+}
+.root-header a:hover {
+  color: white;
+}
+
+.root-header form {
+  display: block;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.root-header form:hover {
+  display: block;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.root-header form > * {
+  cursor: pointer;
+}
+
+.root-header-nav {
+  margin: 0 auto;
+  width: 1000px;
+}
+
+
+.root-header-list {
+  float: right;
+}
+
+.root-header-list > li {
+  float: left;
+}
+
+// CONTENT HEADER
+
+.content-header {
+  background: #f7f7f7;
+  color: black;
+  height: 100px;
+}
+
+.content-header a {
+  display: block;
+}
+
+.content-header-nav {
+  margin: 0 auto;
+  width: 1000px;
+
+}
+
+.content-header-logo {
+  margin-top: 30px;
+  float: left;
+}
+
+.content-header-list {
+  float: right;
+}
+
+.content-header-list > li {
+  padding-bottom: 10px;
+  margin: 45px 15px;
+  border-bottom: 3px solid #0ac775;
+  font-weight: 600;
+  float: left;
+  font-size: 12px;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.root-content {
+  width: 1000px;
+  margin: auto;
+}

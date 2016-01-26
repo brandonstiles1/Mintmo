@@ -5,17 +5,8 @@ var React = require('react'),
     Route = ReactRouter.Route,
     IndexRoute = ReactRouter.IndexRoute;
 
+var App = require('./app');
 
-var App = React.createClass({
-  render: function(){
-    return (
-        <div>
-          <header><h1>Mintmo</h1></header>
-          <p> I'm the root!</p>
-        </div>
-    );
-  }
-  });
 
 var routes = (
   <Route path="/" component={App}>

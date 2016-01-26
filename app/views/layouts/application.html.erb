@@ -7,20 +7,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header>
-    <% if logged_in? %>
-      <p class="username"><%= current_user.email %></p>
-      <form class="logout" action="<%= session_url %>" method="post">
-        <input
-        type="hidden"
-        name="authenticity_token"
-        value="<%= form_authenticity_token %>">
-
-        <input type="hidden" name="_method" value="delete">
-        <button>Log out</button>
-      </form>
-    <% end %>
-  </header>
   <%= flash[:errors].join("<br>") unless flash[:errors].nil? %>
   <%= flash[:message].join("<br>") unless flash[:message].nil? %>
 
