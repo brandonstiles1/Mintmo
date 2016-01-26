@@ -1,6 +1,12 @@
+<header class="group">
+  <ul>
+    <li><a class="current" href="<%= new_user_url %>">Sign up</a></li>
+    <li><a href="<%= new_session_url %>">Log in</a></li>
+  </ul>
+</header>
 
   <section class="new-user">
-    <h1>Sign up!</h1>
+    <h1>See all your finances in one place</h1>
 
     <form class="new-user-form" action="<%= user_url %>" method="post">
       <input
@@ -8,7 +14,7 @@
         name="authenticity_token"
         value="<%= form_authenticity_token %>">
 
-      <label>Email
+      <label>Your Email
         <input type="text" name="user[email]" value="<%= @user.email %>">
       </label>
 
@@ -28,14 +34,9 @@
         <input type="numver" name="user[age]" value="<%= @user.age %>">
       </label>
 
-      <button>Register</button>
+      <button>SIGN UP</button>
 
     </form>
 
-    <section class="new-user-member">
-      <p> Already have an account? Log in!<p>
-        <form action="<%= new_session_url %>" method="get">
-          <button>Log in!</button>
-        </form>
-    </section>
+
   </section>

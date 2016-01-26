@@ -1,5 +1,12 @@
+<header class="group">
+  <ul>
+    <li><a href="<%= new_user_url %>">Sign up</a></li>
+    <li><a class="current" href="<%= new_session_url %>">Log in</a></li>
+  </ul>
+</header>
+
 <section class="login-user">
-  <h1>Log in</h1>
+  <h1>Log in to Mintmo</h1>
 
   <form action="<%= session_url %>" method="post">
     <input
@@ -15,13 +22,6 @@
       <input type="password" name="user[password]">
     </label>
 
-    <button>Submit!</button>
+    <button>LOG IN</button>
   </form>
-
-  <section class="login-user-new">
-    <p> Don't? have an account? Create one!<p>
-      <form action="<%= new_user_url %>" method="get">
-        <button>Sign up!</button>
-      </form>
-  </section>
 </section>
