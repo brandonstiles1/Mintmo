@@ -29,27 +29,37 @@ var AccountIndex = React.createClass({
   },
 
   totalAccountTypeBalance: function (account_type) {
+    var sum = 0;
+    this.state.accounts[account_type].forEach(function(account) {
+      sum += parseFloat(account.balance);
+    });
 
+    return sum;
   },
 
   render: function () {
     var that = this;
     var accounts = this.state.accounts;
     var account_types = [];
+    var accountBalances = {};
 
     Object.keys(accounts).forEach(function(account_type) {
       if ( accounts[account_type].length > 0 ) {
         account_types.push(account_type);
+        accountBalances[account_type] = that.totalAccountTypeBalance(account_type);
       }
     });
 
     var mappedAccounts = account_types.map(function(type){
       return (
         <div key={type} className="account-types">
-          <h3>{type}</h3>
+          <div className="account-type-headers group">
+            <h3>{type}</h3>
+            <h4>${accountBalances[type]}</h4>
+          </div>
           <ul>
            {accounts[type].map(function(account){
-             return <li className="account-type-account" onClick={that.handleClick.bind(null, account)} key={account.id}>{account.name}: {account.balance}</li>;
+             return <li className="account-type-account" onClick={that.handleClick.bind(null, account)} key={account.id}>{account.name}: ${account.balance}</li>;
             })}
           </ul>
         </div>

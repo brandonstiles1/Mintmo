@@ -97,13 +97,23 @@
   font-size: 18px;
   font-weight: bold;
 }
-.account-types > h3 {
+.account-type-headers {
   background: #f7f7f7;
   font-size: 15px;
+  font-weight: normal;
+  display: block;
+}
+.account-type-headers > h3 {
+  float: left;
+  font-weight: normal;
+}
+.account-type-headers > h4 {
+  float: right;
   font-weight: normal;
 }
 
 .account-type-account {
+  padding-left: 25px;
   background: white;
   font-size: 13px;
 }
