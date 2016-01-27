@@ -36,9 +36,26 @@
           <input id="form-password" type="password" name="user[password]" >
         </div>
 
+
         <div class="submit">
           <button>LOG IN</button>
         </div>
+      </fieldset>
+    </form>
+
+    <form class="form group" action="<%= session_url %>" method="post">
+      <input type="hidden"
+      name="authenticity_token"
+      id=""
+      value="<%= form_authenticity_token %>">
+      <input type="hidden" name="user[email]" value="test@test.com">
+      <input type="hidden" name="user[password]" value="password">
+      <div class="submit">
+        <button>LOG IN AS GUEST</button>
+      </div>
+    </form>
+
+
   </section>
 
   <section class="login-content-sidebar">
