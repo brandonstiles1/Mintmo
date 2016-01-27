@@ -28,30 +28,33 @@ var AccountIndex = React.createClass({
     this.history.pushState(null, '/accounts/' + account.id, {});
   },
 
+  totalAccountTypeBalance: function (account_type) {
+
+  },
+
   render: function () {
     var that = this;
     var accounts = this.state.accounts;
-    var mappedAccounts = Object.keys(accounts).forEach(function(account_type) {
-      return (
-        <div>
-          <h3>{account_type}</h3>
-          <ul className="types">
-            {accounts[account_type].forEach(function(account) {
-              return <li
-                onClick={that.handleClick.bind(null, account)}
-                key={account.id}>{account.name}: {account.balance}</li>;})
-            }
-          </ul>
-      </div>);
+    var account_types = [];
+
+    Object.keys(accounts).forEach(function(account_type) {
+      if ( accounts[account_type].length > 0 ) {
+        account_types.push(account_type);
+      }
     });
 
-    debugger
-
-    // this.state.accounts.map(function(account, index) {
-    //   return <li
-    //     onClick={that.handleClick.bind(null, account)}
-    //     key={index}>{account.name}: {account.balance}</li>;
-    // });
+    var mappedAccounts = account_types.map(function(type){
+      return (
+        <div key={type} className="account-types">
+          <h3>{type}</h3>
+          <ul>
+           {accounts[type].map(function(account){
+             return <li className="account-type-account" onClick={that.handleClick.bind(null, account)} key={account.id}>{account.name}: {account.balance}</li>;
+            })}
+          </ul>
+        </div>
+      );
+    });
 
     return (
       <div className="accounts">

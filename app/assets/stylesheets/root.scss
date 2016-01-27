@@ -82,7 +82,28 @@
   text-transform: uppercase;
 }
 
+// CONTENT
 .root-content {
   width: 1000px;
   margin: auto;
+}
+
+//ROOT SIDEBAR
+.root-content-sidebar {
+  width: 302px;
+}
+
+.root-content-sidebar > h1 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.account-types > h3 {
+  background: #f7f7f7;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.account-type-account {
+  background: white;
+  font-size: 13px;
 }
