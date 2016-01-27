@@ -8,6 +8,12 @@ class Api::UsersController < ApplicationController
     render :show
   end
 
+  def destroy
+   @user = current_user
+   @user.destroy!
+   redirect_to new_session_url
+  end
+
   private
   def user_params
     params.require(:user).permit(:email, :password, :fname, :lname, :age)

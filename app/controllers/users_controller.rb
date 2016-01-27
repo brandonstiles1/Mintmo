@@ -20,15 +20,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-   @user = User.find(params[:id])
-   @user.update!(user_params)
- end
-
- def destroy
+  def destroy
    @user = User.find(params[:id])
    @user.destroy!
- end
+  end
 
 
   private
@@ -37,7 +32,7 @@ class UsersController < ApplicationController
       redirect_to root_url
     end
   end
-  
+
   def user_params
     params.require(:user).permit(:email, :password, :fname, :lname, :age)
   end
