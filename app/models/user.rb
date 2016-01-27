@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  #associations
+  has_many :accounts
+  has_many :institutions, through: :accounts, source: :institution
+
 
   def self.generate_session_token
    SecureRandom.urlsafe_base64

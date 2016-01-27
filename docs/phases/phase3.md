@@ -1,4 +1,4 @@
-# Phase 3: Notebooks and Tags (2 days)
+# Phase 3: Transactions and Tags (2 days)
 
 ## Rails
 ### Models

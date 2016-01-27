@@ -11,10 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126174751) do
+ActiveRecord::Schema.define(version: 20160127133616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "name",                                   null: false
+    t.string   "institution_id",                         null: false
+    t.string   "user_id",                                null: false
+    t.decimal  "balance",        precision: 8, scale: 2, null: false
+    t.string   "account_type",                           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["institution_id"], name: "index_accounts_on_institution_id", using: :btree
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
+
+  create_table "institutions", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "url"
+    t.string   "logo_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "institutions", ["name"], name: "index_institutions_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false

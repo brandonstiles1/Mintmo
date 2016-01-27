@@ -1,4 +1,4 @@
-# Phase 2: Flux Architecture and Note CRUD (2 days)
+# Phase 2: Flux Architecture and Account CRUD (2 days)
 
 ## Rails
 ### Models
@@ -20,10 +20,10 @@
 * ApiActions.receiveAllAccounts -> triggered by ApiUtil
 * ApiActions.receiveSingleAccount
 * ApiActions.deleteAccounts
-* NoteActions.fetchAllAccounts -> triggers ApiUtil
-* NoteActions.fetchSingleAccount
-* NoteActions.createAccount
-* NoteActions.editAccount
+* AccountActions.fetchAllAccounts -> triggers ApiUtil
+* AccountActions.fetchSingleAccount
+* AccountActions.createAccount
+* AccountActions.editAccount
 * NoteActions.destroyAccount
 
 ### ApiUtil
