@@ -20,12 +20,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-   @user = User.find(params[:id])
-   @user.destroy!
-  end
-
-
   private
   def redirect_logged_in_users
     if logged_in?
