@@ -2,13 +2,15 @@ var React = require('react'),
     History = require('react-router').History;
 
 var AccountStore = require('../stores/account'),
-    ApiUtil  = require('../util/api_util');
+    ApiUtil  = require('../util/api_util'),
+    AccountTypeIndex = require('./account_type_index');
 
 var AccountIndex = React.createClass({
   mixins: [History],
 
+
   getInitialState: function () {
-    return { accounts: AccountStore.all() };
+    return { accounts: AccountStore.all(), expanded: {} };
   },
 
   componentDidMount: function () {
@@ -24,52 +26,57 @@ var AccountIndex = React.createClass({
     this.storeListener.remove();
   },
 
-  handleClick: function (account) {
-    this.history.pushState(null, '/accounts/' + account.id, {});
-  },
-
-  totalAccountTypeBalance: function (account_type) {
+  totalAccountTypeBalance: function (accountType) {
     var sum = 0;
 
-    this.state.accounts[account_type].forEach(function(account) {
+    this.state.accounts[accountType].forEach(function(account) {
       sum += parseFloat(account.balance_n);
     });
 
     return sum;
   },
 
+  toggleExpand: function (type) {
+    if (this.state.expanded[type] === undefined) {
+      this.state.expanded[type] = false;
+    } else {
+      this.state.expanded[type] = !this.state.expanded[type];
+    }
+
+    this.onChange();
+  },
+
   render: function () {
     var that = this;
     var accounts = this.state.accounts;
-    var account_types = [];
+    var accountTypes = [];
     var accountBalances = {};
 
-    Object.keys(accounts).forEach(function(account_type) {
-      if ( accounts[account_type].length > 0 ) {
-        account_types.push(account_type);
-        accountBalances[account_type] = that.totalAccountTypeBalance(account_type);
+    Object.keys(accounts).forEach(function(accountType) {
+      if ( accounts[accountType].length > 0 ) {
+        accountTypes.push(accountType);
+        accountBalances[accountType] = that.totalAccountTypeBalance(accountType);
       }
     });
 
-    var mappedAccounts = account_types.map(function(type){
+    var mappedAccounts = accountTypes.map(function(type){
       var typeClass = (accountBalances[type] > 0) ? "account-type-headers group" : "account-type-headers-neg group";
+      var expandedAccounts;
+      if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
+        expandedAccounts = (
+          <ul >
+            <AccountTypeIndex accounts={accounts[type]}/>
+          </ul>);
+      }
+
+
       return (
         <div key={type} className="account-types">
-          <div className={typeClass}>
+          <div onClick={that.toggleExpand.bind(null, type)} className={typeClass}>
             <h3 >{type}</h3>
             <h4 >${accountBalances[type]}</h4>
           </div>
-
-          <ul >
-           {accounts[type].map(function(account, index){
-            var currentAccount = account;
-
-             return <li className="account-type-account group" key={index}  >
-                      <p1 onClick={that.handleClick.bind(null, currentAccount)} >{account.name.slice(0, 18)}...</p1>
-                      <p2 >{account.balance}</p2>
-                    </li>;
-            })}
-          </ul>
+          {expandedAccounts}
         </div>
       );
     });
