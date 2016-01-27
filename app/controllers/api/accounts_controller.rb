@@ -1,18 +1,21 @@
 class Api::AccountsController < ApplicationController
 
   def index
-    @accounts = current_user.accounts
+    # @accounts = current_user.accounts
+    render json: current_user.accounts.to_json
   end
 
   def create
     @account = current_user.accounts.create!(account_params)
-    if @account.save
-      # redirect_to api_account_url(@account)
-      render :show
-    else
-      flash.now[:errors] = ["Invalid information. Please enter all information."]
-      render :new
-    end
+    @account.save!
+    render json: @account.to_json
+    # if @account.save
+    #   # redirect_to api_account_url(@account)
+    #   render :show
+    # else
+    #   flash.now[:errors] = ["Invalid information. Please enter all information."]
+    #   render :new
+    # end
   end
 
   def new

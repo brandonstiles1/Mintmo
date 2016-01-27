@@ -1,5 +1,7 @@
 var React = require('react');
 
+var AccountIndex = require('./components/account_index');
+
 var App = React.createClass({
   render: function(){
     return (
@@ -23,11 +25,8 @@ var App = React.createClass({
             <section className="root-content-sidebar">
 
               <h1>Accounts</h1>
-
-              <h2>Cash</h2>
-              <h2>Credit Cards</h2>
-              <h2>Loans</h2>
-              <h2>Paypal</h2>
+              <AccountIndex />
+              
 
             </section>
 

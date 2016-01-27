@@ -5,11 +5,13 @@ var React = require('react'),
     Route = ReactRouter.Route,
     IndexRoute = ReactRouter.IndexRoute;
 
-var App = require('./app');
+var App = require('./app'),
+    AccountIndex = require('./components/account_index');
 
 
 var routes = (
   <Route path="/" component={App}>
+    <IndexRoute component={AccountIndex}/>
   </Route>
 );
 
