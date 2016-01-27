@@ -1,4 +1,7 @@
 class Api::InstitutionsController < ApplicationController
+
+  before_action :redirect_logged_out_users
+
   def index
     render json: Institution.all.to_json
   end

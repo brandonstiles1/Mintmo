@@ -5,7 +5,5 @@ class StaticPagesController < ApplicationController
   def root
   end
 
-  def redirect_logged_out_users
-    redirect_to new_session_url unless logged_in?
-  end
+
 end

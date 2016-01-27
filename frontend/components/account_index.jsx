@@ -1,7 +1,7 @@
 var React = require('react'),
     History = require('react-router').History;
 
-var AccountStore = require('../stores/bench'),
+var AccountStore = require('../stores/account'),
     ApiUtil  = require('../util/api_util');
 
 var AccountIndex = React.createClass({
@@ -12,6 +12,7 @@ var AccountIndex = React.createClass({
   },
 
   componentDidMount: function () {
+    ApiUtil.fetchAccounts();
     this.storeListener = AccountStore.addListener(this.onChange);
   },
 

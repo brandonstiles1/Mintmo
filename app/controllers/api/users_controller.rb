@@ -1,4 +1,7 @@
 class Api::UsersController < ApplicationController
+
+  before_action :redirect_logged_out_users
+
   def show
     @user = current_user
   end

@@ -1,5 +1,7 @@
 class Api::AccountsController < ApplicationController
 
+  before_action :redirect_logged_out_users
+
   def index
     # @accounts = current_user.accounts
     render json: current_user.accounts.to_json

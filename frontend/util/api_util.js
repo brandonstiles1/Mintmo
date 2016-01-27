@@ -9,7 +9,7 @@ var ApiUtil = {
      url: "/api/accounts",
      dataType: "json",
      success: function (accounts) {
-       APiActions.receiveAllAccounts(accounts);
+       ApiActions.receiveAllAccounts(accounts);
      }
    });
 
@@ -21,7 +21,7 @@ var ApiUtil = {
      url: "/api/institutions",
      dataType: "json",
      success: function (institutions) {
-       APiActions.receiveAllInstitutions(institutions);
+       ApiActions.receiveAllInstitutions(institutions);
      }
    });
   },
