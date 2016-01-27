@@ -30,8 +30,9 @@ var AccountIndex = React.createClass({
 
   totalAccountTypeBalance: function (account_type) {
     var sum = 0;
+
     this.state.accounts[account_type].forEach(function(account) {
-      sum += parseFloat(account.balance);
+      sum += parseFloat(account.balance_n);
     });
 
     return sum;
@@ -51,15 +52,22 @@ var AccountIndex = React.createClass({
     });
 
     var mappedAccounts = account_types.map(function(type){
+      var typeClass = (accountBalances[type] > 0) ? "account-type-headers group" : "account-type-headers-neg group";
       return (
         <div key={type} className="account-types">
-          <div className="account-type-headers group">
-            <h3>{type}</h3>
-            <h4>${accountBalances[type]}</h4>
+          <div className={typeClass}>
+            <h3 >{type}</h3>
+            <h4 >${accountBalances[type]}</h4>
           </div>
-          <ul>
-           {accounts[type].map(function(account){
-             return <li className="account-type-account" onClick={that.handleClick.bind(null, account)} key={account.id}>{account.name}: ${account.balance}</li>;
+
+          <ul >
+           {accounts[type].map(function(account, index){
+            var currentAccount = account;
+
+             return <li className="account-type-account group" key={index}  >
+                      <p1 onClick={that.handleClick.bind(null, currentAccount)} >{account.name.slice(0, 18)}...</p1>
+                      <p2 >{account.balance}</p2>
+                    </li>;
             })}
           </ul>
         </div>

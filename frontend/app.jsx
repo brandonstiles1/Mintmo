@@ -10,11 +10,11 @@ var App = React.createClass({
             <nav className="content-header-nav group">
 
               <h1 className="content-header-logo">
-                <a href="#"><img src="../app/images/mint-logo.png" alt="" /></a>
+                <a href="#"><img src="http://i.imgur.com/ramP0da.png" alt="" /></a>
               </h1>
 
               <ul className="content-header-list group">
-                <li><a href="#">Overview</a></li>
+                <li className="overview" ><a  href="#">Overview</a></li>
                 <li><a href="#">Transactions</a></li>
               </ul>
 
@@ -26,7 +26,7 @@ var App = React.createClass({
 
               <h1>Accounts</h1>
               <AccountIndex />
-              
+
 
             </section>
 

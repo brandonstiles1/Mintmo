@@ -74,12 +74,15 @@
 .content-header-list > li {
   padding-bottom: 10px;
   margin: 45px 15px;
-  border-bottom: 3px solid #0ac775;
   font-weight: 600;
   float: left;
   font-size: 12px;
   color: #333;
   text-transform: uppercase;
+}
+
+.content-header-list > li.overview {
+  border-bottom: 3px solid #0ac775;
 }
 
 // CONTENT
@@ -90,7 +93,9 @@
 
 //ROOT SIDEBAR
 .root-content-sidebar {
+  margin-top: 32px;
   width: 302px;
+  border-right: 1px solid #ccc;
 }
 
 .root-content-sidebar > h1 {
@@ -103,17 +108,49 @@
   font-weight: normal;
   display: block;
 }
+
+.account-type-account > p1 {
+  float: left;
+  color: black;
+  cursor: pointer;
+  padding: 5px 0;
+}
+
+.account-type-account > p2 {
+  float: right;
+  padding-right: 40px;
+}
 .account-type-headers > h3 {
   float: left;
   font-weight: normal;
 }
 .account-type-headers > h4 {
   float: right;
+  font-weight: 600;
+  padding-right: 40px;
+  color: #71c775;
+}
+
+.account-type-headers-neg {
+  background: #f7f7f7;
+  font-size: 15px;
+  font-weight: normal;
+  display: block;
+}
+.account-type-headers-neg > h3 {
+  float: left;
   font-weight: normal;
 }
 
+.account-type-headers-neg > h4 {
+  color: black;
+  float: right;
+  font-weight: 600;
+  padding-right: 40px;
+}
+
 .account-type-account {
-  padding-left: 25px;
+  padding-left: 27px;
   background: white;
   font-size: 13px;
 }

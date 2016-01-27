@@ -18,6 +18,11 @@ charles_schwab = Institution.create!(
   url: "https://www.schwab.com/",
   logo_url: "https://www.schwab.com/public/file/P-6040152/logo.png"
 )
+student_loans = Institution.create!(
+  name: "National Student Loan Database System",
+  url: "https://www.nslds.ed.gov/nslds/nslds_SA/",
+  logo_url: "https://www.nslds.ed.gov/nslds/nslds_SA/images/nslds/misc/FSA_Logo_Left.gif"
+)
 
 paypal = Institution.create!(
   name: "Paypal",
@@ -41,4 +46,12 @@ paypal_checking = Account.create!(
   user_id: u1.id,
   balance: 563.19,
   account_type: "Cash"
+)
+
+student_loans = Account.create!(
+  name: "DIRECT STAFFORD SUBSIDIZED",
+  institution_id: student_loans.id,
+  user_id: u1.id,
+  balance: -13486.24,
+  account_type: "Loans"
 )
