@@ -18,6 +18,10 @@
 
     <h1 class="main-header">Log in to Mintmo</h1>
 
+    <% if flash[:errors] %>
+      <p class="errors" ><%= flash[:errors].join("<br>").html_safe %> </p>
+    <% end%>
+
     <form class="form group" action="<%= session_url %>" method="post">
       <input type="hidden"
         name="authenticity_token"

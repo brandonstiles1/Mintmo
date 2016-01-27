@@ -20,6 +20,10 @@
 
     <h1 class="main-header">See all your finances in one place & create a budget</h1>
 
+    <% if flash[:errors] %>
+      <p class="errors" ><%= flash[:errors].join("<br>").html_safe %> </p>
+    <% end%>
+
     <form class="form group" action="<%= user_url %>" method="post">
       <input type="hidden"
         name="authenticity_token"

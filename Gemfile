@@ -29,7 +29,7 @@ gem 'rails_12factor'
 gem 'paperclip'
 gem 'figaro'
 gem 'aws-sdk', '~> 1.6'
-
+gem 'font-awesome-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
