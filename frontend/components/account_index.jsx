@@ -30,16 +30,33 @@ var AccountIndex = React.createClass({
 
   render: function () {
     var that = this;
-    var mappedAccounts = this.state.accounts.map(function(account, index) {
-      return <li
-        onClick={that.handleClick.bind(null, account)}
-        key={index}>{account.name}: {account.balance}</li>;
+    var accounts = this.state.accounts;
+    var mappedAccounts = Object.keys(accounts).forEach(function(account_type) {
+      return (
+        <div>
+          <h3>{account_type}</h3>
+          <ul className="types">
+            {accounts[account_type].forEach(function(account) {
+              return <li
+                onClick={that.handleClick.bind(null, account)}
+                key={account.id}>{account.name}: {account.balance}</li>;})
+            }
+          </ul>
+      </div>);
     });
 
+    debugger
+
+    // this.state.accounts.map(function(account, index) {
+    //   return <li
+    //     onClick={that.handleClick.bind(null, account)}
+    //     key={index}>{account.name}: {account.balance}</li>;
+    // });
+
     return (
-      <ul className="accounts">
+      <div className="accounts">
         {mappedAccounts}
-      </ul>
+      </div>
     );
   }
 

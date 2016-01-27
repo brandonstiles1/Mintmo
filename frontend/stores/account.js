@@ -29,14 +29,16 @@ var addAccount = function (account) {
 var AccountStore = new Store(AppDispatcher);
 
 AccountStore.all = function () {
-  var accountsArray = [];
-  Object.keys(_accounts).forEach(function(account_type) {
-    _accounts[account_type].forEach(function(account) {
-      accountsArray.push(account);
-    });
-  });
+  // var accountsArray = [];
+  // Object.keys(_accounts).forEach(function(account_type) {
+  //   _accounts[account_type].forEach(function(account) {
+  //     accountsArray.push(account);
+  //   });
+  // });
+  //
+  // return accountsArray;
 
-  return accountsArray;
+  return _accounts;
 };
 
 AccountStore.__onDispatch = function (payload) {
