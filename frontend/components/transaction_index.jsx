@@ -26,14 +26,35 @@ var TransactionIndex = React.createClass({
 
   render: function () {
     var transactions = this.state.transactions;
-    var mappedTransactions = transactions.map(function(transaction) {
-      return <li key={transaction.id}>{transaction.description}: {transaction.amount}</li>;
+
+    var mappedBody = transactions.map(function(transaction, index) {
+
+      return (
+        <tr>
+          <td>{transaction.date}</td>
+          <td>{transaction.description}</td>
+          <td>{transaction.category.name}</td>
+          <td>{transaction.amount}</td>
+        </tr>
+      );
     });
 
     return (
-      <ol className="transaction-list">
-        {mappedTransactions}
-      </ol>
+      <div>
+        <table className="transaction-table">
+          <thead className="transaction-table-header">
+            <tr >
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody className="transaction-table-body">
+            {mappedBody}
+          </tbody>
+        </table>
+      </div>
     );
   }
 

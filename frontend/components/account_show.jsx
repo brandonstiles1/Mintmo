@@ -48,8 +48,19 @@ var AccountShow = React.createClass({
     } else {
       transactionClass = "content-header-list-selected";
     }
+    debugger
 
-    if (this.state.account === undefined) { return <div>{this.props.children}</div>; }
+    var mappedBody = this.state.account.transactions.map(function(transaction, index) {
+      return (
+        <tr>
+          <td>{transaction.date}</td>
+          <td>{transaction.description}</td>
+          <td>{transaction.category.name}</td>
+          <td>{transaction.amount}</td>
+        </tr>
+      );
+    });
+
 
     return (
       <div>
@@ -79,7 +90,19 @@ var AccountShow = React.createClass({
         </section>
         <section className="root-content-main">
           <h1>Transactions</h1>
-
+          <table className="transaction-table">
+            <thead className="transaction-table-header">
+              <tr >
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody className="transaction-table-body">
+              {mappedBody}
+            </tbody>
+          </table>
         </section>
 
       </main>
