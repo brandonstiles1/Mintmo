@@ -13,6 +13,11 @@ class Api::AccountsController < ApplicationController
     render json: @account.to_json
   end
 
+  def show
+    @account = Account.includes(transactions: [:category]).find(params[:id])
+    render :show
+  end
+
   def new
     @account = current_user.accounts.new
   end
