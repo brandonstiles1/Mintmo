@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   #associations
   has_many :accounts
   has_many :institutions, through: :accounts, source: :institution
+  has_many :transactions, through: :accounts, source: :transactions
 
 
   def self.generate_session_token

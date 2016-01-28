@@ -3,7 +3,7 @@ class Api::AccountsController < ApplicationController
   before_action :redirect_logged_out_users
 
   def index
-    @accounts = current_user.accounts.includes(:institution)
+    @accounts = current_user.accounts.includes(:institution, :transactions)
     render :index
   end
 
@@ -11,13 +11,6 @@ class Api::AccountsController < ApplicationController
     @account = current_user.accounts.create!(account_params)
     @account.save!
     render json: @account.to_json
-    # if @account.save
-    #   # redirect_to api_account_url(@account)
-    #   render :show
-    # else
-    #   flash.now[:errors] = ["Invalid information. Please enter all information."]
-    #   render :new
-    # end
   end
 
   def new
