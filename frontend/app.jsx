@@ -11,7 +11,7 @@ var App = React.createClass({
             <nav className="content-header-nav group">
 
               <h1 className="content-header-logo">
-                <a href="#"><img src="http://i.imgur.com/ramP0da.png" alt="" /></a>
+                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
               </h1>
 
               <ul className="content-header-list group">
