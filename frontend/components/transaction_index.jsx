@@ -29,7 +29,7 @@ var TransactionIndex = React.createClass({
     var mappedTransactions = transactions.map(function(transaction) {
       return <li key={transaction.id}>{transaction.description}: {transaction.amount}</li>;
     });
-    
+
     return (
       <ol className="transaction-list">
         {mappedTransactions}

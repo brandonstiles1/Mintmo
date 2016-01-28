@@ -11,6 +11,13 @@ var ApiActions = {
     });
   },
 
+  retrieveAccount: function (account){
+    AppDispatcher.dispatch({
+      actionType: AccountConstants.ACCOUNT_RETRIEVED,
+      account: account
+    });
+  },
+
   receiveAllAccounts: function (accounts) {
     AppDispatcher.dispatch({
       actionType: AccountConstants.ACCOUNTS_RECEIVED,

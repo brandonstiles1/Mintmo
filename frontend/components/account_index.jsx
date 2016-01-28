@@ -11,17 +11,20 @@ var AccountIndex = React.createClass({
 
 
   getInitialState: function () {
-    return { accounts: AccountStore.all(), expanded: {}, overviewClicked: true, transactionsClicked: false };
+    return { accounts: AccountStore.all(), expanded: {}, overviewClicked: true, transactionsClicked: false, accountClicked: false};
   },
 
   handleOverviewClick: function () {
-    this.setState({overviewClicked: true, transactionsClicked: false});
+    this.setState({overviewClicked: true, transactionsClicked: false, accountClicked: false});
     this.history.pushState(null, '/', {});
+  },
+
+  handleAccountClick: function () {
+    this.setState({accountClicked: true});
   },
 
   handleTransactionsClick: function () {
     this.setState({overviewClicked: false, transactionsClicked: true});
-    this.history.pushState(null, '/', {});
   },
 
   componentDidMount: function () {
@@ -84,7 +87,7 @@ var AccountIndex = React.createClass({
       if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
         expandedAccounts = (
           <ul >
-            <AccountTypeIndex transactionsClick={that.handleTransactionsClick} accounts={accounts[type]}/>
+            <AccountTypeIndex accountClick={that.handleAccountClick} transactionsClick={that.handleTransactionsClick} accounts={accounts[type]}/>
           </ul>);
       }
 
@@ -99,37 +102,109 @@ var AccountIndex = React.createClass({
       );
     });
 
-    return (
-      <div>
-        <header className="content-header">
-          <nav className="content-header-nav group">
+    if (this.state.accountClicked) {
 
-            <h1 className="content-header-logo">
-              <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
-            </h1>
+      return (
+        <div>
+          <header className="content-header">
+            <nav className="content-header-nav group">
 
-            <ul className="content-header-list group">
-              <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
-              <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
-            </ul>
+              <h1 className="content-header-logo">
+                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
+              </h1>
 
-          </nav>
-        </header>
-        <main className="root-content group">
-          <section className="root-content-sidebar">
-        <div className="accounts">
-          {mappedAccounts}
+              <ul className="content-header-list group">
+                <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
+                <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
+              </ul>
 
+            </nav>
+          </header>
+          {this.props.children}
         </div>
-      </section>
-      <section className="root-content-main">
-        <h1>Transactions</h1>
-        <TransactionIndex />
+      );
+    } else if (this.state.transactionsClicked){
+      return (
+        <div>
+          <header className="content-header">
+            <nav className="content-header-nav group">
 
-      </section>
+              <h1 className="content-header-logo">
+                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
+              </h1>
 
-    </main>
-  </div>);
+              <ul className="content-header-list group">
+                <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
+                <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
+              </ul>
+
+            </nav>
+          </header>
+          <main className="root-content group">
+            <section className="root-content-sidebar">
+          <h1>Type</h1>
+          <div className="accounts">
+            <div className="account-types">
+              <div className="account-type-headers group">
+                <h3>Cash</h3>
+                <h3>Investment</h3>
+                <h3>Loan</h3>
+              </div>
+            </div>
+          </div>
+          <h1>Accounts</h1>
+            <div className="accounts">
+              <div className="account-types">
+                <div className="account-type-headers group">
+                  <h3>All Accounts</h3>
+                  <h3>Account 1</h3>
+                  <h3>Account 2</h3>
+                  <h3>Etc</h3>
+                </div>
+              </div>
+            </div>
+        </section>
+        <section className="root-content-main">
+          <h1>Transactions</h1>
+          <TransactionIndex />
+        </section>
+
+      </main>
+    </div>);  
+    } else {
+      return (
+        <div>
+          <header className="content-header">
+            <nav className="content-header-nav group">
+
+              <h1 className="content-header-logo">
+                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
+              </h1>
+
+              <ul className="content-header-list group">
+                <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
+                <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
+              </ul>
+
+            </nav>
+          </header>
+          <main className="root-content group">
+            <section className="root-content-sidebar">
+          <div className="accounts">
+            {mappedAccounts}
+
+          </div>
+        </section>
+        <section className="root-content-main">
+          <h1>Transactions</h1>
+          <TransactionIndex />
+        </section>
+
+      </main>
+    </div>);
+    }
+
+
   }
 
 });

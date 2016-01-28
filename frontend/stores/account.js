@@ -29,16 +29,23 @@ var addAccount = function (account) {
 var AccountStore = new Store(AppDispatcher);
 
 AccountStore.all = function () {
-  // var accountsArray = [];
-  // Object.keys(_accounts).forEach(function(account_type) {
-  //   _accounts[account_type].forEach(function(account) {
-  //     accountsArray.push(account);
-  //   });
-  // });
-  //
-  // return accountsArray;
-
   return _accounts;
+};
+
+AccountStore.find = function (id) {
+
+  var accountsArray = [];
+  Object.keys(_accounts).forEach(function(account_type) {
+    _accounts[account_type].forEach(function(account) {
+      accountsArray.push(account);
+    });
+  });
+
+  for (var i = 0; i < accountsArray.length; i++) {
+    if (accountsArray[i].id === id) {
+      return accountsArray[i];
+    }
+  }
 };
 
 AccountStore.__onDispatch = function (payload) {
@@ -50,6 +57,10 @@ AccountStore.__onDispatch = function (payload) {
       break;
     case AccountConstants.ACCOUNT_RECEIVED:
       addAccount(payload.account);
+      AccountStore.__emitChange();
+      break;
+    case AccountConstants.ACCOUNT_RETRIEVED:
+      AccountStore.find(payload.account.id);
       AccountStore.__emitChange();
       break;
   }

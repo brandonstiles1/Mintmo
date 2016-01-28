@@ -8,7 +8,8 @@ var AccountStore = require('../stores/account'),
 var AccountTypeIndex = React.createClass({
   mixins: [History],
 
-  handleClick: function (account) {
+  showAccount: function (account) {
+    this.props.accountClick();
     this.props.transactionsClick();
     this.history.pushState(null, '/accounts/' + account.id, {});
   },
@@ -29,7 +30,7 @@ var AccountTypeIndex = React.createClass({
 
     var mappedAccounts = accounts.map(function(account, index) {
       return <li className="account-type-account group" key={index}  >
-              <p1 onClick={that.handleClick.bind(null, account)} >{account.name.slice(0, 18)}...</p1>
+              <p1 onClick={that.showAccount.bind(null, account)} >{account.name.slice(0, 18)}...</p1>
               <p2 >{account.balance}</p2>
             </li>;
     });

@@ -13,6 +13,18 @@ var ApiUtil = {
 
   },
 
+  fetchAccount: function (id) {
+    $.ajax({
+     type: "get",
+     url: "/api/accounts/" + id,
+     dataType: "json",
+     success: function (account) {
+       ApiActions.retrieveAccount(account);
+     }
+   });
+
+  },
+
   fetchTransactions: function () {
     $.ajax({
      type: "get",

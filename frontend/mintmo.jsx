@@ -9,18 +9,22 @@ var React = require('react'),
 var App = require('./app'),
     AccountIndex = require('./components/account_index'),
     AccountShow = require('./components/account_show'),
-    AccountTypeIndex = require('./components/account_type_index');
+    AccountTypeIndex = require('./components/account_type_index'),
+    TransactionIndex = require('./components/transaction_index');
 
 
 var routes = (
-  <Route path="/" component={AccountIndex} >
-    <Route path="accounts/:accountId" component={ AccountShow } />
-  </Route>
+  <Router history={ createBrowserHistory } >
+    <Route path="/" component={AccountIndex} >
+      <Route path="accounts/:accountId" component={ AccountShow } >
+      </Route>
+    </Route>
+  </Router>
 );
 
 
 window.init = function () {
   ReactDOM.render(
-  <Router history={ createBrowserHistory } >{routes}</Router>,
+  routes,
   document.getElementById('root') );
 };

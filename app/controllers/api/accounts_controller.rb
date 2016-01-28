@@ -12,7 +12,7 @@ class Api::AccountsController < ApplicationController
     @account.save!
     render json: @account.to_json
   end
-  #push to github
+
   def show
     @account = Account.includes(transactions: [:category]).find(params[:id])
     render :show
