@@ -1,6 +1,4 @@
-var ApiActions = require('../actions/api'),
-    AccountConstants = require('../constants/account'),
-    InstitutionConstants = require('../constants/institution');
+var ApiActions = require('../actions/api');
 
 var ApiUtil = {
   fetchAccounts: function () {
@@ -10,6 +8,18 @@ var ApiUtil = {
      dataType: "json",
      success: function (accounts) {
        ApiActions.receiveAllAccounts(accounts);
+     }
+   });
+
+  },
+
+  fetchTransactions: function () {
+    $.ajax({
+     type: "get",
+     url: "/api/transactions",
+     dataType: "json",
+     success: function (transactions) {
+       ApiActions.receiveAllTransactions(transactions);
      }
    });
 

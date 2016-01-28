@@ -56,19 +56,28 @@ student_loans = Account.create!(
   account_type: "Loans"
 )
 
+Category.destroy_all
+cat1 = Category.create(name: "UNCATEGORIZED")
+cat2 = Category.create(name: "Education")
+cat3 = Category.create(name: "Financial")
+cat4 = Category.create(name: "Travel")
+cat5 = Category.create(name: "Tryina Get It")
+
 Transaction.destroy_all
 t1 = Transaction.create!(
   account_id: cs_checking.id,
   amount: 1595.36,
   description: "Paycheck",
-  date: "Tue, 26 Jan 2016 19:42:16 UTC +00:00"
+  date: "Tue, 26 Jan 2016 19:42:16 UTC +00:00",
+  category_id: cat1.id
 )
 
 t2 = Transaction.create!(
   account_id: cs_checking.id,
   amount: -500.10,
   description: "Rent",
-  date: "Wed, 27 Jan 2016 19:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 19:42:16 UTC +00:00",
+  category_id: cat1.id
 )
 
 
@@ -76,61 +85,70 @@ t3 = Transaction.create!(
   account_id: cs_checking.id,
   amount: -64.75,
   description: "Tinder Date",
-  date: "Wed, 27 Jan 2016 15:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 15:42:16 UTC +00:00",
+  category_id: cat5.id
 )
 
 t4 = Transaction.create!(
   account_id: cs_checking.id,
   amount: 200.00,
   description: "Passing Go in Monopoly",
-  date: "Wed, 27 Jan 2016 18:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 18:42:16 UTC +00:00",
+  category_id: cat4.id
 )
 
 t5 = Transaction.create!(
   account_id: paypal_checking.id,
   amount: 19.95,
   description: "Stupid shit on eBay",
-  date: "Wed, 27 Jan 2016 15:34:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 15:34:16 UTC +00:00",
+  category_id: cat3.id
 )
 
 t6 = Transaction.create!(
   account_id: paypal_checking.id,
   amount: 386.45,
   description: "Blah blahhhh",
-  date: "Wed, 27 Jan 2016 16:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 16:42:16 UTC +00:00",
+  category_id: cat1.id
 )
 
 t7 = Transaction.create!(
   account_id: paypal_checking.id,
   amount: 69.69,
   description: "Wink wink wink",
-  date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
+  category_id: cat5.id
 )
 
 t8 = Transaction.create!(
   account_id: paypal_checking.id,
   amount: 69.69,
   description: "Wink wink wink",
-  date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
+  category_id: cat5.id
 )
 
 t9 = Transaction.create!(
   account_id: student_loans.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 11:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 11:42:16 UTC +00:00",
+  category_id: cat2.id
 )
 
 t10 = Transaction.create!(
   account_id: student_loans.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
+  category_id: cat2.id
 )
 
 t11 = Transaction.create!(
   account_id: student_loans.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00"
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category_id: cat2.id
 )

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :api, format: 'json' do
      resources :institutions
      resources :accounts
-     resources :transaction
+     resources :transactions
   end
 
 end

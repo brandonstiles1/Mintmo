@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128001126) do
+ActiveRecord::Schema.define(version: 20160128013523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 20160128001126) do
 
   add_index "accounts", ["institution_id"], name: "index_accounts_on_institution_id", using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
 
   create_table "institutions", force: :cascade do |t|
     t.string   "name",       null: false
@@ -48,9 +56,11 @@ ActiveRecord::Schema.define(version: 20160128001126) do
     t.boolean  "is_private?",                         default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
   add_index "transactions", ["account_id"], name: "index_transactions_on_account_id", using: :btree
+  add_index "transactions", ["category_id"], name: "index_transactions_on_category_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false

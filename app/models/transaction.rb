@@ -11,12 +11,14 @@
 #  is_private? :boolean          default(TRUE)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  category_id :integer
 #
 
 class Transaction < ActiveRecord::Base
   validates :account, :amount, :description, :date, presence: true
 
   belongs_to :account
+  belongs_to :category
   has_one :user, through: :account, source: :user
   has_one :institution, through: :account, source: :institution
 end

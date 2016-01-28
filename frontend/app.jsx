@@ -1,6 +1,7 @@
 var React = require('react');
 
-var AccountIndex = require('./components/account_index');
+var AccountIndex = require('./components/account_index'),
+    TransactionIndex = require('./components/transaction_index');
 
 var App = React.createClass({
   render: function(){
@@ -23,10 +24,12 @@ var App = React.createClass({
 
           <main className="root-content group">
             <section className="root-content-sidebar">
-
-              <h1>Accounts</h1>
+              <h1  >Accounts</h1>
               <AccountIndex />
-
+            </section>
+            <section className="root-content-main">
+              <h1>Transactions</h1>
+              <TransactionIndex />
 
             </section>
 

@@ -1,0 +1,3 @@
+module.exports = {
+  TRANSACTIONS_RECEIVED: "TRANSACTIONS_RECEIVED"
+};

@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher'),
-    AccountConstants = require('../constants/account');
-    InstitutionConstants = require('../constants/account');
+    AccountConstants = require('../constants/account'),
+    InstitutionConstants = require('../constants/account'),
+    TransactionConstants = require('../constants/transaction');
 
 var ApiActions = {
   receiveAccount: function (account){
@@ -14,6 +15,13 @@ var ApiActions = {
     AppDispatcher.dispatch({
       actionType: AccountConstants.ACCOUNTS_RECEIVED,
       accounts: accounts
+    });
+  },
+
+  receiveAllTransactions: function (transactions) {
+    AppDispatcher.dispatch({
+      actionType: TransactionConstants.TRANSACTIONS_RECEIVED,
+      transactions: transactions
     });
   },
 
