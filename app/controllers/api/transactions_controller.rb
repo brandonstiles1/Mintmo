@@ -3,7 +3,9 @@ class Api::TransactionsController < ApplicationController
   before_action :redirect_logged_out_users
 
   def index
-    @transactions = current_user.transactions.includes(:institution, :account, :category)
+    @transactions = current_user.transactions
+      .includes(:institution, :account, :category)
+
     render :index
   end
 

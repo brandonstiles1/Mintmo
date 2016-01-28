@@ -21,4 +21,6 @@ class Transaction < ActiveRecord::Base
   belongs_to :category
   has_one :user, through: :account, source: :user
   has_one :institution, through: :account, source: :institution
+
+  default_scope { order('date DESC') } 
 end

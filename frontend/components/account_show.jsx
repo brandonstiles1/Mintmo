@@ -63,12 +63,12 @@ var AccountShow = React.createClass({
               [date.getMonth()+1,
                date.getDate(),
                date.getFullYear()].join('/');
-               
+
       return (
         <tr>
           <td>{dateFormat}</td>
           <td>{transaction.description}</td>
-          <td>{transaction.category.name}</td>
+          <td>{transaction.category}</td>
           <td>{transaction.amount}</td>
         </tr>
       );

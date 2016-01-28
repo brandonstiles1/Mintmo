@@ -4,6 +4,8 @@ class Api::AccountsController < ApplicationController
 
   def index
     @accounts = current_user.accounts.includes(:institution, :transactions)
+
+
     render :index
   end
 
@@ -15,6 +17,7 @@ class Api::AccountsController < ApplicationController
 
   def show
     @account = Account.includes(transactions: [:category, :institution]).find(params[:id])
+
     render :show
   end
 
