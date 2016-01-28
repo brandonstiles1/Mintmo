@@ -28,10 +28,14 @@ var TransactionIndex = React.createClass({
     var transactions = this.state.transactions;
 
     var mappedBody = transactions.map(function(transaction, index) {
-
+      var date = new Date(transaction.date);
+      var dateFormat =
+              [date.getMonth()+1,
+               date.getDate(),
+               date.getFullYear()].join('/');
       return (
         <tr>
-          <td>{transaction.date}</td>
+          <td>{dateFormat}</td>
           <td>{transaction.description}</td>
           <td>{transaction.category.name}</td>
           <td>{transaction.amount}</td>
