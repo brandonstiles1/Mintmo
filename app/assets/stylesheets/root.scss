@@ -81,7 +81,7 @@
   text-transform: uppercase;
 }
 
-.content-header-list > li.overview {
+.content-header-list > li.content-header-list-selected {
   border-bottom: 3px solid #0ac775;
 }
 
@@ -95,7 +95,7 @@
 
 //ROOT SIDEBAR
 .root-content-sidebar {
-  display: block;
+  float: left;
   margin-top: 32px;
   width: 302px;
   border-right: 1px solid #ccc;

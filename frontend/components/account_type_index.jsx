@@ -2,12 +2,14 @@ var React = require('react'),
     History = require('react-router').History;
 
 var AccountStore = require('../stores/account'),
-    ApiUtil  = require('../util/api_util');
+    ApiUtil  = require('../util/api_util'),
+    AccountIndex = require('./account_index');
 
 var AccountTypeIndex = React.createClass({
   mixins: [History],
 
   handleClick: function (account) {
+    this.props.transactionsClick();
     this.history.pushState(null, '/accounts/' + account.id, {});
   },
 
