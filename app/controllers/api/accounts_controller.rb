@@ -14,7 +14,7 @@ class Api::AccountsController < ApplicationController
   end
 
   def show
-    @account = Account.includes(transactions: [:category]).find(params[:id])
+    @account = Account.includes(transactions: [:category, :institution]).find(params[:id])
     render :show
   end
 

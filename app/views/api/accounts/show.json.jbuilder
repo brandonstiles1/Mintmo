@@ -1,5 +1,7 @@
-json.extract! @account, :id, :name, :account_type, :institution_id, :transactions
+json.partial! 'api/accounts/account', account: @account
 
-json.set! :institution_name, @account.institution.name
-json.set! :balance, number_to_currency(@account.balance, precision: 2)
-json.set! :balance_n, @account.balance
+json.transactions do
+  json.array! @account.transactions do |transaction|
+    json.partial! 'api/transactions/transaction', transaction: transaction
+  end
+end

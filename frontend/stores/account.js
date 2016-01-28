@@ -5,6 +5,7 @@ var AppDispatcher = require('../dispatcher/dispatcher'),
 
 
 var _accounts = {};
+var _accountsIdx = {};
 
 var _accountSetup = function () {
   AccountConstants.ACCOUNT_TYPES.forEach(function(type){
@@ -19,11 +20,28 @@ var resetAccounts = function (accounts) {
   _accountSetup();
   accounts.forEach(function(account) {
     _accounts[account.account_type].push(account);
+    _accountsIdx[account.id] = account;
   });
 };
 
 var addAccount = function (account) {
-  _accounts[account.account_type].push(account);
+  _accountsIdx[account.id] = account;
+
+  var accountTypeArray = _accounts[account.account_type];
+  var idx = -1;
+
+  for (var i = 0; i < accountTypeArray.length; i++) {
+    if (accountTypeArray[i].id === account.id) {
+      idx = i;
+    }
+  }
+
+  if (idx === -1) {
+    _accounts[account.account_type].push(account);
+  } else {
+    _accounts[account.account_type][idx] = account;
+  }
+
 };
 
 var AccountStore = new Store(AppDispatcher);
@@ -33,20 +51,11 @@ AccountStore.all = function () {
 };
 
 AccountStore.find = function (id) {
-
-  var accountsArray = [];
-  Object.keys(_accounts).forEach(function(account_type) {
-    _accounts[account_type].forEach(function(account) {
-      accountsArray.push(account);
-    });
-  });
-
-  for (var i = 0; i < accountsArray.length; i++) {
-    if (accountsArray[i].id === id) {
-      return accountsArray[i];
-    }
-  }
+  return _accountsIdx[id];
 };
+
+
+
 
 AccountStore.__onDispatch = function (payload) {
 
@@ -60,7 +69,7 @@ AccountStore.__onDispatch = function (payload) {
       AccountStore.__emitChange();
       break;
     case AccountConstants.ACCOUNT_RETRIEVED:
-      AccountStore.find(payload.account.id);
+      addAccount(payload.account);
       AccountStore.__emitChange();
       break;
   }

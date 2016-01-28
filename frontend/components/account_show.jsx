@@ -9,7 +9,7 @@ var AccountShow = React.createClass({
   mixins: [History],
 
   getStateFromStore: function () {
-    return {account: AccountStore.find(parseInt(this.props.params.accountId))};
+    return {account: AccountStore.find(this.props.params.accountId)};
   },
 
   getInitialState: function () {
@@ -19,6 +19,10 @@ var AccountShow = React.createClass({
   componentDidMount: function () {
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
     this.accountListener = AccountStore.addListener(this.onChange);
+  },
+
+  componentWillReceiveProps: function (newProps) {
+    ApiUtil.fetchAccount(newProps.params.accountId);
   },
 
   onChange: function () {
@@ -49,16 +53,20 @@ var AccountShow = React.createClass({
       transactionClass = "content-header-list-selected";
     }
 
+    var transactions = this.state.account.account.transactions;
 
-    var mappedBody = this.state.account.transactions.map(function(transaction, index) {
-      var date = transaction.date;
+    if (transactions === undefined) { return <div></div>; }
+
+    var mappedBody = transactions.map(function(transaction, index) {
+      var date = new Date(transaction.date);
       var dateFormat =
               [date.getMonth()+1,
                date.getDate(),
                date.getFullYear()].join('/');
+               
       return (
         <tr>
-          <td>{transaction.dateFormat}</td>
+          <td>{dateFormat}</td>
           <td>{transaction.description}</td>
           <td>{transaction.category.name}</td>
           <td>{transaction.amount}</td>
@@ -68,9 +76,9 @@ var AccountShow = React.createClass({
 
 
     return (
-      <div>
-          <main className="root-content group">
-            <section className="root-content-sidebar">
+      <main className="root-content group">
+
+        <section className="root-content-sidebar">
           <h1>Type</h1>
           <div className="accounts">
             <div className="account-types">
@@ -93,6 +101,7 @@ var AccountShow = React.createClass({
               </div>
             </div>
         </section>
+
         <section className="root-content-main">
           <h1>Transactions</h1>
           <table className="transaction-table">
@@ -109,9 +118,7 @@ var AccountShow = React.createClass({
             </tbody>
           </table>
         </section>
-
-      </main>
-    </div>);
+      </main>);
   }
 
 });
