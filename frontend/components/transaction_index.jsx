@@ -34,7 +34,7 @@ var TransactionIndex = React.createClass({
                date.getDate(),
                date.getFullYear()].join('/');
       return (
-        <tr>
+        <tr key={index}>
           <td>{dateFormat}</td>
           <td>{transaction.description}</td>
           <td>{transaction.category}</td>

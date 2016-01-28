@@ -9,6 +9,7 @@ var AccountTypeIndex = React.createClass({
   mixins: [History],
 
   showAccount: function (account) {
+
     this.props.accountClick();
     this.props.transactionsClick();
     this.history.pushState(null, '/accounts/' + account.id, {});
@@ -27,6 +28,13 @@ var AccountTypeIndex = React.createClass({
   render: function () {
     var that = this;
     var accounts = this.props.accounts;
+    var accountTypes = [];
+
+    Object.keys(accounts).forEach(function(accountType) {
+      if ( accounts[accountType].length > 0 ) {
+        accountTypes.push(accountType);
+      }
+    });
 
     var mappedAccounts = accounts.map(function(account, index) {
       return <li className="account-type-account group" key={index}  >

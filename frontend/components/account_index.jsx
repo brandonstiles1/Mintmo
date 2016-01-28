@@ -170,7 +170,7 @@ var AccountIndex = React.createClass({
         </section>
 
       </main>
-    </div>);  
+    </div>);
     } else {
       return (
         <div>
@@ -190,6 +190,7 @@ var AccountIndex = React.createClass({
           </header>
           <main className="root-content group">
             <section className="root-content-sidebar">
+            <h1>Accounts</h1>
           <div className="accounts">
             {mappedAccounts}
 

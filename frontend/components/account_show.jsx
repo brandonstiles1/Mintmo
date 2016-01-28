@@ -8,15 +8,12 @@ var AccountStore =require('../stores/account'),
 var AccountShow = React.createClass({
   mixins: [History],
 
-  getStateFromStore: function () {
-    return {account: AccountStore.find(this.props.params.accountId)};
-  },
-
   getInitialState: function () {
-    return {account: this.getStateFromStore(), overviewClicked: false, transactionsClicked: true};
+    return {account: AccountStore.find(this.props.params.accountId), allAccounts: AccountStore.all(), overviewClicked: false, transactionsClicked: true};
   },
 
   componentDidMount: function () {
+    ApiUtil.fetchAccounts();
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
     this.accountListener = AccountStore.addListener(this.onChange);
   },
@@ -26,7 +23,7 @@ var AccountShow = React.createClass({
   },
 
   onChange: function () {
-    this.setState({account: this.getStateFromStore()});
+    this.setState({account: AccountStore.find(this.props.params.accountId), allAccounts: AccountStore.all()});
   },
 
   componentWillUnmount: function () {
@@ -38,12 +35,51 @@ var AccountShow = React.createClass({
     this.history.pushState(null, '/', {});
   },
 
+  handleAccountClick: function () {
+
+  },
+
   handleTransactionsClick: function () {
     this.setState({overviewClicked: false, transactionsClicked: true});
     this.history.pushState(null, '/', {});
   },
 
   render: function () {
+    var that = this;
+    var account = this.state.account;
+    var accounts = this.state.allAccounts;
+    var accountsArr = [];
+    var accountTypes = [];
+
+    Object.keys(accounts).forEach(function(accountType) {
+      if ( accounts[accountType].length > 0 ) {
+        accountTypes.push(accountType);
+
+        accounts[accountType].forEach(function(account){
+          accountsArr.push(account);
+        });
+      }
+    });
+
+    var mappedAccountTypes = accountTypes.map(function(type){
+      return (
+        <div key={type} className="account-types">
+          <div onClick={that.handleAccountClick.bind(null, type)} >
+            <h3 className="account-types-show-type">{type}</h3>
+          </div>
+        </div>
+      );
+    });
+
+    var mappedAccounts = accountsArr.map(function(account, index){
+      return (
+        <div key={index} className="account-types">
+          <div onClick={that.handleAccountClick.bind(null, account)} >
+            <h3 className="account-types-show-type">{account.name}</h3>
+          </div>
+        </div>
+      );
+    });
 
     var overviewClass = "overview",
         transactionClass = "transaction";
@@ -53,7 +89,7 @@ var AccountShow = React.createClass({
       transactionClass = "content-header-list-selected";
     }
 
-    var transactions = this.state.account.account.transactions;
+    var transactions = this.state.account.transactions;
 
     if (transactions === undefined) { return <div></div>; }
 
@@ -65,7 +101,7 @@ var AccountShow = React.createClass({
                date.getFullYear()].join('/');
 
       return (
-        <tr>
+        <tr key={index}>
           <td>{dateFormat}</td>
           <td>{transaction.description}</td>
           <td>{transaction.category}</td>
@@ -74,18 +110,15 @@ var AccountShow = React.createClass({
       );
     });
 
-
     return (
       <main className="root-content group">
 
-        <section className="root-content-sidebar">
+        <section className="root-content-sidebar-show">
           <h1>Type</h1>
           <div className="accounts">
             <div className="account-types">
               <div className="account-type-headers group">
-                <h3>Cash</h3>
-                <h3>Investment</h3>
-                <h3>Loan</h3>
+              {mappedAccountTypes}
               </div>
             </div>
           </div>
@@ -93,18 +126,22 @@ var AccountShow = React.createClass({
             <div className="accounts">
               <div className="account-types">
                 <div className="account-type-headers group">
-                  <h3>All Accounts</h3>
-                  <h3>Account 1</h3>
-                  <h3>Account 2</h3>
-                  <h3>Etc</h3>
+                  <div className="account-types">
+                    <div onClick={that.handleAccountClick} >
+                      <h3 className="account-types-show-type">All Accounts</h3>
+                    </div>
+                  </div>
+                  {mappedAccounts}
                 </div>
               </div>
             </div>
         </section>
 
         <section className="root-content-main">
-          <h1>Transactions</h1>
-          <table className="transaction-table">
+          <h1>{account.name.slice(0,25)}...</h1>
+          <h6>TOTAL BALANCE</h6>
+          <h5>{account.balance}</h5>
+          <table className="transaction-table group">
             <thead className="transaction-table-header">
               <tr >
                 <th>Date</th>
