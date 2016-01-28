@@ -25,7 +25,8 @@ var resetAccounts = function (accounts) {
 };
 
 var addAccount = function (account) {
-  _accountsIdx[account.id] = account;
+
+  _accountsIdx[account.id] = $.extend({}, _accountsIdx[account.id], account);
 
   var accountTypeArray = _accounts[account.account_type];
   var idx = -1;
@@ -39,7 +40,7 @@ var addAccount = function (account) {
   if (idx === -1) {
     _accounts[account.account_type].push(account);
   } else {
-    _accounts[account.account_type][idx] = account;
+    _accounts[account.account_type][idx] = $.extend({}, _accounts[account.account_type][idx], account);
   }
 
 };
