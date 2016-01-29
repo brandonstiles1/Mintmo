@@ -7,7 +7,8 @@ var AccountStore =require('../stores/account'),
     Header = require('./header'),
     AccountShowSidebar = require('./sidebars/show_sidebar'),
     TransactionIndexItem = require('./transaction_index_item'),
-    ComponentActions = require('../actions/component_actions');
+    ComponentActions = require('../actions/component_actions'),
+    TransactionIndexForm = require('./transaction_form');
 
 var AccountShow = React.createClass({
   mixins: [History],
@@ -17,7 +18,8 @@ var AccountShow = React.createClass({
       account: AccountStore.find(this.props.params.accountId),
       allAccounts: AccountStore.all(),
       overviewClicked: false,
-      transactionsClicked: true
+      transactionsClicked: true,
+      formIndex: null
     };
   },
 
@@ -60,6 +62,10 @@ var AccountShow = React.createClass({
     this.history.pushState(null, 'accounts', {});
   },
 
+  makeFormIndex: function (index) {
+    this.setState({formIndex: index});
+  },
+
   render: function () {
 
     var that = this,
@@ -82,13 +88,22 @@ var AccountShow = React.createClass({
             transactionsClick={that.handleTransactionsClick}
             />;
 
-
     if (!(account && account.transactions)) { return <div>SPINNER</div>; }
 
-
-      var mappedBody = account.transactions.map(function(transaction, index) {
-        return <TransactionIndexItem transaction={transaction} key={index} />;
-      });
+    var mappedBody = account.transactions.map(function(transaction, index) {
+      if (index === that.state.formIndex) {
+        return (
+          <TransactionItemForm
+              transaction={transaction}
+              key={index} /> );
+      } else {
+        return (
+          <TransactionIndexItem
+            onClick={that.makeFormIndex.bind(null, index)}
+            transaction={transaction}
+            key={index} /> );
+      }
+    });
 
     return (
       <div>

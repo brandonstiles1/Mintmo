@@ -63,7 +63,16 @@ module.exports = {
     });
 
     return accountsArr;
-  }
+  },
 
+  formatDate: function (datetime) {
+    var date = new Date(datetime);
+
+    return (
+      [date.getMonth()+1,
+       date.getDate(),
+       date.getFullYear()].join('/')
+    );
+  }
 
 };
