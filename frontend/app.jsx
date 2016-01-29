@@ -6,8 +6,12 @@ var React = require('react'),
 var App = React.createClass({
 
   componentDidMount: function () {
-    CurrentUserStore.addListener(this.forceUpdate.bind(this));
+    this.storeListener = CurrentUserStore.addListener(this.forceUpdate.bind(this));
     SessionsApiUtil.fetchCurrentUser();
+  },
+
+  componentWillUnmount: function () {
+    this.storeListener.remove();
   },
 
   render: function() {

@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
   def destroy
     logout!
     flash.now[:message] = "Peace!"
-    redirect_to new_session_url
+    render :new
   end
 
   def redirect_logged_in_users

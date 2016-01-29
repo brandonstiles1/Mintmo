@@ -7,7 +7,15 @@ var CurrentUserActions = {
       actionType: CurrentUserConstants.RECEIVE_CURRENT_USER,
       currentUser: currentUser
     });
+  },
+
+  removeCurrentUser: function () {
+    AppDispatcher.dispatch({
+      actionType: CurrentUserConstants.REMOVE_CURRENT_USER,
+      currentUser: currentUser
+    });
   }
+
 };
 
 module.exports = CurrentUserActions;

@@ -48,7 +48,8 @@ var addAccount = function (account) {
 var AccountStore = new Store(AppDispatcher);
 
 AccountStore.all = function () {
-  return _accounts;
+  return $.extend({}, _accounts);
+
 };
 
 AccountStore.find = function (id) {

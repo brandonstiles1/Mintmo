@@ -4,7 +4,8 @@ var React = require('react'),
 var AccountStore = require('../stores/account'),
     ApiUtil  = require('../util/api_util'),
     AccountTypeIndex = require('./account_type_index'),
-    TransactionIndex = require('./transaction_index');
+    TransactionIndex = require('./transaction_index'),
+    Header = require('./header');
 
 var AccountIndex = React.createClass({
   mixins: [History],
@@ -20,7 +21,9 @@ var AccountIndex = React.createClass({
   },
 
   handleAccountClick: function () {
-    this.setState({accountClicked: true});
+    // this.setState({accountClicked: true});
+    this.state.accountClicked = true;
+    // this.forceUpdate();
   },
 
   handleTransactionsClick: function () {
@@ -112,7 +115,10 @@ var AccountIndex = React.createClass({
       if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
         expandedAccounts = (
           <ul >
-            <AccountTypeIndex accountClick={that.handleAccountClick} transactionsClick={that.handleTransactionsClick} accounts={accounts[type]}/>
+            <AccountTypeIndex
+              accountClick={that.handleAccountClick}
+              transactionsClick={that.handleTransactionsClick}
+              accounts={accounts[type]}/>
           </ul>);
       }
 
@@ -128,43 +134,24 @@ var AccountIndex = React.createClass({
     });
 
     if (this.state.accountClicked) {
-
       return (
         <div>
-          <header className="content-header">
-            <nav className="content-header-nav group">
-
-              <h1 className="content-header-logo">
-                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
-              </h1>
-
-              <ul className="content-header-list group">
-                <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
-                <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
-              </ul>
-
-            </nav>
-          </header>
+          <Header
+            overviewClicked={this.state.overviewClicked}
+            transactionsClicked={this.state.transactionsClicked}
+            overviewClick={this.handleOverviewClick}
+            transactionsClick={this.handleTransactionsClick}/>
           {this.props.children}
         </div>
       );
     } else if (this.state.transactionsClicked){
       return (
         <div>
-          <header className="content-header">
-            <nav className="content-header-nav group">
-
-              <h1 className="content-header-logo">
-                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
-              </h1>
-
-              <ul className="content-header-list group">
-                <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
-                <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
-              </ul>
-
-            </nav>
-          </header>
+          <Header
+            overviewClicked={this.state.overviewClicked}
+            transactionsClicked={this.state.transactionsClicked}
+            overviewClick={this.handleOverviewClick}
+            transactionsClick={this.handleTransactionsClick}/>
           <main className="root-content group">
             <section className="root-content-sidebar-show">
               <h1>Type</h1>
@@ -199,20 +186,11 @@ var AccountIndex = React.createClass({
     } else {
       return (
         <div>
-          <header className="content-header">
-            <nav className="content-header-nav group">
-
-              <h1 className="content-header-logo">
-                <a href="#"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
-              </h1>
-
-              <ul className="content-header-list group">
-                <li className={overviewClass}><a onClick={this.handleOverviewClick} href="#">Overview</a></li>
-                <li className={transactionClass}><a onClick={this.handleTransactionsClick} href="#">Transactions</a></li>
-              </ul>
-
-            </nav>
-          </header>
+          <Header
+            overviewClicked={this.state.overviewClicked}
+            transactionsClicked={this.state.transactionsClicked}
+            overviewClick={this.handleOverviewClick}
+            transactionsClick={this.handleTransactionsClick}/>
           <main className="root-content group">
             <section className="root-content-sidebar">
             <h1>Accounts</h1>
@@ -237,7 +215,3 @@ var AccountIndex = React.createClass({
 
 
 module.exports = AccountIndex;
-
-
-
-//               {this.props.children}

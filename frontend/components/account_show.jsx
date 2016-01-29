@@ -3,7 +3,8 @@ var React = require('react'),
 
 var AccountStore =require('../stores/account'),
     ApiUtil = require('../util/api_util'),
-    TransactionIndex = require('./transaction_index');
+    TransactionIndex = require('./transaction_index'),
+    Header = require('./header');
 
 var AccountShow = React.createClass({
   mixins: [History],
@@ -110,6 +111,12 @@ var AccountShow = React.createClass({
     });
 
     return (
+      <div>
+      <Header
+        overviewClicked={this.state.overviewClicked}
+        transactionsClicked={this.state.transactionsClicked}
+        overviewClick={this.handleOverviewClick}
+        transactionsClick={this.handleTransactionsClick}/>
       <main className="root-content group">
 
         <section className="root-content-sidebar-show">
@@ -154,7 +161,8 @@ var AccountShow = React.createClass({
             </tbody>
           </table>
         </section>
-      </main>);
+      </main>
+    </div>);
   }
 
 });
