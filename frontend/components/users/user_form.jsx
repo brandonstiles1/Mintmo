@@ -46,15 +46,13 @@ var UserForm = React.createClass({
               <fieldset className="form-fieldset">
 
                 <div className="input">
-                  <label>Your Email
-                    <input id="form-email" type="text" name="user[email]" />
-                  </label>
+                  <label>Your Email</label>
+                  <input id="form-email" type="text" name="user[email]" />
                 </div>
 
                 <div className="input">
-                  <label>Password
-                    <input id="form-password" type="password" name="user[password]" />
-                  </label>
+                  <label>Password</label>
+                  <input id="form-password" type="password" name="user[password]" />
                 </div>
 
                 <div className="submit">

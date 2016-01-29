@@ -17,6 +17,11 @@ var TransactionItemForm = React.createClass({
     this.setState({showEditDetails: !this.state.showEditDetails});
   },
 
+  handleCancel: function (e) {
+    e.preventDefault();
+    this.setState({showEditDetails: false});
+  },
+
   updateTransaction: function () {
     var transaction = { transaction: {
       description: this.state.transaction.description,
@@ -26,7 +31,7 @@ var TransactionItemForm = React.createClass({
     }};
 
     ApiUtil.updateTransaction(transaction, function () {
-      this.props.history.pushState(null, '/', {});
+      this.toggleEditDetails();
     }.bind(this));
   },
 
@@ -36,17 +41,27 @@ var TransactionItemForm = React.createClass({
     });
 
     var editDetails = (
-      <button className="edit-details-button" onClick={this.toggleEditDetails}>
+      <button className="edit-details" onClick={this.toggleEditDetails}>
         EDIT DETAILS
       </button>
     );
 
     if (this.state.showEditDetails) {
       editDetails = (
-        <textarea
-          className="edit-details-notes"
-          placeholder="notes"
-          valueLink={this.linkState('notes')} />
+        <div className="edit-details-show">
+          <textarea
+            className="edit-details-notes"
+            placeholder="notes"
+            valueLink={this.linkState('notes')} />
+          <div className="edit-detail-buttons group">
+            <button
+              className="edit-details-cancel"
+              onClick={this.handleCancel}>CANCEL</button>
+            <button
+              className="edit-details-submit"
+              onClick={this.updateTransaction}>IM DONE</button>
+          </div>
+        </div>
       );
     }
 

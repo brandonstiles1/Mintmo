@@ -56,8 +56,8 @@ var AccountIndex = React.createClass({
         accountClicked = this.state.accountClicked,
         overviewClicked = this.state.overviewClicked,
         transactionsClicked = this.state.transactionsClicked,
-        overviewClass = ComponentActions.getOverviewClass(overviewClicked);
-        transactionClass = ComponentActions.getTransactionClass(transactionsClicked);
+        overviewClass = ComponentActions.getOverviewClass(overviewClicked),
+        transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
         header =
           <Header
             overviewClicked={overviewClicked}
