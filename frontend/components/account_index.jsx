@@ -5,25 +5,30 @@ var AccountStore = require('../stores/account'),
     ApiUtil  = require('../util/api_util'),
     AccountTypeIndex = require('./account_type_index'),
     TransactionIndex = require('./transaction_index'),
+    IndexSidebar = require('./sidebars/index_sidebar'),
+    AccountShowSidebar = require('./sidebars/show_sidebar'),
+    AccountShow = require('./account_show'),
     Header = require('./header');
 
 var AccountIndex = React.createClass({
   mixins: [History],
 
-
   getInitialState: function () {
-    return { accounts: AccountStore.all(), expanded: {}, overviewClicked: true, transactionsClicked: false, accountClicked: false};
+    return {
+      accounts: AccountStore.all(),
+      expanded: {},
+      overviewClicked: true,
+      transactionsClicked: false,
+      accountClicked: false
+    };
   },
 
   handleOverviewClick: function () {
     this.setState({overviewClicked: true, transactionsClicked: false, accountClicked: false});
-    this.history.pushState(null, '/', {});
   },
 
   handleAccountClick: function () {
-    // this.setState({accountClicked: true});
-    this.state.accountClicked = true;
-    // this.forceUpdate();
+    this.setState({accountClicked: true});
   },
 
   handleTransactionsClick: function () {
@@ -43,172 +48,69 @@ var AccountIndex = React.createClass({
     this.storeListener.remove();
   },
 
-  totalAccountTypeBalance: function (accountType) {
-    var sum = 0;
-
-    this.state.accounts[accountType].forEach(function(account) {
-      sum += parseFloat(account.balance_n);
-    });
-
-    return sum;
-  },
-
-  toggleExpand: function (type) {
-    if (this.state.expanded[type] === undefined) {
-      this.state.expanded[type] = false;
-    } else {
-      this.state.expanded[type] = !this.state.expanded[type];
-    }
-
-    this.onChange();
-  },
-
   render: function () {
 
-    var that = this;
-    var accounts = this.state.accounts;
-    var accountTypes = [];
-    var accountBalances = {};
-    var accountsArr = [];
+    var that = this,
+        accounts = this.state.accounts,
+        overviewClicked = this.state.overviewClicked,
+        transactionsClicked = this.state.transactionsClicked,
+        overviewClass = "overview",
+        transactionClass = "transaction",
+        header =
+          <Header
+            overviewClicked={overviewClicked}
+            transactionsClicked={transactionsClicked}
+            overviewClick={this.handleOverviewClick}
+            transactionsClick={this.handleTransactionsClick}/>;
 
-    Object.keys(accounts).forEach(function(accountType) {
-      if ( accounts[accountType].length > 0 ) {
-        accountTypes.push(accountType);
-        accountBalances[accountType] = that.totalAccountTypeBalance(accountType);
-        accounts[accountType].forEach(function(account){
-          accountsArr.push(account);
-        });
-      }
-    });
-
-    var overviewClass = "overview",
-        transactionClass = "transaction";
-    if (this.state.overviewClicked) {
+    if (overviewClicked) {
       overviewClass = "content-header-list-selected";
     } else {
       transactionClass = "content-header-list-selected";
     }
 
-    var mappedAccountTypes = accountTypes.map(function(type){
-      return (
-        <div key={type} className="account-types">
-          <div onClick={that.handleAccountClick.bind(null, type)} >
-            <h3 className="account-types-show-type">{type}</h3>
-          </div>
-        </div>
-      );
-    });
-
-    var trasactionMappedAccounts = accountsArr.map(function(account, index){
-      return (
-        <div key={index} className="account-types">
-          <div onClick={that.handleAccountClick.bind(null, account)} >
-            <a href={"#/accounts/" + account.id}><h3 className="account-types-show-type">{account.name}</h3></a>
-          </div>
-        </div>
-      );
-    });
-
-    var mappedAccounts = accountTypes.map(function(type){
-      var typeClass = (accountBalances[type] > 0) ? "account-type-headers group" : "account-type-headers-neg group";
-      var expandedAccounts;
-      if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
-        expandedAccounts = (
-          <ul >
-            <AccountTypeIndex
-              accountClick={that.handleAccountClick}
-              transactionsClick={that.handleTransactionsClick}
-              accounts={accounts[type]}/>
-          </ul>);
-      }
-
-      return (
-        <div key={type} className="account-types">
-          <div onClick={that.toggleExpand.bind(null, type)} className={typeClass}>
-            <h3 >{type}</h3>
-            <h4 >${accountBalances[type]}</h4>
-          </div>
-          {expandedAccounts}
-        </div>
-      );
-    });
-
     if (this.state.accountClicked) {
       return (
         <div>
-          <Header
-            overviewClicked={this.state.overviewClicked}
-            transactionsClicked={this.state.transactionsClicked}
-            overviewClick={this.handleOverviewClick}
-            transactionsClick={this.handleTransactionsClick}/>
-          {this.props.children}
+          {header}
+          <AccountShow />
         </div>
       );
     } else if (this.state.transactionsClicked){
+
       return (
         <div>
-          <Header
-            overviewClicked={this.state.overviewClicked}
-            transactionsClicked={this.state.transactionsClicked}
-            overviewClick={this.handleOverviewClick}
-            transactionsClick={this.handleTransactionsClick}/>
+          {header}
           <main className="root-content group">
-            <section className="root-content-sidebar-show">
-              <h1>Type</h1>
-              <div className="accounts">
-                <div className="account-types">
-                  <div className="account-type-headers group">
-                  {mappedAccountTypes}
-                  </div>
-                </div>
-              </div>
-              <h1>Accounts</h1>
-                <div className="accounts">
-                  <div className="account-types">
-                    <div className="account-type-headers group">
-                      <div className="account-types">
-                        <div>
-                          <a href="/"><h3 className="account-types-show-type">All Accounts</h3></a>
-                        </div>
-                      </div>
-                      {trasactionMappedAccounts}
-                    </div>
-                  </div>
-                </div>
-            </section>
+            <AccountShowSidebar
+              accounts={that.state.accounts}
+              accountClick={that.handleAccountClick}
+              transactionsClick={that.handleTransactionsClick}
+              />
         <section className="root-content-main">
           <h1>Transactions</h1>
           <TransactionIndex />
         </section>
-
       </main>
     </div>);
     } else {
-      return (
-        <div>
-          <Header
-            overviewClicked={this.state.overviewClicked}
-            transactionsClicked={this.state.transactionsClicked}
-            overviewClick={this.handleOverviewClick}
-            transactionsClick={this.handleTransactionsClick}/>
-          <main className="root-content group">
-            <section className="root-content-sidebar">
-            <h1>Accounts</h1>
-          <div className="accounts">
-            {mappedAccounts}
+    return (
+      <div>
+        {header}
+        <main className="root-content group">
+          <IndexSidebar
+            accounts={that.state.accounts}
+            accountClick={that.handleAccountClick}
+            transactionsClick={that.handleTransactionsClick}
+            />
 
-          </div>
-        </section>
-        <section className="root-content-main">
+          <section className="root-content-main">
           <h1>Transactions</h1>
           <TransactionIndex />
-        </section>
-
-      </main>
-    </div>);
+          </section>
+        </main>
+      </div>);
     }
-
-
   }
 
 });

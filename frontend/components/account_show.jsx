@@ -4,13 +4,19 @@ var React = require('react'),
 var AccountStore =require('../stores/account'),
     ApiUtil = require('../util/api_util'),
     TransactionIndex = require('./transaction_index'),
-    Header = require('./header');
+    Header = require('./header'),
+    AccountShowSidebar = require('./sidebars/show_sidebar');
 
 var AccountShow = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
-    return {account: AccountStore.find(this.props.params.accountId), allAccounts: AccountStore.all(), overviewClicked: false, transactionsClicked: true};
+    return {
+      account: AccountStore.find(this.props.params.accountId),
+      allAccounts: AccountStore.all(),
+      overviewClicked: false,
+      transactionsClicked: true
+    };
   },
 
   componentDidMount: function () {
@@ -30,68 +36,59 @@ var AccountShow = React.createClass({
     this.accountListener.remove();
   },
 
+  handleAccountTypeClick: function () {
+
+  },
+
   handleOverviewClick: function () {
-    this.setState({overviewClicked: true, transactionsClicked: false});
-    this.history.pushState(null, '/', {});
+    this.history.pushState(null, 'accounts', {});
+  },
+
+  handleTransactionsClick: function (e) {
+    e.preventDefault();
+    this.history.pushState(null, 'transactions', {});
   },
 
   handleAccountClick: function () {
-
+    this.setState({accountClicked: true});
   },
 
-  handleTransactionsClick: function () {
-    this.setState({overviewClicked: false, transactionsClicked: true});
-    this.history.pushState(null, '/', {});
+  handleAllAccountsClick: function (e) {
+    e.preventDefault();
+    this.history.pushState(null, 'accounts', {});
   },
 
   render: function () {
-    var that = this;
-    var account = this.state.account;
-    var accounts = this.state.allAccounts;
-    var accountsArr = [];
-    var accountTypes = [];
 
-    Object.keys(accounts).forEach(function(accountType) {
-      if ( accounts[accountType].length > 0 ) {
-        accountTypes.push(accountType);
+    var that = this,
+        account = this.state.account,
+        transactions = account.transactions,
+        accounts = this.state.allAccounts,
+        overviewClass = "overview",
+        transactionClass = "transaction",
+        transactionsClicked =this.state.transactionsClicked,
+        overviewClicked =this.state.overviewClicked,
+        header =
+          <Header
+            overviewClicked={overviewClicked}
+            overviewClick={this.handleOverviewClick}
+            transactionsClicked={transactionsClicked}
+            transactionsClick={this.handleTransactionsClick}/>,
+          sidebar =
+          <AccountShowSidebar
+            accounts={that.state.allAccounts}
+            accountClick={that.handleAccountClick}
+            transactionsClick={that.handleTransactionsClick}
+            />;
 
-        accounts[accountType].forEach(function(account){
-          accountsArr.push(account);
-        });
-      }
-    });
 
-    var mappedAccountTypes = accountTypes.map(function(type){
-      return (
-        <div key={type} className="account-types">
-          <div onClick={that.handleAccountClick.bind(null, type)} >
-            <h3 className="account-types-show-type">{type}</h3>
-          </div>
-        </div>
-      );
-    });
-
-    var mappedAccounts = accountsArr.map(function(account, index){
-      return (
-        <div key={index} className="account-types">
-          <div onClick={that.handleAccountClick.bind(null, account)} >
-            <a href={"#/accounts/" + account.id}><h3 className="account-types-show-type">{account.name}</h3></a>
-          </div>
-        </div>
-      );
-    });
-
-    var overviewClass = "overview",
-        transactionClass = "transaction";
-    if (this.state.overviewClicked) {
+    if (overviewClicked) {
       overviewClass = "content-header-list-selected";
     } else {
       transactionClass = "content-header-list-selected";
     }
 
-    var transactions = this.state.account.transactions;
-
-    if (transactions === undefined) { return <div></div>; }
+    if (!(account && transactions)) { return <div>SPINNER</div>; }
 
     var mappedBody = transactions.map(function(transaction, index) {
       var date = new Date(transaction.date);
@@ -112,36 +109,10 @@ var AccountShow = React.createClass({
 
     return (
       <div>
-      <Header
-        overviewClicked={this.state.overviewClicked}
-        transactionsClicked={this.state.transactionsClicked}
-        overviewClick={this.handleOverviewClick}
-        transactionsClick={this.handleTransactionsClick}/>
+        {header}
       <main className="root-content group">
 
-        <section className="root-content-sidebar-show">
-          <h1>Type</h1>
-          <div className="accounts">
-            <div className="account-types">
-              <div className="account-type-headers group">
-              {mappedAccountTypes}
-              </div>
-            </div>
-          </div>
-          <h1>Accounts</h1>
-            <div className="accounts">
-              <div className="account-types">
-                <div className="account-type-headers group">
-                  <div className="account-types">
-                    <div>
-                      <a href="/"><h3 className="account-types-show-type">All Accounts</h3></a>
-                    </div>
-                  </div>
-                  {mappedAccounts}
-                </div>
-              </div>
-            </div>
-        </section>
+        {sidebar}
 
         <section className="root-content-main">
           <h1>{account.name.slice(0,25)}...</h1>

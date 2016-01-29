@@ -25,7 +25,6 @@ var SessionsApiUtil = {
         callback && callback();
       },
       error: function (data) {
-        debugger
 
       }
     });

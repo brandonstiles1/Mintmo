@@ -20,11 +20,12 @@ var App = require('./app'),
 var routes = (
   <Router >
     <Route path="login" component={ SessionForm }/>
-    <Route path="/" component={App} onEnter={_ensureLoggedIn}>
-    <IndexRoute component={AccountIndex} onEnter={_ensureLoggedIn} />
     <Route path="users/new" component={ UserForm } />
-      <Route path="accounts/:accountId" component={ AccountShow } >
-      </Route>
+    <Route path="/" component={App} onEnter={_ensureLoggedIn}>
+      <IndexRoute component={AccountIndex} />
+      <Route path="accounts" component={AccountIndex} />
+      <Route path="accounts/:accountId" component={ AccountShow } />
+      <Route path="transactions"component={TransactionIndex} />
     </Route>
   </Router>
 );

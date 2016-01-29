@@ -30,10 +30,11 @@ var AccountTypeIndex = React.createClass({
     var accounts = this.props.accounts;
 
     var mappedAccounts = accounts.map(function(account, index) {
-      return <li className="account-type-account group" key={index}  >
-              <p1 onClick={that.showAccount.bind(null, account)} >{account.name.slice(0, 18)}...</p1>
-              <p2 >{account.balance}</p2>
-            </li>;
+      return (
+        <li className="account-type-account group" key={index}  >
+          <p1 onClick={that.showAccount.bind(null, account)} >{account.name.slice(0, 18)}...</p1>
+          <p2 >{account.balance}</p2>
+        </li>);
     });
 
     return (

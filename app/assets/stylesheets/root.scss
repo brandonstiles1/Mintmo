@@ -70,6 +70,9 @@
 .content-header-list {
   float: right;
 }
+.account-types-show-type {
+  cursor: pointer;
+}
 
 .content-header-list > li {
   padding-bottom: 10px;
@@ -105,7 +108,7 @@
   font-size: 18px;
   font-weight: bold;
 }
-.account-type-headers {
+.account-balance-headers {
   background: #f7f7f7;
   font-size: 15px;
   font-weight: normal;
@@ -124,30 +127,26 @@
   float: right;
   padding-right: 40px;
 }
-.account-type-headers > h3 {
+.type-background > h3 {
   float: left;
   font-weight: normal;
 }
-.account-type-headers > h4 {
+.account-balance {
   float: right;
   font-weight: 600;
   padding-right: 40px;
   color: #71c775;
 }
 
-.account-type-headers-neg {
-  background: #f7f7f7;
+.account-balance-headers {
+
   font-size: 15px;
   font-weight: normal;
   cursor: pointer;
   display: block;
 }
-.account-type-headers-neg > h3 {
-  float: left;
-  font-weight: normal;
-}
 
-.account-type-headers-neg > h4 {
+.account-balance-neg {
   color: black;
   float: right;
   font-weight: 600;
@@ -155,7 +154,12 @@
 }
 
 .account-type-account {
+  display: block;
   padding-left: 27px;
   background: white;
   font-size: 13px;
+}
+
+.type-background {
+  background: #f7f7f7;
 }

@@ -56,6 +56,14 @@ student_loans = Account.create!(
   account_type: "Loans"
 )
 
+student_loans2 = Account.create!(
+  name: "DIRECT STAFFORD UNSUBSIDIZED",
+  institution_id: student_loans.id,
+  user_id: u1.id,
+  balance: -15486.24,
+  account_type: "Loans"
+)
+
 Category.destroy_all
 cat1 = Category.create(name: "UNCATEGORIZED")
 cat2 = Category.create(name: "Education")
@@ -147,6 +155,22 @@ t10 = Transaction.create!(
 
 t11 = Transaction.create!(
   account_id: student_loans.id,
+  amount: 340.69,
+  description: "Student Loan Payment",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category_id: cat2.id
+)
+
+t12 = Transaction.create!(
+  account_id: student_loans2.id,
+  amount: 340.69,
+  description: "Student Loan Payment",
+  date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
+  category_id: cat2.id
+)
+
+t13 = Transaction.create!(
+  account_id: student_loans2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",

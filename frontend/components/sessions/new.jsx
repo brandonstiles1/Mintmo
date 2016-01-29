@@ -43,13 +43,15 @@ var SessionForm = React.createClass({
           <fieldset className="form-fieldset">
 
             <div className="input">
-              <label for="form-email">Email</label>
-              <input id="form-email" type="text" name="user[email]" />
+              <label>Email
+                <input id="form-email" type="text" name="user[email]" />
+              </label>
             </div>
 
             <div className="input">
-              <label for="form-password">Password</label>
-              <input id="form-password" type="password" name="user[password]" />
+              <label >Password
+                <input id="form-password" type="password" name="user[password]" />
+              </label>
             </div>
 
 

@@ -10,7 +10,7 @@ var UserForm = React.createClass({
     e.preventDefault();
 
     var credentials = $(e.currentTarget).serializeJSON();
-    
+
     UsersApiUtil.createUser(credentials, function () {
       this.history.pushState({}, "/");
     }.bind(this));
@@ -46,13 +46,15 @@ var UserForm = React.createClass({
               <fieldset className="form-fieldset">
 
                 <div className="input">
-                  <label for="form-email">Your Email</label>
-                  <input id="form-email" type="text" name="user[email]" />
+                  <label>Your Email
+                    <input id="form-email" type="text" name="user[email]" />
+                  </label>
                 </div>
 
                 <div className="input">
-                  <label for="form-password">Password</label>
-                  <input id="form-password" type="password" name="user[password]" />
+                  <label>Password
+                    <input id="form-password" type="password" name="user[password]" />
+                  </label>
                 </div>
 
                 <div className="submit">
