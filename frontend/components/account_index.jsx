@@ -61,15 +61,20 @@ var AccountIndex = React.createClass({
   },
 
   render: function () {
+
     var that = this;
     var accounts = this.state.accounts;
     var accountTypes = [];
     var accountBalances = {};
+    var accountsArr = [];
 
     Object.keys(accounts).forEach(function(accountType) {
       if ( accounts[accountType].length > 0 ) {
         accountTypes.push(accountType);
         accountBalances[accountType] = that.totalAccountTypeBalance(accountType);
+        accounts[accountType].forEach(function(account){
+          accountsArr.push(account);
+        });
       }
     });
 
@@ -80,6 +85,26 @@ var AccountIndex = React.createClass({
     } else {
       transactionClass = "content-header-list-selected";
     }
+
+    var mappedAccountTypes = accountTypes.map(function(type){
+      return (
+        <div key={type} className="account-types">
+          <div onClick={that.handleAccountClick.bind(null, type)} >
+            <h3 className="account-types-show-type">{type}</h3>
+          </div>
+        </div>
+      );
+    });
+
+    var trasactionMappedAccounts = accountsArr.map(function(account, index){
+      return (
+        <div key={index} className="account-types">
+          <div onClick={that.handleAccountClick.bind(null, account)} >
+            <a href={"#/accounts/" + account.id}><h3 className="account-types-show-type">{account.name}</h3></a>
+          </div>
+        </div>
+      );
+    });
 
     var mappedAccounts = accountTypes.map(function(type){
       var typeClass = (accountBalances[type] > 0) ? "account-type-headers group" : "account-type-headers-neg group";
@@ -141,29 +166,29 @@ var AccountIndex = React.createClass({
             </nav>
           </header>
           <main className="root-content group">
-            <section className="root-content-sidebar">
-          <h1>Type</h1>
-          <div className="accounts">
-            <div className="account-types">
-              <div className="account-type-headers group">
-                <h3>Cash</h3>
-                <h3>Investment</h3>
-                <h3>Loan</h3>
-              </div>
-            </div>
-          </div>
-          <h1>Accounts</h1>
-            <div className="accounts">
-              <div className="account-types">
-                <div className="account-type-headers group">
-                  <h3>All Accounts</h3>
-                  <h3>Account 1</h3>
-                  <h3>Account 2</h3>
-                  <h3>Etc</h3>
+            <section className="root-content-sidebar-show">
+              <h1>Type</h1>
+              <div className="accounts">
+                <div className="account-types">
+                  <div className="account-type-headers group">
+                  {mappedAccountTypes}
+                  </div>
                 </div>
               </div>
-            </div>
-        </section>
+              <h1>Accounts</h1>
+                <div className="accounts">
+                  <div className="account-types">
+                    <div className="account-type-headers group">
+                      <div className="account-types">
+                        <div>
+                          <a href="#"><h3 className="account-types-show-type">All Accounts</h3></a>
+                        </div>
+                      </div>
+                      {trasactionMappedAccounts}
+                    </div>
+                  </div>
+                </div>
+            </section>
         <section className="root-content-main">
           <h1>Transactions</h1>
           <TransactionIndex />

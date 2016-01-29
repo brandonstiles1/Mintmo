@@ -35,10 +35,10 @@ var TransactionIndex = React.createClass({
                date.getFullYear()].join('/');
       return (
         <tr key={index}>
-          <td>{dateFormat}</td>
-          <td>{transaction.description}</td>
-          <td>{transaction.category}</td>
-          <td>{transaction.amount}</td>
+          <td className="date">{dateFormat}</td>
+          <td className="description">{transaction.description}</td>
+          <td className="category">{transaction.category}</td>
+          <td className="amount">{transaction.amount}</td>
         </tr>
       );
     });
@@ -48,10 +48,10 @@ var TransactionIndex = React.createClass({
         <table className="transaction-table">
           <thead className="transaction-table-header">
             <tr >
-              <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Amount</th>
+              <th className="date">Date</th>
+              <th className="description">Description</th>
+              <th className="category">Category</th>
+              <th className="amount">Amount</th>
             </tr>
           </thead>
           <tbody className="transaction-table-body">
