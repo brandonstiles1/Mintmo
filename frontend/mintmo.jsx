@@ -19,9 +19,9 @@ var App = require('./app'),
 
 var routes = (
   <Router >
-    <Route path="/" component={App} >
-    <IndexRoute component={AccountIndex}  />
     <Route path="login" component={ SessionForm }/>
+    <Route path="/" component={App} onEnter={_ensureLoggedIn}>
+    <IndexRoute component={AccountIndex} onEnter={_ensureLoggedIn} />
     <Route path="users/new" component={ UserForm } />
       <Route path="accounts/:accountId" component={ AccountShow } >
       </Route>
@@ -35,27 +35,20 @@ window.init = function () {
   document.getElementById('root') );
 };
 
+
 function _ensureLoggedIn(nextState, replace, callback) {
-  // the third `callback` arg allows us to do async
-  // operations before the route runs. Router will wait
-  // for us to call it before actually routing
+
 
   if (CurrentUserStore.userHasBeenFetched()) {
-    // _redirectIfNotLoggedIn(); // this function below
+    _redirectIfNotLoggedIn(); // this function below
   } else {
-    // currentUser has not been fetched
-    // lets fetch them and then see if
-    // we have to redirect or not
-
     SessionsApiUtil.fetchCurrentUser(_redirectIfNotLoggedIn);
   }
 
   function _redirectIfNotLoggedIn() {
     if (!CurrentUserStore.isLoggedIn()) {
-
       replace({}, "/login");
-      callback();
     }
     callback();
   }
-};
+}

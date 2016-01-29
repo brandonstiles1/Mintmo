@@ -11,6 +11,7 @@ CurrentUserStore.currentUser = function () {
 };
 
 CurrentUserStore.isLoggedIn = function () {
+  debugger
   return !!_currentUser.id;
 };
 
