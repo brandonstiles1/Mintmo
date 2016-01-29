@@ -127,7 +127,7 @@ var AccountShow = React.createClass({
                 <div className="account-type-headers group">
                   <div className="account-types">
                     <div>
-                      <a href="#"><h3 className="account-types-show-type">All Accounts</h3></a>
+                      <a href="/"><h3 className="account-types-show-type">All Accounts</h3></a>
                     </div>
                   </div>
                   {mappedAccounts}
