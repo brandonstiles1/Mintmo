@@ -2,7 +2,8 @@ var React = require('react'),
     History = require('react-router').History;
 
 var TransactionStore = require('../stores/transaction'),
-    ApiUtil  = require('../util/api_util');
+    ApiUtil  = require('../util/api_util'),
+    TransactionIndexItem = require('./transaction_index_item');
 
 var TransactionIndex = React.createClass({
   mixins: [History],
@@ -28,19 +29,7 @@ var TransactionIndex = React.createClass({
     var transactions = this.state.transactions;
 
     var mappedBody = transactions.map(function(transaction, index) {
-      var date = new Date(transaction.date);
-      var dateFormat =
-              [date.getMonth()+1,
-               date.getDate(),
-               date.getFullYear()].join('/');
-      return (
-        <tr key={index}>
-          <td className="date">{dateFormat}</td>
-          <td className="description">{transaction.description}</td>
-          <td className="category">{transaction.category}</td>
-          <td className="amount">{transaction.amount}</td>
-        </tr>
-      );
+      return <TransactionIndexItem transaction={transaction} key={index} />;
     });
 
     return (

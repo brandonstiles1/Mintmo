@@ -5,7 +5,9 @@ var AccountStore =require('../stores/account'),
     ApiUtil = require('../util/api_util'),
     TransactionIndex = require('./transaction_index'),
     Header = require('./header'),
-    AccountShowSidebar = require('./sidebars/show_sidebar');
+    AccountShowSidebar = require('./sidebars/show_sidebar'),
+    TransactionIndexItem = require('./transaction_index_item'),
+    ComponentActions = require('../actions/component_actions');
 
 var AccountShow = React.createClass({
   mixins: [History],
@@ -63,10 +65,10 @@ var AccountShow = React.createClass({
     var that = this,
         account = this.state.account,
         accounts = this.state.allAccounts,
-        overviewClass = "overview",
-        transactionClass = "transaction",
         transactionsClicked =this.state.transactionsClicked,
         overviewClicked =this.state.overviewClicked,
+        overviewClass = ComponentActions.getOverviewClass(overviewClicked),
+        transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
         header =
           <Header
             overviewClicked={overviewClicked}
@@ -81,31 +83,12 @@ var AccountShow = React.createClass({
             />;
 
 
-    if (overviewClicked) {
-      overviewClass = "content-header-list-selected";
-    } else {
-      transactionClass = "content-header-list-selected";
-    }
-
     if (!(account && account.transactions)) { return <div>SPINNER</div>; }
 
 
-    var mappedBody = account.transactions.map(function(transaction, index) {
-      var date = new Date(transaction.date);
-      var dateFormat =
-              [date.getMonth()+1,
-               date.getDate(),
-               date.getFullYear()].join('/');
-
-      return (
-        <tr key={index}>
-          <td className="date">{dateFormat}</td>
-          <td className="description">{transaction.description}</td>
-          <td className="category">{transaction.category}</td>
-          <td className="amount">{transaction.amount}</td>
-        </tr>
-      );
-    });
+      var mappedBody = account.transactions.map(function(transaction, index) {
+        return <TransactionIndexItem transaction={transaction} key={index} />;
+      });
 
     return (
       <div>
