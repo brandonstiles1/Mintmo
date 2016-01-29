@@ -62,7 +62,6 @@ var AccountShow = React.createClass({
 
     var that = this,
         account = this.state.account,
-        transactions = account.transactions,
         accounts = this.state.allAccounts,
         overviewClass = "overview",
         transactionClass = "transaction",
@@ -88,9 +87,10 @@ var AccountShow = React.createClass({
       transactionClass = "content-header-list-selected";
     }
 
-    if (!(account && transactions)) { return <div>SPINNER</div>; }
+    if (!(account && account.transactions)) { return <div>SPINNER</div>; }
 
-    var mappedBody = transactions.map(function(transaction, index) {
+
+    var mappedBody = account.transactions.map(function(transaction, index) {
       var date = new Date(transaction.date);
       var dateFormat =
               [date.getMonth()+1,

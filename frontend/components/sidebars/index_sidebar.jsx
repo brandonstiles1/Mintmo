@@ -1,6 +1,7 @@
 var React = require('react');
 
-var AccountTypeIndex = require('../account_type_index');
+var AccountTypeIndex = require('../account_type_index'),
+    ComponentActions = require('../../actions/component_actions');
 
 var IndexSidebar = React.createClass({
   getInitialState: function () {
@@ -31,21 +32,22 @@ var IndexSidebar = React.createClass({
   render: function () {
     var that = this,
         accounts = this.props.accounts,
-        accountTypes = [],
-        accountBalances = {},
-        accountsArr = [];
+        accountTypes = ComponentActions.getAccountTypes(accounts),
+        accountBalances = ComponentActions.getAccountBalances(accounts),
+        accountsArr = ComponentActions.getAccountsArr(accounts),
+        mappedAccountTypes = this.getMappedAccountTypes(accountTypes, accountBalances, accounts);
 
-    Object.keys(accounts).forEach(function(accountType) {
-      if ( accounts[accountType].length > 0 ) {
-        accountTypes.push(accountType);
-        accountBalances[accountType] = that.totalAccountTypeBalance(accountType);
-        accounts[accountType].forEach(function(account){
-          accountsArr.push(account);
-        });
-      }
-    });
+    return (
+      <section className="root-content-sidebar">
+        <h1>Accounts</h1>
+        {mappedAccountTypes}
+      </section>
+    );
+  },
 
-    var mappedAccounts = accountTypes.map(function(type){
+  getMappedAccountTypes: function (accountTypes, accountBalances, accounts) {
+    var that = this;
+    var mappedAccountTypes = accountTypes.map(function(type){
       var balanceClass = (accountBalances[type] > 0) ? "account-balance" : "account-balance-neg group";
       var expandedAccounts;
       if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
@@ -68,14 +70,9 @@ var IndexSidebar = React.createClass({
       );
     });
 
-    return (
-      <section className="root-content-sidebar">
-        <h1>Accounts</h1>
-        {mappedAccounts}
-      </section>
-    );
-  }
-  
+    return mappedAccountTypes;
+  },
+
 });
 
 

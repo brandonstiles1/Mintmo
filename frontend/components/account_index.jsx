@@ -8,7 +8,8 @@ var AccountStore = require('../stores/account'),
     IndexSidebar = require('./sidebars/index_sidebar'),
     AccountShowSidebar = require('./sidebars/show_sidebar'),
     AccountShow = require('./account_show'),
-    Header = require('./header');
+    Header = require('./header'),
+    ComponentActions = require('../actions/component_actions');
 
 var AccountIndex = React.createClass({
   mixins: [History],
@@ -52,10 +53,11 @@ var AccountIndex = React.createClass({
 
     var that = this,
         accounts = this.state.accounts,
+        accountClicked = this.state.accountClicked,
         overviewClicked = this.state.overviewClicked,
         transactionsClicked = this.state.transactionsClicked,
-        overviewClass = "overview",
-        transactionClass = "transaction",
+        overviewClass = ComponentActions.getOverviewClass(overviewClicked);
+        transactionClass = ComponentActions.getTransactionClass(transactionsClicked);
         header =
           <Header
             overviewClicked={overviewClicked}
@@ -63,20 +65,15 @@ var AccountIndex = React.createClass({
             overviewClick={this.handleOverviewClick}
             transactionsClick={this.handleTransactionsClick}/>;
 
-    if (overviewClicked) {
-      overviewClass = "content-header-list-selected";
-    } else {
-      transactionClass = "content-header-list-selected";
-    }
 
-    if (this.state.accountClicked) {
+    if (accountClicked) {
       return (
         <div>
           {header}
           <AccountShow />
         </div>
       );
-    } else if (this.state.transactionsClicked){
+    } else if (transactionsClicked){
 
       return (
         <div>
