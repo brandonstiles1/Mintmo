@@ -1,19 +1,29 @@
-var React = require('react');
-
-var AccountIndex = require('./components/account_index'),
-    TransactionIndex = require('./components/transaction_index'),
-    History = require('react-router').History;
+var React = require('react'),
+    SessionsApiUtil = require('./util/sessions_api_util'),
+    CurrentUserStore = require("./stores/current_user_store"),
+    Header = require('./components/header');
 
 var App = React.createClass({
 
+  componentDidMount: function () {
+    CurrentUserStore.addListener(this.forceUpdate.bind(this));
+    SessionsApiUtil.fetchCurrentUser();
+  },
 
-  render: function(){
+  render: function() {
+    if (!CurrentUserStore.userHasBeenFetched()) {
+      return <p>PLEASE WAIT</p>;
+    }
+
 
     return (
-        <div>
-        </div>
+      <div>
+
+        { this.props.children }
+      </div>
     );
-  }
+  },
+
 });
 
 module.exports = App;

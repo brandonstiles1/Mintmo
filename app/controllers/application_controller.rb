@@ -25,7 +25,9 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_logged_out_users
-    redirect_to new_session_url unless logged_in?
+    unless current_user
+      render json: ["Nope."]
+    end
   end
 
 end

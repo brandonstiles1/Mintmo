@@ -1,9 +1,10 @@
 class Api::UsersController < ApplicationController
 
-  before_action :redirect_logged_out_users
+  # before_action :redirect_logged_out_users
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
+    render :show
   end
 
   def update
@@ -11,10 +12,19 @@ class Api::UsersController < ApplicationController
     render :show
   end
 
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      log_in_user!(@user)
+      render :show
+    else
+      render json: ["Incorrect email/password combination."], status: 401
+    end
+  end
+
   def destroy
    @user = current_user
    @user.destroy!
-   redirect_to new_session_url
   end
 
   private
