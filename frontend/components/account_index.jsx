@@ -9,7 +9,8 @@ var AccountStore = require('../stores/account'),
     AccountShowSidebar = require('./sidebars/show_sidebar'),
     AccountShow = require('./account_show'),
     Header = require('./header'),
-    ComponentActions = require('../actions/component_actions');
+    ComponentActions = require('../actions/component_actions'),
+    Search = require('./search');
 
 var AccountIndex = React.createClass({
   mixins: [History],
@@ -108,8 +109,11 @@ var AccountIndex = React.createClass({
             />
 
           <section className="root-content-main">
-          <h1>Transactions</h1>
-          <TransactionIndex />
+          <header className="root-content-main-header">
+            <h1>All Transactions</h1>
+            <Search />
+          </header>
+            <TransactionIndex />
           </section>
         </main>
       </div>);

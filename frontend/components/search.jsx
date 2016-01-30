@@ -1,10 +1,13 @@
-var React = require('react');
-var SearchResultsStore = require('../stores/search_results_store');
-var SearchApiUtil = require('../util/search_api_util');
-var TransactionIndexItem = require('./transaction_index_item'),
+var React = require('react'),
+    LinkedStateMixin = require('react-addons-linked-state-mixin');
+
+var SearchResultsStore = require('../stores/search_results_store'),
+    SearchApiUtil = require('../util/search_api_util'),
+    TransactionIndexItem = require('./transaction_index_item'),
     TransactionItemForm = require('./transaction_form');
 
 var Search = React.createClass({
+    mixins: [LinkedStateMixin],
 
   componentDidMount: function() {
     this.listener = SearchResultsStore.addListener(this._onChange);
@@ -18,8 +21,8 @@ var Search = React.createClass({
     this.forceUpdate();
   },
 
-  search: function (e) {
-    var query = e.target.value;
+  search: function () {
+    var query = this.state.query;
     SearchApiUtil.search(query, 1);
 
     this.setState({page: 1, query: query, formIndex: 0});
@@ -61,10 +64,14 @@ var Search = React.createClass({
     });
 
     return (
-      <div>
-        <input type="text" placeholder="Can't search yet" onKeyUp={ this.search } />
+      <div className="search-component">
+        <input
+          type="text"
+          valueLink={this.linkState('query')}
+          placeholder="Can't search yet" />
         Displaying {SearchResultsStore.all().length} of
         {SearchResultsStore.meta().totalCount}
+        <button className="search-button" onClick={this.search}>Search</button>
         <button onClick={this.nextPage}>Next ></button>
 
         <tbody className="transaction-table-body">
