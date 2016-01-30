@@ -50,29 +50,30 @@ var TransactionItemForm = React.createClass({
         date = ComponentActions.formatDate(transaction.date);
 
     var editDetails = (
-      <td className="edit-details">
         <button className="edit-details" onClick={this.toggleEditDetails}>
           EDIT DETAILS
         </button>
-      </td>
     );
 
     if (this.state.showEditDetails) {
       editDetails = (
-        <td className="edit-details-show">
-          <textarea
-            className="edit-details-notes"
-            placeholder="notes"
-            valueLink={this.linkState('notes')} />
-          <div className="edit-detail-buttons group">
+        <p className="edit-details-show group">
+          <h7 className="edit-notes group">
+            <a>Notes</a>
+            <textarea
+              type="text"
+              className="edit-details-notes"
+              valueLink={this.linkState('notes')} />
+          </h7>
+          <a className="edit-detail-buttons group">
             <button
               className="edit-details-cancel"
               onClick={this.handleCancel}>CANCEL</button>
             <button
               className="edit-details-submit"
-              onClick={this.updateTransaction}>IM DONE</button>
-          </div>
-        </td>
+              onClick={this.updateTransaction}>I'M DONE</button>
+          </a>
+        </p>
       );
     }
 
@@ -84,6 +85,7 @@ var TransactionItemForm = React.createClass({
             type="text"
             placeholder="description"
             valueLink={this.linkState('description')} />
+          {editDetails}
         </td>
         <td className="category">
           <input
@@ -92,7 +94,6 @@ var TransactionItemForm = React.createClass({
           valueLink={this.linkState('category')} />
         </td>
           <td className="amount">{transaction.amount}</td>
-          {editDetails}
       </tr>
     );
   }
