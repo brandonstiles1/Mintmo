@@ -3,13 +3,14 @@ var React = require('react'),
 
 var TransactionStore = require('../stores/transaction'),
     ApiUtil  = require('../util/api_util'),
-    TransactionIndexItem = require('./transaction_index_item');
+    TransactionIndexItem = require('./transaction_index_item'),
+    TransactionItemForm = require('./transaction_form');
 
 var TransactionIndex = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
-    return { transactions: TransactionStore.all()};
+    return { transactions: TransactionStore.all(), formIndex: null};
   },
 
   componentDidMount: function () {
@@ -25,11 +26,27 @@ var TransactionIndex = React.createClass({
     this.storeListener.remove();
   },
 
+  makeFormIndex: function (index) {
+    this.setState({formIndex: index});
+  },
+
   render: function () {
-    var transactions = this.state.transactions;
+    var that = this,
+        transactions = this.state.transactions;
 
     var mappedBody = transactions.map(function(transaction, index) {
-      return <TransactionIndexItem transaction={transaction} key={index} />;
+      if (index === that.state.formIndex) {
+        return (
+          <TransactionItemForm
+              transaction={transaction}
+              key={index} /> );
+      } else {
+        return (
+          <TransactionIndexItem
+            onClick={that.makeFormIndex.bind(null, index)}
+            transaction={transaction}
+            key={index} /> );
+      }
     });
 
     return (

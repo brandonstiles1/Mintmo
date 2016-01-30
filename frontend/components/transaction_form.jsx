@@ -8,8 +8,19 @@ var TransactionItemForm = React.createClass({
   mixins: [LinkedStateMixin],
 
   getInitialState: function () {
+    var transaction = this.props.transaction,
+        description = transaction.description,
+        notes = transaction.notes,
+        date = transaction.date,
+        category_id = transaction.category_id,
+        category = transaction.category;
+
     return {
-      showEditDetails: false
+      showEditDetails: false,
+      description: description,
+      notes: notes,
+      category_id: category_id,
+      category: category
     };
   },
 
@@ -36,9 +47,6 @@ var TransactionItemForm = React.createClass({
   },
 
   render: function () {
-    var categoryOptions = this.state.categories.map(function(category, index) {
-
-    });
 
     var editDetails = (
       <button className="edit-details" onClick={this.toggleEditDetails}>

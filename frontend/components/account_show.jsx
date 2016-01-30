@@ -8,7 +8,7 @@ var AccountStore =require('../stores/account'),
     AccountShowSidebar = require('./sidebars/show_sidebar'),
     TransactionIndexItem = require('./transaction_index_item'),
     ComponentActions = require('../actions/component_actions'),
-    TransactionIndexForm = require('./transaction_form');
+    TransactionItemForm = require('./transaction_form');
 
 var AccountShow = React.createClass({
   mixins: [History],
