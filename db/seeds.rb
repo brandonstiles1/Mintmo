@@ -48,7 +48,7 @@ paypal_checking = Account.create!(
   account_type: "Cash"
 )
 
-student_loans = Account.create!(
+loans1 = Account.create!(
   name: "DIRECT STAFFORD SUBSIDIZED",
   institution_id: student_loans.id,
   user_id: u1.id,
@@ -56,7 +56,7 @@ student_loans = Account.create!(
   account_type: "Loans"
 )
 
-student_loans2 = Account.create!(
+loans2 = Account.create!(
   name: "DIRECT STAFFORD UNSUBSIDIZED",
   institution_id: student_loans.id,
   user_id: u1.id,
@@ -138,7 +138,7 @@ t8 = Transaction.create!(
 )
 
 t9 = Transaction.create!(
-  account_id: student_loans.id,
+  account_id: loans1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 11:42:16 UTC +00:00",
@@ -146,7 +146,7 @@ t9 = Transaction.create!(
 )
 
 t10 = Transaction.create!(
-  account_id: student_loans.id,
+  account_id: loans1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
@@ -154,7 +154,7 @@ t10 = Transaction.create!(
 )
 
 t11 = Transaction.create!(
-  account_id: student_loans.id,
+  account_id: loans1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
@@ -162,7 +162,7 @@ t11 = Transaction.create!(
 )
 
 t12 = Transaction.create!(
-  account_id: student_loans2.id,
+  account_id: loans2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
@@ -170,7 +170,7 @@ t12 = Transaction.create!(
 )
 
 t13 = Transaction.create!(
-  account_id: student_loans2.id,
+  account_id: loans2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",

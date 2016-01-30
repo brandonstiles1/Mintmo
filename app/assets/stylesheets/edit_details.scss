@@ -1,5 +1,14 @@
-button.edit-details {
+.edit-details {
+  height: 18px;
+  position: relative;
+  display: block;
+}
 
+.edit-details > button {
+
+}
+
+.edit-details > button:hover {
 
 }
 
@@ -21,4 +30,29 @@ button.edit-details-submit {
 
 .edit-detail-buttons > button {
 
+}
+
+
+tr.edit-form {
+  background: #666666;
+  height: 30px;
+  color: black;
+}
+
+tr.edit-form:hover {
+  background: #666666;
+  height: 30px;
+}
+
+td > input {
+  font-size: 12px;
+  width: 100%;
+  background: white;
+  text-overflow: ellipsis;
+  margin-left: -9px;
+  padding: 4px;
+}
+
+tr.edit-form > td.description {
+  padding-right: 2px;
 }

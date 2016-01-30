@@ -2,7 +2,8 @@ var React = require('react'),
     LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var TransactionStore = require('../stores/transaction'),
-    ApiUtil  = require('../util/api_util');
+    ApiUtil  = require('../util/api_util'),
+    ComponentActions = require('../actions/component_actions');
 
 var TransactionItemForm = React.createClass({
   mixins: [LinkedStateMixin],
@@ -47,16 +48,20 @@ var TransactionItemForm = React.createClass({
   },
 
   render: function () {
+    var transaction = this.props.transaction,
+        date = ComponentActions.formatDate(transaction.date);
 
     var editDetails = (
-      <button className="edit-details" onClick={this.toggleEditDetails}>
-        EDIT DETAILS
-      </button>
+      <td className="edit-details">
+        <button className="edit-details" onClick={this.toggleEditDetails}>
+          EDIT DETAILS
+        </button>
+      </td>
     );
 
     if (this.state.showEditDetails) {
       editDetails = (
-        <div className="edit-details-show">
+        <td className="edit-details-show">
           <textarea
             className="edit-details-notes"
             placeholder="notes"
@@ -69,27 +74,28 @@ var TransactionItemForm = React.createClass({
               className="edit-details-submit"
               onClick={this.updateTransaction}>IM DONE</button>
           </div>
-        </div>
+        </td>
       );
     }
 
     return (
-      <form onSubmit={this.updateTransaction}>
-        <input
+      <tr className="edit-form group">
+        <td className="date">{date}</td>
+        <td className="description">
+          <input
+            type="text"
+            placeholder="description"
+            valueLink={this.linkState('description')} />
+        </td>
+        <td className="category">
+          <input
           type="text"
-          placeholder="description"
-          valueLink={this.linkState('description')}></input>
-
-        <input
-          type="datetime-local"
-          valueLink={this.linkState('date')}></input>
-        <select
-          valueLink={this.linkState('category_id')}>
-          <option></option>
-
-        </select>
-        {editDetails}
-      </form  >
+          placeholder="category"
+          valueLink={this.linkState('category')} />
+        </td>
+          <td className="amount">{transaction.amount}</td>
+          {editDetails}
+      </tr>
     );
   }
 

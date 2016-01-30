@@ -94,6 +94,10 @@ th.date {
 
 th.description {
   width: 40%;
+  padding-left: 40px;
+}
+td.description {
+  padding-left: 40px;
 }
 
 th.category {
@@ -105,7 +109,7 @@ th.amount {
 }
 
 .transaction-table-body {
-  background: #f5f5f5;
+  background: white;
   color: #333;
 }
 
@@ -113,8 +117,13 @@ td {
   border-top: 1px solid #dbdad8;
   padding: 3px 4px 2px 9px;
   height: 30px;
+  margin: 0;
 }
 
 tr:hover {
   background: #ebf8f0;
+}
+
+tr.transaction-row-odd {
+  background: #f5f5f5;
 }

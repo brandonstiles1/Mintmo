@@ -10,7 +10,7 @@ var TransactionIndex = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
-    return { transactions: TransactionStore.all(), formIndex: null};
+    return { transactions: TransactionStore.all(), formIndex: 0};
   },
 
   componentDidMount: function () {
@@ -43,6 +43,7 @@ var TransactionIndex = React.createClass({
       } else {
         return (
           <TransactionIndexItem
+            index={index}
             onClick={that.makeFormIndex.bind(null, index)}
             transaction={transaction}
             key={index} /> );

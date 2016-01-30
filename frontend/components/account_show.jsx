@@ -19,7 +19,7 @@ var AccountShow = React.createClass({
       allAccounts: AccountStore.all(),
       overviewClicked: false,
       transactionsClicked: true,
-      formIndex: null
+      formIndex: 0
     };
   },
 
@@ -33,7 +33,10 @@ var AccountShow = React.createClass({
   },
 
   onChange: function () {
-    this.setState({account: AccountStore.find(this.props.params.accountId), allAccounts: AccountStore.all()});
+    this.setState({
+      account: AccountStore.find(this.props.params.accountId),
+      allAccounts: AccountStore.all()
+    });
   },
 
   componentWillUnmount: function () {
@@ -99,6 +102,7 @@ var AccountShow = React.createClass({
       } else {
         return (
           <TransactionIndexItem
+            index={index}
             onClick={that.makeFormIndex.bind(null, index)}
             transaction={transaction}
             key={index} /> );

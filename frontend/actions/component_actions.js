@@ -66,13 +66,9 @@ module.exports = {
   },
 
   formatDate: function (datetime) {
-    var date = new Date(datetime);
 
-    return (
-      [date.getMonth()+1,
-       date.getDate(),
-       date.getFullYear()].join('/')
-    );
+    var dateArr = new Date(datetime).toDateString().split(" ");
+    return dateArr[1].toUpperCase() + " " + dateArr[2];
   }
 
 };
