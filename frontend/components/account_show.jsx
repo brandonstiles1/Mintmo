@@ -29,7 +29,9 @@ var AccountShow = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    ApiUtil.fetchAccount(newProps.params.accountId);
+    if (this.props.params.accountId !== newProps.params.accountId) {
+      ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
+    }
   },
 
   onChange: function () {
@@ -51,9 +53,8 @@ var AccountShow = React.createClass({
     this.history.pushState(null, 'accounts', {});
   },
 
-  handleTransactionsClick: function (e) {
-    e.preventDefault();
-    this.history.pushState(null, 'transactions', {});
+  handleTransactionsClick: function () {
+    this.history.pushState(null, 'accounts', {});
   },
 
   handleAccountClick: function () {
@@ -61,6 +62,7 @@ var AccountShow = React.createClass({
   },
 
   handleAllAccountsClick: function (e) {
+    debugger
     e.preventDefault();
     this.history.pushState(null, 'accounts', {});
   },

@@ -1,16 +1,26 @@
-var React = require('react');
+var React = require('react'),
+    History = require('react-router').History;
 
 var AccountTypeIndex = require('../account_type_index'),
     ComponentActions = require('../../actions/component_actions');
 
 var AccountShowSidebar = React.createClass({
+  mixins: [History],
 
   handleAccountTypeClick: function (type) {
 
   },
 
-  handleAccountClick: function () {
-    this.props.accountClick();
+  handleAllAccountsClick: function () {
+    if (this.props.allAccountsClick) {
+      this.props.allAccountsClick();
+    } else {
+      this.history.pushState(null, '/', {});
+    }
+  },
+
+  handleAccountClick: function (account) {
+    this.history.pushState(null, 'accounts/' + account.id, {});
   },
 
 
@@ -28,7 +38,7 @@ var AccountShowSidebar = React.createClass({
         <h1>Type</h1>
         {mappedAccountTypes}
         <h1>Accounts</h1>
-        <a href="#/">
+        <a onClick={this.handleAllAccountsClick} href="#">
           <h3 className="account-types-show-type">All Accounts</h3>
         </a>
         {transactionMappedAccounts}

@@ -32,6 +32,11 @@ var AccountIndex = React.createClass({
     this.setState({accountClicked: true});
   },
 
+  handleAllAccountsClick: function () {
+    this.setState({overviewClicked: true, transactionsClicked: false, accountClicked: false});
+  },
+
+
   handleTransactionsClick: function () {
     this.setState({overviewClicked: false, transactionsClicked: true});
   },
@@ -80,6 +85,7 @@ var AccountIndex = React.createClass({
           {header}
           <main className="root-content group">
             <AccountShowSidebar
+              allAccountsClick={that.handleAllAccountsClick}
               accounts={that.state.accounts}
               accountClick={that.handleAccountClick}
               transactionsClick={that.handleTransactionsClick}
