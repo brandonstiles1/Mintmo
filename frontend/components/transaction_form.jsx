@@ -38,8 +38,6 @@ var TransactionItemForm = React.createClass({
     var transaction = { transaction: {
       description: this.state.transaction.description,
       notes: this.state.transaction.notes,
-      date: this.state.transaction.date,
-      category_id: this.state.transaction.category_id
     }};
 
     ApiUtil.updateTransaction(transaction, function () {
@@ -79,7 +77,7 @@ var TransactionItemForm = React.createClass({
     }
 
     return (
-      <tr className="edit-form group">
+      <tr className="edit-form">
         <td className="date">{date}</td>
         <td className="description">
           <input

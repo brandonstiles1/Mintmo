@@ -34,6 +34,7 @@ button.edit-details-submit {
 
 
 tr.edit-form {
+  position: relative;
   background: #666666;
   height: 30px;
   color: black;
@@ -55,4 +56,39 @@ td > input {
 
 tr.edit-form > td.description {
   padding-right: 2px;
+  width: 400px;
+}
+
+tr.edit-form > td.category > input {
+  margin-left: -6px;
+}
+
+td.amount {
+  text-align: right;
+}
+
+tr.edit-form > td.amount  {
+  font-weight: 600;
+  color: white;
+}
+
+td.edit-details {
+
+  position: relative;
+}
+
+button.edit-details {
+  background: #666666;
+  color: white;
+  display: block;
+  position: absolute;
+  left: -318px;
+  top: 35px;
+  height: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 9px;
+  padding: 2px 14px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
