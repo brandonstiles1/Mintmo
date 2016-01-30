@@ -62,7 +62,6 @@ var AccountShow = React.createClass({
   },
 
   handleAllAccountsClick: function (e) {
-    debugger
     e.preventDefault();
     this.history.pushState(null, 'accounts', {});
   },

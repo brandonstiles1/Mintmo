@@ -10,6 +10,7 @@ Rails.application.routes.draw do
      resources :transactions
      resources :users
      resource :session
+    get "search", to: "utils#search"
   end
 
 end

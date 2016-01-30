@@ -30,6 +30,17 @@ paypal = Institution.create!(
   logo_url: "https://www.paypalobjects.com/webstatic/icon/pp258.png"
 )
 
+capital_one = Institution.create!(
+  name: "Capital One",
+  url: "https://www.capitalone.com/",
+  logo_url: "https://media.cofstatic.com/assets/rwd/img/logo/capitalone-logo-2x-oasis.png"
+)
+
+fidelity = Institution.create!(
+  name: "Fidelity Investments",
+  url: "https://www.fidelity.com/",
+  logo_url: "http://2013.pytexas.org/media/cms/10/fidelity_2012.png"
+)
 
 Account.destroy_all
 cs_checking = Account.create!(
@@ -48,7 +59,7 @@ paypal_checking = Account.create!(
   account_type: "Cash"
 )
 
-Loan1 = Account.create!(
+loan1 = Account.create!(
   name: "DIRECT STAFFORD SUBSIDIZED",
   institution_id: student_Loan.id,
   user_id: u1.id,
@@ -56,12 +67,28 @@ Loan1 = Account.create!(
   account_type: "Loan"
 )
 
-Loan2 = Account.create!(
+loan2 = Account.create!(
   name: "DIRECT STAFFORD UNSUBSIDIZED",
   institution_id: student_Loan.id,
   user_id: u1.id,
   balance: -15486.24,
   account_type: "Loan"
+)
+
+credit_card1 = Account.create!(
+  name: "Capital One Venture One",
+  institution_id: capital_one.id,
+  user_id: u1.id,
+  balance: -116.25,
+  account_type: "Credit Cards"
+)
+
+investment1 = Account.create!(
+  name: "Fidelity 401(k)",
+  institution_id: fidelity.id,
+  user_id: u1.id,
+  balance: 12653.25,
+  account_type: "Investments"
 )
 
 
@@ -129,7 +156,7 @@ t8 = Transaction.create!(
 )
 
 t9 = Transaction.create!(
-  account_id: Loan1.id,
+  account_id: loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 11:42:16 UTC +00:00",
@@ -137,7 +164,7 @@ t9 = Transaction.create!(
 )
 
 t10 = Transaction.create!(
-  account_id: Loan1.id,
+  account_id: loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
@@ -145,7 +172,7 @@ t10 = Transaction.create!(
 )
 
 t11 = Transaction.create!(
-  account_id: Loan1.id,
+  account_id: loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
@@ -153,7 +180,7 @@ t11 = Transaction.create!(
 )
 
 t12 = Transaction.create!(
-  account_id: Loan2.id,
+  account_id: loan2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
@@ -161,9 +188,69 @@ t12 = Transaction.create!(
 )
 
 t13 = Transaction.create!(
-  account_id: Loan2.id,
+  account_id: loan2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
   category: "Education"
 )
+
+t14 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+t15 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+t16 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+t17 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+t18 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+t19 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+t20 = Transaction.create!(
+  account_id: investment1.id,
+  amount: 500.00,
+  description: "401(k) Contribution",
+  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  category: "Retirement"
+)
+
+cs_checking.create_transactions(20)
+credit_card1.create_transactions(20)
+paypal_checking.create_transactions(20)

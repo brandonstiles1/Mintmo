@@ -12,8 +12,32 @@
 #  updated_at     :datetime
 #
 
+ACCOUNT_TYPES = [
+  "Cash",
+  "Credit Cards",
+  "Loan",
+  "Investments"
+]
+
+CATEGORY_TYPES = [
+  "Restaurants",
+  "UNCATEGORIZED",
+  "Transport",
+  "Bills & Utilities",
+  "Education",
+  "Entertainment",
+  "Fees & Charges",
+  "Financial",
+  "Home",
+  "Income",
+  "Kids",
+  "Misc Expenses",
+  "Shopping",
+  "Taxes",
+  "Travel"
+]
+
 class Account < ActiveRecord::Base
-  ACCOUNT_TYPES = ["Cash", "Credit Cards", "Loan", "Investments", "Property"]
 
   validates :name, :institution, :user, :balance, :account_type, presence: true
   validates :account_type, inclusion: ACCOUNT_TYPES
@@ -22,4 +46,22 @@ class Account < ActiveRecord::Base
   belongs_to :user
 
   has_many :transactions
+
+
+  def create_transactions(number)
+    number.times do |time|
+      category = CATEGORY_TYPES.sample
+      description = Faker::Commerce.product_name
+      date = Faker::Date.backward(rand(100))
+      amount = (rand(10000)/100) - 50
+
+      self.transactions.create(
+        category: category,
+        description: description,
+        date: date,
+        amount: amount
+      )
+    end
+  end
+
 end

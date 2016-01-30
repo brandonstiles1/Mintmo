@@ -51,10 +51,15 @@ var TransactionItemForm = React.createClass({
   },
 
   updateTransaction: function () {
+    var category = this.state.category;
+    if (category === "") {
+      category = "UNCATEGORIZED";
+    }
+
     var transaction = {
       id: this.state.id,
       description: this.state.description,
-      category: this.state.category,
+      category: category,
       notes: this.state.notes,
       date: this.state.date,
       amount: this.state.amount
@@ -113,7 +118,7 @@ var TransactionItemForm = React.createClass({
           <input
             onKeyUp={this.updateTransaction}
             type="text"
-            placeholder="description"
+            placeholder="Description"
             valueLink={this.linkState('description')} />
           {editDetails}
         </td>
@@ -121,7 +126,6 @@ var TransactionItemForm = React.createClass({
           <input
             onKeyUp={this.updateTransaction}
             type="text"
-            placeholder="category"
             valueLink={this.linkState('category')} />
         </td>
           <td className="amount">

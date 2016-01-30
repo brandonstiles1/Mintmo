@@ -25,7 +25,6 @@ var resetAccounts = function (accounts) {
 };
 
 var addAccount = function (account) {
-
   _accountsIdx[account.id] = $.extend({}, _accountsIdx[account.id], account);
 
   var accountTypeArray = _accounts[account.account_type];
