@@ -8,14 +8,18 @@ var AccountStore =require('../stores/account'),
     AccountShowSidebar = require('./sidebars/show_sidebar'),
     TransactionIndexItem = require('./transaction_index_item'),
     ComponentActions = require('../actions/component_actions'),
-    TransactionItemForm = require('./transaction_form');
+    TransactionItemForm = require('./transaction_form'),
+    TransactionStore =require('../stores/transaction');
 
 var AccountShow = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
+    var accountId = this.props.params.accountId;
+
     return {
-      account: AccountStore.find(this.props.params.accountId),
+      account: AccountStore.find(accountId),
+      transactions: TransactionStore.all(),
       allAccounts: AccountStore.all(),
       overviewClicked: false,
       transactionsClicked: true,
@@ -25,24 +29,29 @@ var AccountShow = React.createClass({
 
   componentDidMount: function () {
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
+    ApiUtil.fetchAccountTransactions(this.props.params.accountId);
     this.accountListener = AccountStore.addListener(this.onChange);
+    this.transactionListener = TransactionStore.addListener(this.onChange);
+
   },
 
   componentWillReceiveProps: function (newProps) {
-    if (this.props.params.accountId !== newProps.params.accountId) {
-      ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
-    }
+    ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
+    ApiUtil.fetchAccountTransactions(newProps.params.accountId);
   },
 
   onChange: function () {
+    var accountId = this.props.params.accountId;
     this.setState({
-      account: AccountStore.find(this.props.params.accountId),
-      allAccounts: AccountStore.all()
+      account: AccountStore.find(accountId),
+      allAccounts: AccountStore.all(),
+      transactions: TransactionStore.all()
     });
   },
 
   componentWillUnmount: function () {
     this.accountListener.remove();
+    this.transactionListener.remove();
   },
 
   handleAccountTypeClick: function () {
@@ -71,9 +80,9 @@ var AccountShow = React.createClass({
   },
 
   render: function () {
-
     var that = this,
         account = this.state.account,
+        transactions = this.state.transactions,
         accounts = this.state.allAccounts,
         transactionsClicked =this.state.transactionsClicked,
         overviewClicked =this.state.overviewClicked,
@@ -92,9 +101,9 @@ var AccountShow = React.createClass({
             transactionsClick={that.handleTransactionsClick}
             />;
 
-    if (!(account && account.transactions)) { return <div>SPINNER</div>; }
+          if (!(account && transactions)) { return <div>SPINNER</div>; }
 
-    var mappedBody = account.transactions.map(function(transaction, index) {
+    var mappedBody = transactions.map(function(transaction, index) {
       if (index === that.state.formIndex) {
         return (
           <TransactionItemForm

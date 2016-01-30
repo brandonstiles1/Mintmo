@@ -14,7 +14,7 @@ var TransactionItemForm = React.createClass({
         notes = transaction.notes,
         date = transaction.date,
         category = transaction.category,
-        date = transaction.date,
+        date = transaction.date
         amount = transaction.amount,
         id = transaction.id;
 
@@ -51,6 +51,7 @@ var TransactionItemForm = React.createClass({
   },
 
   updateTransaction: function () {
+
     var category = this.state.category;
     if (category === "") {
       category = "UNCATEGORIZED";

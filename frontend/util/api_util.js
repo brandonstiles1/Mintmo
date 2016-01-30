@@ -37,6 +37,25 @@ var ApiUtil = {
 
   },
 
+  fetchAccountTransactions: function (accountId) {
+    $.ajax({
+     type: "get",
+     url: "/api/transactions",
+     dataType: "json",
+     success: function (transactions) {
+       var accountTransactions = [];
+       transactions.forEach(function(transaction) {
+         if (transaction.account_id === parseInt(accountId)) {
+           accountTransactions.push(transaction);
+         }
+       });
+
+       ApiActions.receiveAccountTransactions(accountTransactions);
+     }
+   });
+
+ },
+
 
   updateTransaction: function (transaction) {
     $.ajax({

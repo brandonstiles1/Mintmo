@@ -11,6 +11,13 @@ var ApiActions = {
     });
   },
 
+  receiveAccountTransactions: function (transactions){
+    AppDispatcher.dispatch({
+      actionType: TransactionConstants.ACCOUNT_TRANSACTIONS_RECEIVED,
+      transactions: transactions
+    });
+  },
+
   retrieveAccount: function (account){
     AppDispatcher.dispatch({
       actionType: AccountConstants.ACCOUNT_RETRIEVED,

@@ -5,6 +5,8 @@ var AppDispatcher = require('../dispatcher/dispatcher'),
 
 var _transactions = [];
 var _transactionsIdx = {};
+var _transactionsByAccountId = {};
+
 var TransactionStore = new Store(AppDispatcher);
 
 TransactionStore.all = function () {
@@ -15,16 +17,21 @@ var resetTransactions = function (transactions) {
   _transactions = transactions.slice();
   transactions.forEach(function(transaction) {
     _transactionsIdx[transaction.id] = transaction;
+    if (typeof _transactionsByAccountId[transaction.account_id] === "undefined") {
+      _transactionsByAccountId[transaction.account_id] = [];
+    }
+    _transactionsByAccountId[transaction.account_id].push(transaction);
+  });
+};
+
+var resetAccountTransactions = function (transactions) {
+  transactions.forEach(function(transaction) {
+    _transactionsIdx[transaction.id] = transaction;
   });
 };
 
 var find = function (id) {
   return _transactionsIdx[id];
-  // for (var i = 0; i < _transactions.length; i++) {
-  //   if (_transactions[i].id === parseInt(id) ) {
-  //     return _transactions[i];
-  //   }
-  // }
 };
 
 var addTransaction = function (transaction) {
@@ -55,6 +62,10 @@ TransactionStore.__onDispatch = function (payload) {
       break;
     case TransactionConstants.TRANSACTION_RECEIVED:
       addTransaction(payload.transaction);
+      TransactionStore.__emitChange();
+      break;
+    case TransactionConstants.ACCOUNT_TRANSACTIONS_RECEIVED:
+      resetTransactions(payload.transactions);
       TransactionStore.__emitChange();
       break;
   }

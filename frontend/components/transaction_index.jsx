@@ -31,6 +31,7 @@ var TransactionIndex = React.createClass({
   },
 
   render: function () {
+    
     var that = this,
         transactions = this.state.transactions;
 
