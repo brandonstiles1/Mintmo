@@ -32,6 +32,13 @@ var ApiActions = {
     });
   },
 
+  receiveTransaction: function (transaction) {
+    AppDispatcher.dispatch({
+      actionType: TransactionConstants.TRANSACTION_RECEIVED,
+      transaction: transaction
+    });
+  },
+
   receiveAllInstitutions: function (institutions) {
     AppDispatcher.dispatch({
       actionType: InstitutionConstants.INSTITUTIONS_RECEIVED,

@@ -18,7 +18,7 @@ charles_schwab = Institution.create!(
   url: "https://www.schwab.com/",
   logo_url: "https://www.schwab.com/public/file/P-6040152/logo.png"
 )
-student_loans = Institution.create!(
+student_Loan = Institution.create!(
   name: "National Student Loan Database System",
   url: "https://www.nslds.ed.gov/nslds/nslds_SA/",
   logo_url: "https://www.nslds.ed.gov/nslds/nslds_SA/images/nslds/misc/FSA_Logo_Left.gif"
@@ -48,28 +48,22 @@ paypal_checking = Account.create!(
   account_type: "Cash"
 )
 
-loans1 = Account.create!(
+Loan1 = Account.create!(
   name: "DIRECT STAFFORD SUBSIDIZED",
-  institution_id: student_loans.id,
+  institution_id: student_Loan.id,
   user_id: u1.id,
   balance: -13486.24,
-  account_type: "Loans"
+  account_type: "Loan"
 )
 
-loans2 = Account.create!(
+Loan2 = Account.create!(
   name: "DIRECT STAFFORD UNSUBSIDIZED",
-  institution_id: student_loans.id,
+  institution_id: student_Loan.id,
   user_id: u1.id,
   balance: -15486.24,
-  account_type: "Loans"
+  account_type: "Loan"
 )
 
-Category.destroy_all
-cat1 = Category.create(name: "UNCATEGORIZED")
-cat2 = Category.create(name: "Education")
-cat3 = Category.create(name: "Financial")
-cat4 = Category.create(name: "Travel")
-cat5 = Category.create(name: "Tryina Get It")
 
 Transaction.destroy_all
 t1 = Transaction.create!(
@@ -77,7 +71,6 @@ t1 = Transaction.create!(
   amount: 1595.36,
   description: "Paycheck",
   date: "Tue, 26 Jan 2016 19:42:16 UTC +00:00",
-  category_id: cat1.id
 )
 
 t2 = Transaction.create!(
@@ -85,7 +78,6 @@ t2 = Transaction.create!(
   amount: -500.10,
   description: "Rent",
   date: "Wed, 27 Jan 2016 19:42:16 UTC +00:00",
-  category_id: cat1.id
 )
 
 
@@ -94,7 +86,7 @@ t3 = Transaction.create!(
   amount: -64.75,
   description: "Tinder Date",
   date: "Wed, 27 Jan 2016 15:42:16 UTC +00:00",
-  category_id: cat5.id
+  category: "Tryina Get It"
 )
 
 t4 = Transaction.create!(
@@ -102,7 +94,7 @@ t4 = Transaction.create!(
   amount: 200.00,
   description: "Passing Go in Monopoly",
   date: "Wed, 27 Jan 2016 18:42:16 UTC +00:00",
-  category_id: cat4.id
+  category: "Travel"
 )
 
 t5 = Transaction.create!(
@@ -110,7 +102,7 @@ t5 = Transaction.create!(
   amount: 19.95,
   description: "Stupid shit on eBay",
   date: "Wed, 27 Jan 2016 15:34:16 UTC +00:00",
-  category_id: cat3.id
+  category: "Financial"
 )
 
 t6 = Transaction.create!(
@@ -118,7 +110,6 @@ t6 = Transaction.create!(
   amount: 386.45,
   description: "Blah blahhhh",
   date: "Wed, 27 Jan 2016 16:42:16 UTC +00:00",
-  category_id: cat1.id
 )
 
 t7 = Transaction.create!(
@@ -126,7 +117,7 @@ t7 = Transaction.create!(
   amount: 69.69,
   description: "Wink wink wink",
   date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
-  category_id: cat5.id
+  category: "Tryina Get It"
 )
 
 t8 = Transaction.create!(
@@ -134,45 +125,45 @@ t8 = Transaction.create!(
   amount: 69.69,
   description: "Wink wink wink",
   date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
-  category_id: cat5.id
+  category: "Tryina Get It"
 )
 
 t9 = Transaction.create!(
-  account_id: loans1.id,
+  account_id: Loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 11:42:16 UTC +00:00",
-  category_id: cat2.id
+  category: "Education"
 )
 
 t10 = Transaction.create!(
-  account_id: loans1.id,
+  account_id: Loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
-  category_id: cat2.id
+  category: "Education"
 )
 
 t11 = Transaction.create!(
-  account_id: loans1.id,
+  account_id: Loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
-  category_id: cat2.id
+  category: "Education"
 )
 
 t12 = Transaction.create!(
-  account_id: loans2.id,
+  account_id: Loan2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
-  category_id: cat2.id
+  category: "Education"
 )
 
 t13 = Transaction.create!(
-  account_id: loans2.id,
+  account_id: Loan2.id,
   amount: 340.69,
   description: "Student Loan Payment",
   date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
-  category_id: cat2.id
+  category: "Education"
 )

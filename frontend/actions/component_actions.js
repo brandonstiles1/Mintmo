@@ -66,8 +66,8 @@ module.exports = {
   },
 
   formatDate: function (datetime) {
-
     var dateArr = new Date(datetime).toDateString().split(" ");
+    
     return dateArr[1].toUpperCase() + " " + dateArr[2];
   }
 

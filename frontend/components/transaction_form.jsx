@@ -13,16 +13,32 @@ var TransactionItemForm = React.createClass({
         description = transaction.description,
         notes = transaction.notes,
         date = transaction.date,
-        category_id = transaction.category_id,
-        category = transaction.category;
+        category = transaction.category,
+        date = transaction.date,
+        amount = transaction.amount,
+        id = transaction.id;
 
     return {
       showEditDetails: false,
       description: description,
       notes: notes,
-      category_id: category_id,
-      category: category
+      category: category,
+      id: id,
+      date: date,
+      amount: amount
     };
+  },
+
+  componentDidMount: function() {
+    this.listener = TransactionStore.addListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.forceUpdate();
+  },
+
+  componentWillUnmount: function() {
+    this.listener.remove();
   },
 
   toggleEditDetails: function () {
@@ -35,19 +51,27 @@ var TransactionItemForm = React.createClass({
   },
 
   updateTransaction: function () {
-    var transaction = { transaction: {
-      description: this.state.transaction.description,
-      notes: this.state.transaction.notes,
-    }};
+    var transaction = {
+      id: this.state.id,
+      description: this.state.description,
+      category: this.state.category,
+      notes: this.state.notes,
+      date: this.state.date,
+      amount: this.state.amount
+    };
 
-    ApiUtil.updateTransaction(transaction, function () {
-      this.toggleEditDetails();
-    }.bind(this));
+    ApiUtil.updateTransaction(transaction);
+  },
+
+  updateTransactionNotes: function () {
+    this.updateTransaction();
+    this.toggleEditDetails();
   },
 
   render: function () {
     var transaction = this.props.transaction,
-        date = ComponentActions.formatDate(transaction.date);
+        date = ComponentActions.formatDate(this.state.date);
+
 
     var editDetails = (
         <button className="edit-details" onClick={this.toggleEditDetails}>
@@ -71,7 +95,7 @@ var TransactionItemForm = React.createClass({
               onClick={this.handleCancel}>CANCEL</button>
             <button
               className="edit-details-submit"
-              onClick={this.updateTransaction}>I'M DONE</button>
+              onClick={this.updateTransactionNotes}>I'M DONE</button>
           </a>
         </p>
       );
@@ -79,9 +103,15 @@ var TransactionItemForm = React.createClass({
 
     return (
       <tr className="edit-form">
-        <td className="date">{date}</td>
+        <td className="date">
+          <input
+            type="hidden"
+            valueLink={this.linkState('date')} />
+          {date}
+        </td>
         <td className="description">
           <input
+            onKeyUp={this.updateTransaction}
             type="text"
             placeholder="description"
             valueLink={this.linkState('description')} />
@@ -89,11 +119,17 @@ var TransactionItemForm = React.createClass({
         </td>
         <td className="category">
           <input
-          type="text"
-          placeholder="category"
-          valueLink={this.linkState('category')} />
+            onKeyUp={this.updateTransaction}
+            type="text"
+            placeholder="category"
+            valueLink={this.linkState('category')} />
         </td>
-          <td className="amount">{transaction.amount}</td>
+          <td className="amount">
+            <input
+              type="hidden"
+              valueLink={this.linkState('amount')} />
+            {this.state.amount}
+          </td>
       </tr>
     );
   }

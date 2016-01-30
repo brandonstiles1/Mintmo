@@ -18,7 +18,6 @@ class Transaction < ActiveRecord::Base
   validates :account, :amount, :description, :date, presence: true
 
   belongs_to :account
-  belongs_to :category
   has_one :user, through: :account, source: :user
   has_one :institution, through: :account, source: :institution
 

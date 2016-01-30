@@ -87,7 +87,8 @@ td.amount {
   text-align: right;
 }
 
-tr.edit-form > td.amount  {
+tr.edit-form > td.amount,
+tr.edit-form > td.date,  {
   font-weight: 600;
   color: white;
 }

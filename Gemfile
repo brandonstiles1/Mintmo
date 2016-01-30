@@ -30,6 +30,10 @@ gem 'paperclip'
 gem 'figaro'
 gem 'aws-sdk', '~> 1.6'
 gem 'font-awesome-rails'
+gem 'kaminari'
+gem 'accountingjs-rails'
+gem 'pg_search'
+gem 'paypal-sdk-rest'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

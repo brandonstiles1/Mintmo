@@ -4,7 +4,7 @@ class Api::TransactionsController < ApplicationController
 
   def index
     @transactions = current_user.transactions
-      .includes(:institution, :account, :category)
+      .includes(:institution, :account)
 
     render :index
   end
@@ -20,8 +20,13 @@ class Api::TransactionsController < ApplicationController
   # end
 
   def update
-    @transaction = Transaction.find(params[:id])
+    @transaction = Transaction.includes(:institution, :account).find(params[:transaction][:id])
     @transaction.update!(transaction_params)
+    render :show
+  end
+
+  def show
+    @transaction = Transaction.includes(:institution, :account).find(params[:id])
     render :show
   end
 
@@ -40,7 +45,8 @@ class Api::TransactionsController < ApplicationController
       :description,
       :notes,
       :date,
-      :is_private?
+      :is_private?,
+      :category
     )
   end
 

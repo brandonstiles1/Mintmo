@@ -13,7 +13,7 @@
 #
 
 class Account < ActiveRecord::Base
-  ACCOUNT_TYPES = ["Cash", "Credit Cards", "Loans", "Investments", "Property"]
+  ACCOUNT_TYPES = ["Cash", "Credit Cards", "Loan", "Investments", "Property"]
 
   validates :name, :institution, :user, :balance, :account_type, presence: true
   validates :account_type, inclusion: ACCOUNT_TYPES

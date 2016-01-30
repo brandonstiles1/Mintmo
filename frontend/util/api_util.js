@@ -37,6 +37,24 @@ var ApiUtil = {
 
   },
 
+
+  updateTransaction: function (transaction) {
+    $.ajax({
+     type: "patch",
+     url: "/api/transactions/" + transaction.id,
+     dataType: "json",
+     data: {transaction: transaction},
+     success: function () {
+       ApiActions.receiveTransaction(transaction);
+     },
+     error: function (data) {
+
+     }
+   });
+
+  },
+
+
   fetchInstitutions: function () {
     $.ajax({
      type: "get",
