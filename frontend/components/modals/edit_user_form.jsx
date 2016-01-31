@@ -14,7 +14,7 @@ var EditUserFormModal = React.createClass({
   getInitialState: function() {
     this.currentUser = CurrentUserStore.currentUser();
     var user = UsersStore.find(this.currentUser.id);
-    
+
     return {
       user: user,
       fname: user.fname || "",
@@ -22,7 +22,8 @@ var EditUserFormModal = React.createClass({
       gender: user.gender || "",
       age: user.age || "",
       id: user.id,
-      image_url: user.image_url
+      image_url: user.image_url,
+      imageFile: null
     };
   },
 
@@ -146,9 +147,10 @@ var EditUserFormModal = React.createClass({
   },
 
   handleFileChange: function (e) {
-    var reader = new FileReader();
-    var file = e.currentTarget.files[0];
-    var that = this;
+    var reader = new FileReader(),
+        file = e.currentTarget.files[0],
+        prev_url = this.state.image_url,
+        that = this;
 
     reader.onloadend = function () {
       that.setState({ image_url: reader.result, imageFile: file });
@@ -157,12 +159,11 @@ var EditUserFormModal = React.createClass({
     if (file) {
       reader.readAsDataURL(file);
     } else {
-      this.setState({ image_url: "", imageFile: null });
+      this.setState({ image_url: prev_url, imageFile: null });
     }
   },
 
   handleUpdate: function () {
-    var imageFile = null;
     var user = new FormData();
 
     if ( typeof this.state.imageFile !== "undefined" ) {
