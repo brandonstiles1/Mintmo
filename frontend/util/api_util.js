@@ -94,9 +94,6 @@ var ApiUtil = {
       data: { account: account },
       success: function (account) {
         ApiActions.receiveAccount(account);
-      },
-      error: function (data) {
-        debugger
       }
     });
   }
