@@ -14,15 +14,15 @@ var EditUserFormModal = React.createClass({
   getInitialState: function() {
     this.currentUser = CurrentUserStore.currentUser();
     var user = UsersStore.find(this.currentUser.id);
-
-
+    
     return {
       user: user,
       fname: user.fname || "",
       lname: user.lname || "",
       gender: user.gender || "",
       age: user.age || "",
-      id: user.id
+      id: user.id,
+      image_url: user.image_url
     };
   },
 
@@ -63,6 +63,11 @@ var EditUserFormModal = React.createClass({
   // },
 
   render: function() {
+    var image_url = this.state.image_url;
+
+    if (image_url === "/missing.png") {
+      image_url = "http://i.imgur.com/lvPhxf4.jpg";
+    }
 
     var maleCheck = "",
         femaleCheck = "";
@@ -74,7 +79,7 @@ var EditUserFormModal = React.createClass({
     }
 
     return (
-      <div>
+      <div className="edit-user-form">
         <h1 className="main-header"> About Me</h1>
           <p>Tell us about yourself so we can improve the financial advice we provide</p>
         <h2 className="about-me">About Me</h2>
@@ -86,7 +91,7 @@ var EditUserFormModal = React.createClass({
                 type="file"
                 onChange={ this.handleFileChange }/>
 
-            <img className="preview-image" src={ this.state.image_url } />
+              <img className="preview-image" src={ image_url } />
 
             <div className="input">
               <label>First Name</label>

@@ -1,0 +1,17 @@
+.preview-image {
+  width: 200px;
+  height: auto;
+  display: block;
+  float: right;
+}
+
+.edit-user-form {
+  width: 800px;
+  height: 693px;
+  top: 0;
+  z-index: 3;
+  left: 350px;
+  position: absolute;
+  background: -webkit-linear-gradient(top, #fbfbfb, #f2f2f2);
+  border: 1px solid #dddddd;
+}

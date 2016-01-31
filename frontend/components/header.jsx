@@ -44,7 +44,9 @@ var Header = React.createClass({
 
   render: function() {
     var overviewClass = "overview",
-        transactionClass = "transaction";
+        transactionClass = "transaction",
+        modal = <div></div>;
+
     if (this.props.overviewClicked) {
       overviewClass = "content-header-list-selected";
     } else {
@@ -52,12 +54,13 @@ var Header = React.createClass({
     }
 
     if (this.state.modalVisibile) {
-      return <EditUserFormModal toggleModal={this.toggleModal} />;
+      modal = <EditUserFormModal toggleModal={this.toggleModal} />;
     }
 
     if (CurrentUserStore.isLoggedIn()) {
         return (
           <div>
+            {modal}
             <header className="root-header">
               <nav className="root-header-nav group">
 
