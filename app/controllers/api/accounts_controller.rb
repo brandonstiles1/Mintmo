@@ -9,10 +9,8 @@ class Api::AccountsController < ApplicationController
 
   def create
     @account = current_user.accounts.create!(account_params)
-    @account.generate_balance
-    @account.generate_account_type
-    @account.save!
     @account.create_transactions
+    @account = Account.includes(transactions: [:institution]).find(@account.id)
     render :show
   end
 

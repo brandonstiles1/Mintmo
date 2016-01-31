@@ -18,6 +18,15 @@ module.exports = {
     }
   },
 
+  generateBalance: function () {
+    return Math.floor(Math.random() * (25000 + 3999) - 4000) - 0.05;
+  },
+
+  generateAccountType: function () {
+    var types = ["Cash", "Credit Cards", "Loan", "Investments"];
+    return types[Math.floor(Math.random() * types.length)];
+  },
+
   getAccountTypes: function (accounts) {
     var accountTypes = [];
 
@@ -67,7 +76,7 @@ module.exports = {
 
   formatDate: function (datetime) {
     var dateArr = new Date(datetime).toDateString().split(" ");
-    
+
     return dateArr[1].toUpperCase() + " " + dateArr[2];
   }
 

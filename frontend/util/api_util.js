@@ -13,19 +13,6 @@ var ApiUtil = {
 
   },
 
-  addNewAccount: function (account) {
-    $.ajax({
-     type: "post",
-     url: "/api/accounts",
-     dataType: "json",
-     data: {account: account},
-     success: function (account) {
-       ApiActions.receiveAccount(account);
-     }
-   });
-
-  },
-
   fetchAccount: function (id) {
     $.ajax({
      type: "get",
@@ -99,12 +86,17 @@ var ApiUtil = {
   },
 
   createAccount: function (account) {
+
     $.ajax({
       type: "post",
       url: "/api/accounts",
       dataType: "json",
-      success: function (benches) {
+      data: { account: account },
+      success: function (account) {
         ApiActions.receiveAccount(account);
+      },
+      error: function (data) {
+        debugger
       }
     });
   }

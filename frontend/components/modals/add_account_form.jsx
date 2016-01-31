@@ -1,10 +1,12 @@
 var React = require('react'),
     LinkedStateMixin = require('react-addons-linked-state-mixin'),
-    Link = require('react-router').Link;
+    History = require('react-router').History;
 
+var ApiUtil = require('../../util/api_util'),
+    ComponentActions = require('../../actions/component_actions');
 
 var AddAccountFormModal = React.createClass({
-  mixins: [LinkedStateMixin],
+  mixins: [LinkedStateMixin, History],
 
   getInitialState: function() {
     return {
@@ -24,11 +26,13 @@ var AddAccountFormModal = React.createClass({
     var instId = this.props.id;
 
     var account = {
-      account_name: this.state.account_name,
-      institution_id: instId,
+      name: this.state.account_name,
+      balance: ComponentActions.generateBalance(),
+      account_type: ComponentActions.generateAccountType(),
+      institution_id: instId
     };
 
-    ApiUtil.addNewAccount(account);
+    ApiUtil.createAccount(account);
 
   },
 

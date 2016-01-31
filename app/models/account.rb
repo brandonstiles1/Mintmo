@@ -65,12 +65,4 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def generate_balance
-    rand(-4000..25000)
-  end
-
-  def generate_account_type
-    ACCOUNT_TYPES.sample
-  end
-
 end
