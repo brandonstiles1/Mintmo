@@ -31,11 +31,11 @@ var EditUserFormModal = React.createClass({
 
   componentDidMount: function() {
     SessionsApiUtil.fetchCurrentUser();
-    this.storeListener = UsersStore.addListener;
+
   },
 
   componentWillUnmount: function() {
-    this.storeListener.remove;
+
   },
 
   closeModal: function () {
@@ -63,6 +63,7 @@ var EditUserFormModal = React.createClass({
   // },
 
   render: function() {
+
     var maleCheck = "",
         femaleCheck = "";
 
@@ -107,14 +108,14 @@ var EditUserFormModal = React.createClass({
                 <input
                   id="user-gender-male"
                   type="radio"
-                  onClick={this.setMaleGender}
+                  onChange={this.setMaleGender}
                   checked={maleCheck} />
 
                 <label>Female</label>
                 <input
                   id="user-gender-female"
                   type="radio"
-                  onClick={this.setFemaleGender}
+                  onChange={this.setFemaleGender}
                   checked={femaleCheck} />
             </div>
 
@@ -169,7 +170,7 @@ var EditUserFormModal = React.createClass({
     user.append("user[gender]", this.state.gender);
     user.append("user[age]", this.state.age);
 
-    UsersApiUtil.updateUser(user);
+    UsersApiUtil.updateUser(user, this.closeModal);
   }
 
 });

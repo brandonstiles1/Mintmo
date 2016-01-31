@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :email, format: { with: /\A([^@\s]+)@(([-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :gender, inclusion: %w(M F), if: -> { gender }
+  validates :gender, inclusion: %w(Male Female), if: -> { gender }
 
   after_initialize :ensure_session_token
 

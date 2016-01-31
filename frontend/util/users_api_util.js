@@ -39,12 +39,13 @@ var UsersApiUtil = {
   },
 
   updateUser: function (user, callback) {
-    debugger
     $.ajax({
       url: '/api/users/' + user.id,
       type: 'patch',
+      processData: false,
+      contentType: false,
       dataType: 'json',
-      data: {user: user},
+      data: user,
       success: function (user) {
         UserActions.receiveUserUpdate(user);
         callback && callback();
