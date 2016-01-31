@@ -1,13 +1,17 @@
-var CurrentUserActions = require("./../actions/current_user_actions");
+var CurrentUserActions = require("./../actions/current_user_actions"),
+    UserActions = require("./../actions/user_actions");
+
 var SessionsApiUtil = {
+
   login: function (credentials, success) {
     $.ajax({
       url: '/api/session',
       type: 'POST',
       dataType: 'json',
-      data: credentials.user, // {email: "tommy...", password: "14.."}
+      data: credentials.user,
       success: function (currentUser) {
         CurrentUserActions.receiveCurrentUser(currentUser);
+        UserActions.receiveUser(currentUser);
         success && success();
       }
 
@@ -35,6 +39,7 @@ var SessionsApiUtil = {
       type: 'GET',
       dataType: 'json',
       success: function (currentUser) {
+        UserActions.receiveUser(currentUser);
         CurrentUserActions.receiveCurrentUser(currentUser);
         cb && cb(currentUser);
       }

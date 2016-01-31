@@ -47,6 +47,7 @@ var AccountShow = React.createClass({
       account: AccountStore.find(accountId),
       allAccounts: AccountStore.all(),
       transactions: TransactionStore.all(),
+      formIndex: 0
     });
   },
 

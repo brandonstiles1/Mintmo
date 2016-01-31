@@ -9,17 +9,19 @@ var CurrentUserStore = require('../../stores/current_user_store'),
 
 
 var EditUserFormModal = React.createClass({
+  mixins: [LinkedStateMixin],
 
   getInitialState: function() {
     this.currentUser = CurrentUserStore.currentUser();
     var user = UsersStore.find(this.currentUser.id);
 
+
     return {
       user: user,
-      fname: user.fname,
-      lname: user.lname,
-      gender: user.gender,
-      age: user.age,
+      fname: user.fname || "",
+      lname: user.lname || "",
+      gender: user.gender || "",
+      age: user.age || "",
       id: user.id
     };
   },
@@ -29,28 +31,36 @@ var EditUserFormModal = React.createClass({
 
   componentDidMount: function() {
     SessionsApiUtil.fetchCurrentUser();
-    this.storeListener = UsersStore.addListener(this.onChange);
+    this.storeListener = UsersStore.addListener;
   },
 
   componentWillUnmount: function() {
-    this.storeListener.remove();
+    this.storeListener.remove;
   },
 
   closeModal: function () {
     this.props.toggleModal();
   },
 
-  onChange: function () {
-    var user = UsersStore.find(this.currentUser.id);
-    this.setState({
-      user: user,
-      fname: user.fname,
-      lname: user.lname,
-      gender: user.gender,
-      age: user.age,
-      id: user.id
-    });
+  setMaleGender: function () {
+    this.setState({gender: "Male"});
   },
+
+  setFemaleGender: function () {
+    this.setState({gender: "Female"});
+  },
+
+  // onChange: function () {
+  //   var user = UsersStore.find(this.currentUser.id);
+  //   this.setState({
+  //     user: user,
+  //     fname: user.fname,
+  //     lname: user.lname,
+  //     gender: user.gender,
+  //     age: user.age,
+  //     id: user.id
+  //   });
+  // },
 
   render: function() {
     var maleCheck = "",
@@ -93,19 +103,19 @@ var EditUserFormModal = React.createClass({
 
             <div className="input">
               <label>Gender</label>
+              <label>Male</label>
                 <input
                   id="user-gender-male"
                   type="radio"
-                  value="Male"
-                  valueLink={this.linkState('gender')} maleCheck />
-                <label for="user-gender-male">Male</label>
+                  onClick={this.setMaleGender}
+                  checked={maleCheck} />
 
+                <label>Female</label>
                 <input
                   id="user-gender-female"
                   type="radio"
-                  value="Female"
-                  valueLink={this.linkState('gender')} femaleCheck />
-                <label for="user-gender-female">female</label>
+                  onClick={this.setFemaleGender}
+                  checked={femaleCheck} />
             </div>
 
             <div className="input">
@@ -133,6 +143,7 @@ var EditUserFormModal = React.createClass({
     var reader = new FileReader();
     var file = e.currentTarget.files[0];
     var that = this;
+
     reader.onloadend = function () {
       that.setState({ image_url: reader.result, imageFile: file });
     };
@@ -158,7 +169,7 @@ var EditUserFormModal = React.createClass({
     user.append("user[gender]", this.state.gender);
     user.append("user[age]", this.state.age);
 
-    UsersApiUtil.receiveUserUpdate(user);
+    UsersApiUtil.updateUser(user);
   }
 
 });

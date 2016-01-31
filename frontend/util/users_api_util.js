@@ -39,6 +39,7 @@ var UsersApiUtil = {
   },
 
   updateUser: function (user, callback) {
+    debugger
     $.ajax({
       url: '/api/users/' + user.id,
       type: 'patch',

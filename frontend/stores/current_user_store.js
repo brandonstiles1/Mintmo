@@ -1,12 +1,15 @@
 var Store = require('flux/utils').Store;
-var AppDispatcher = require('../dispatcher/dispatcher');
-var CurrentUserConstants = require('../constants/current_user_constants');
 
-var _currentUser = {};
-var _currentUserHasBeenFetched = false;
+var AppDispatcher = require('../dispatcher/dispatcher'),
+    CurrentUserConstants = require('../constants/current_user_constants');
+
+var _currentUser = {},
+    _currentUserHasBeenFetched = false;
+
 var CurrentUserStore = new Store(AppDispatcher);
 
 CurrentUserStore.currentUser = function () {
+
   return $.extend({}, _currentUser);
 };
 

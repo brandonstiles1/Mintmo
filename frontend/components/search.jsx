@@ -74,12 +74,12 @@ var Search = React.createClass({
         <button className="search-button" onClick={this.search}>Search</button>
         <button onClick={this.nextPage}>Next ></button>
 
-        <tbody className="transaction-table-body">
+        <section className="transaction-table-body">
           { searchResults }
-        </tbody>
+        </section>
       </div>
     );
-  },
+  }
 
 
 });

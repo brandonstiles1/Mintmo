@@ -6,11 +6,12 @@
   height: 42px;
 }
 
-.root-header a {
+.root-header p {
+  cursor: pointer;
   display: block;
   padding: 10px 20px;
 }
-.root-header a:hover {
+.root-header p:hover {
   color: white;
 }
 
