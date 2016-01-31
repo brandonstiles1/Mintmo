@@ -38,6 +38,7 @@ var AddAccountFormModal = React.createClass({
 
   render: function () {
     var institution = this.props.inst,
+        logo = this.props.logo,
         passwordInputType = "password";
 
     if (this.state.checked) {
@@ -45,49 +46,53 @@ var AddAccountFormModal = React.createClass({
     }
 
     return (
-      <div>
+      <div className="modal-edit-form">
         <h1 className="main-header">
-          { this.props.location.query.institution }
+          { this.props.inst }
         </h1>
-        <form className="form group" onSubmit={ this.submit }>
+        <form className="modal-form group" onSubmit={ this.submit }>
 
-          <fieldset className="form-fieldset">
+          <fieldset className="modal-form-fieldset">
 
             <div className="input">
-              <label>Account Name</label>
-              <p>Name your {institution} account</p>
+              <label className="add-account-label">Account Name</label>
+              <p className="add-account-label">Name your {institution} account</p>
               <input
                 type="text"
                 valueLink={this.linkState('account_name')} />
             </div>
 
             <div className="input">
-              <label>User ID</label>
-              <p>for your {institution} account</p>
+              <label className="add-account-label">User ID</label>
+              <p className="add-account-label">for your {institution} account</p>
               <input
                 type="text"
                 valueLink={this.linkState('userID')} />
             </div>
 
             <div className="input">
-              <label>Password</label>
-              <p>for your {institution} account</p>
+              <label className="add-account-label">Password</label>
+              <p className="add-account-label">for your {institution} account</p>
               <input
                 type={passwordInputType}
                 valueLink={this.linkState('account_password')} />
             </div>
 
-              <div className="input">
+              <div className="input show-pass group">
                 <input
                   onChange={this.toggleShowPassword}
-                  type="checkbox">Show password</input>
+                  type="checkbox" />
+                <p>Show password</p>
               </div>
 
-            <div className="submit">
-              <button onClick={this.handleSubmit} >CONNECT SECURELY</button>
+            <div className="submit group">
+              <button
+                className="add-account-submit"
+                onClick={this.handleSubmit} >CONNECT SECURELY</button>
               <p onClick={this.goBack} className="go-back" to={"/"}>Go back</p>
             </div>
           </fieldset>
+          <img className="preview-image" src={ logo } />
         </form>
       </div>
     );

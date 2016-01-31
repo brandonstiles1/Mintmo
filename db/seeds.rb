@@ -16,12 +16,12 @@ Institution.destroy_all
 charles_schwab = Institution.create!(
   name: "Charles Schwab",
   url: "https://www.schwab.com/",
-  logo_url: "https://www.schwab.com/public/file/P-6040152/logo.png"
+  logo_url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Charles_Schwab_Corporation_logo.png"
 )
 student_Loan = Institution.create!(
   name: "National Student Loan Database System",
   url: "https://www.nslds.ed.gov/nslds/nslds_SA/",
-  logo_url: "https://www.nslds.ed.gov/nslds/nslds_SA/images/nslds/misc/FSA_Logo_Left.gif"
+  logo_url: "http://www.csac.ca.gov/images/common/FAFSA_Logo_Transparent_800x292.png"
 )
 
 paypal = Institution.create!(
@@ -33,13 +33,13 @@ paypal = Institution.create!(
 capital_one = Institution.create!(
   name: "Capital One",
   url: "https://www.capitalone.com/",
-  logo_url: "https://media.cofstatic.com/assets/rwd/img/logo/capitalone-logo-2x-oasis.png"
+  logo_url: "http://insidethegate.com/wp-content/uploads/2015/06/CapitalOne-big.png"
 )
 
 fidelity = Institution.create!(
   name: "Fidelity Investments",
   url: "https://www.fidelity.com/",
-  logo_url: "http://2013.pytexas.org/media/cms/10/fidelity_2012.png"
+  logo_url: "http://ecx.images-amazon.com/images/I/51ZPeavjfrL.png"
 )
 
 Account.destroy_all

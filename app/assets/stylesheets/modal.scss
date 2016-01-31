@@ -120,3 +120,80 @@ li.selected {
   float: right;
   margin-left: 20px;
 }
+
+ul.modal-edit-institutions {
+  margin-top: 20px;
+}
+
+.modal-edit-institutions > li {
+  margin: 20px 20px 20px 0;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background: #45cae6;
+}
+
+.modal-edit-institutions > li:hover {
+  cursor: pointer;
+}
+
+.modal-edit-institutions > li > p {
+  float: left;
+  color: white;
+  font-size: 20px;
+  margin: 25px 0 0 20px;
+}
+
+.inst-logo {
+  float: left;
+  height: 75px;
+  width: 100px;
+}
+
+.main-header-account {
+  font-size: 30px;
+  font-weight: 300;
+  padding-bottom: 10px;
+}
+
+label.add-account-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #494949;
+}
+
+div.input > label.add-account-label:first-child {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+
+p.add-account-label {
+  font-size: 11px;
+  color: #999;
+  margin: 5px 0;
+}
+.show-pass > p {
+  float: right;
+  margin-right: 375px;
+  margin-top: -17px;
+}
+
+.show-pass > input {
+  float: left;
+}
+
+.add-account-submit {
+  float: left;
+}
+.go-back {
+  float: left;
+  margin: 10px 0 0 40px;
+  color: #666;
+}
+
+.go-back:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
