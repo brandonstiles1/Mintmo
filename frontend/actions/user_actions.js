@@ -9,6 +9,13 @@ var UserActions = {
     });
   },
 
+  receiveUserUpdate: function (user) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.RECEIVE_USER_UPDATE,
+      user: user
+    });
+  },
+
   receiveUser: function (user) {
     AppDispatcher.dispatch({
       actionType: UserConstants.RECEIVE_USER,

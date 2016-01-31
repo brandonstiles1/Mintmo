@@ -36,6 +36,19 @@ var UsersApiUtil = {
         callback && callback();
       }
     });
+  },
+
+  updateUser: function (user, callback) {
+    $.ajax({
+      url: '/api/users/' + user.id,
+      type: 'patch',
+      dataType: 'json',
+      data: {user: user},
+      success: function (user) {
+        UserActions.receiveUserUpdate(user);
+        callback && callback();
+      }
+    });
   }
 };
 

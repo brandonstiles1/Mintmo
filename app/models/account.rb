@@ -48,8 +48,9 @@ class Account < ActiveRecord::Base
   has_many :transactions
 
 
-  def create_transactions(number)
-    number.times do |time|
+
+  def create_transactions
+    20.times do |time|
       category = CATEGORY_TYPES.sample
       description = Faker::Commerce.product_name
       date = Faker::Date.backward(rand(100))
@@ -62,6 +63,14 @@ class Account < ActiveRecord::Base
         amount: amount
       )
     end
+  end
+
+  def generate_balance
+    rand(-4000..25000)
+  end
+
+  def generate_account_type
+    ACCOUNT_TYPES.sample
   end
 
 end

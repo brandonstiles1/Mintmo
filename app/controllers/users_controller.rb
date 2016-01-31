@@ -20,6 +20,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    current_user.update!(user_params)
+    render :show
+  end
+
   private
   def redirect_logged_in_users
     if logged_in?
@@ -28,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :fname, :lname, :age)
+    params.require(:user).permit(:email, :password, :fname, :lname, :age, :avatar)
   end
 
 end

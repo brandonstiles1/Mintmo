@@ -4,20 +4,20 @@ class Api::AccountsController < ApplicationController
 
   def index
     @accounts = current_user.accounts.includes(:institution, :transactions)
-
-
     render :index
   end
 
   def create
     @account = current_user.accounts.create!(account_params)
+    @account.generate_balance
+    @account.generate_account_type
     @account.save!
-    render json: @account.to_json
+    @account.create_transactions
+    render :show
   end
 
   def show
     @account = Account.includes(transactions: [:institution]).find(params[:id])
-
     render :show
   end
 
@@ -40,8 +40,13 @@ class Api::AccountsController < ApplicationController
 
   private
   def account_params
-    params.require(:account).permit(:name, :institution_id, :user_id,
-      :balance, :account_type)
+    params.require(:account).permit(
+      :name,
+      :institution_id,
+      :user_id,
+      :balance,
+      :account_type
+    )
   end
 
 end

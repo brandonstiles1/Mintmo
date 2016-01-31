@@ -19,7 +19,7 @@ var TransactionIndex = React.createClass({
   },
 
   onChange: function () {
-    this.setState({ transactions: TransactionStore.all()} );
+    this.setState({ transactions: TransactionStore.all() });
   },
 
   componentWillUnmount: function () {
@@ -31,7 +31,7 @@ var TransactionIndex = React.createClass({
   },
 
   render: function () {
-    
+
     var that = this,
         transactions = this.state.transactions;
 

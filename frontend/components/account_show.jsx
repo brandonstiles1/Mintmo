@@ -38,6 +38,7 @@ var AccountShow = React.createClass({
   componentWillReceiveProps: function (newProps) {
     ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
     ApiUtil.fetchAccountTransactions(newProps.params.accountId);
+    this.setState({formIndex: 0});
   },
 
   onChange: function () {
@@ -45,7 +46,7 @@ var AccountShow = React.createClass({
     this.setState({
       account: AccountStore.find(accountId),
       allAccounts: AccountStore.all(),
-      transactions: TransactionStore.all()
+      transactions: TransactionStore.all(),
     });
   },
 

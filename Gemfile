@@ -33,7 +33,6 @@ gem 'font-awesome-rails'
 gem 'kaminari'
 gem 'accountingjs-rails'
 gem 'pg_search'
-gem 'paypal-sdk-rest'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -46,6 +45,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'binding_of_caller'
+  gem 'annotate'
 end
 
 group :development do

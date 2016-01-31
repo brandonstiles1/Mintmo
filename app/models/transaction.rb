@@ -5,13 +5,13 @@
 #  id          :integer          not null, primary key
 #  account_id  :integer          not null
 #  amount      :decimal(8, 2)    not null
-#  description :string           not null
 #  notes       :text
 #  date        :datetime         not null
 #  is_private? :boolean          default(TRUE)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  category_id :integer
+#  description :string
+#  category    :string           default("UNCATEGORIZED")
 #
 
 class Transaction < ActiveRecord::Base

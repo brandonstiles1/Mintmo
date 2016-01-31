@@ -21,7 +21,6 @@ var SessionsApiUtil = {
       dataType: 'json',
       success: function () {
         CurrentUserActions.removeCurrentUser();
-        console.log("logged out");
         callback && callback();
       },
       error: function (data) {

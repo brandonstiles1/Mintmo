@@ -251,6 +251,6 @@ t20 = Transaction.create!(
   category: "Retirement"
 )
 
-cs_checking.create_transactions(20)
-credit_card1.create_transactions(20)
-paypal_checking.create_transactions(20)
+cs_checking.create_transactions
+credit_card1.create_transactions
+paypal_checking.create_transactions
