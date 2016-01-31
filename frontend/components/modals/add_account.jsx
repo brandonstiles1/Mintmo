@@ -1,11 +1,12 @@
 var React = require('react'),
     Link = require('react-router').Link;
 
-var InstitutionStore = require('../../stores/institution');
+var InstitutionStore = require('../../stores/institution'),
+    AddAccountFormModal = require('./add_account_form');
 
 var AddAccountModal = React.createClass({
   getInitialState: function () {
-    return {institutions: InstitutionStore.all()};
+    return {institutions: InstitutionStore.all(), institution: null};
   },
 
   componentDidMount: function() {
@@ -21,7 +22,17 @@ var AddAccountModal = React.createClass({
     this.setState({institutions: InstitutionStore.all()});
   },
 
+  selectInstitution: function (institution) {
+    this.setState({institution: institution});
+  },
+
+  unselectInstitution: function () {
+    this.setState({institution: null});
+  },
+
   render: function () {
+    var inst = this.state.institution;
+
     var institutions = this.state.institutions.map(function(inst) {
       return (
         <Link
@@ -31,12 +42,21 @@ var AddAccountModal = React.createClass({
       );
     });
 
-    return (
-      <div>
-        <h1>Choose from these popular Mintmo accounts</h1>
-        {institutions}
-      </div>
-    );
+    if (institution) {
+      return (
+        <AddAccountFormModal
+          goBack={this.unselectInstitution}
+          inst={inst.name}
+          id={inst.id} />
+      );
+    } else {
+      return (
+        <div>
+          <h1>Choose from these popular Mintmo accounts</h1>
+          {institutions}
+        </div>
+      );
+    }
   }
 
 });

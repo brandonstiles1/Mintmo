@@ -51,18 +51,6 @@ var EditUserFormModal = React.createClass({
     this.setState({gender: "Female"});
   },
 
-  // onChange: function () {
-  //   var user = UsersStore.find(this.currentUser.id);
-  //   this.setState({
-  //     user: user,
-  //     fname: user.fname,
-  //     lname: user.lname,
-  //     gender: user.gender,
-  //     age: user.age,
-  //     id: user.id
-  //   });
-  // },
-
   render: function() {
     var image_url = this.state.image_url;
 
@@ -80,67 +68,69 @@ var EditUserFormModal = React.createClass({
     }
 
     return (
-      <div className="edit-user-form">
+      <div className="modal-edit-form">
         <h1 className="main-header"> About Me</h1>
-          <p>Tell us about yourself so we can improve the financial advice we provide</p>
+        <p>Tell us about yourself so we can improve the financial advice we provide.</p>
         <h2 className="about-me">About Me</h2>
-        <form className="form group" >
-          <fieldset className="form-fieldset">
+        <form className="modal-form group" >
 
-            <label>Add a picture</label>
+          <fieldset className="modal-form-fieldset">
+            <ul>
+            <label className="add-picture">Add a profile picture</label>
               <input
                 type="file"
                 onChange={ this.handleFileChange }/>
 
-              <img className="preview-image" src={ image_url } />
 
-            <div className="input">
-              <label>First Name</label>
+            <li className="modal first-name input group">
+              <label >First Name</label>
               <input
                 type="text"
                 valueLink={this.linkState('fname')} />
-            </div>
+            </li>
 
-            <div className="input">
+            <li className="modal input group">
               <label>Last Name</label>
               <input
                 type="text"
                 valueLink={this.linkState('lname')} />
-            </div>
+            </li>
 
-            <div className="input">
-              <label>Gender</label>
-              <label>Male</label>
-                <input
-                  id="user-gender-male"
-                  type="radio"
-                  onChange={this.setMaleGender}
-                  checked={maleCheck} />
+            <li className="modal input group">
+              <label className="gender group">Gender</label>
+                <label className="gender-male">Male
+                  <input
+                    id="user-gender-male"
+                    type="radio"
+                    onChange={this.setMaleGender}
+                    checked={maleCheck} />
+                </label>
 
-                <label>Female</label>
-                <input
-                  id="user-gender-female"
-                  type="radio"
-                  onChange={this.setFemaleGender}
-                  checked={femaleCheck} />
-            </div>
+                  <label className="gender-female">Female
+                    <input
+                      id="user-gender-female"
+                      type="radio"
+                      onChange={this.setFemaleGender}
+                      checked={femaleCheck} />
+                  </label>
 
-            <div className="input">
+            </li>
+
+            <li className="modal input group">
               <label>Age</label>
               <input
                 type="number"
                 valueLink={this.linkState('age')} />
-            </div>
+            </li>
+          </ul>
 
             <div className="submit">
               <button
-                className="update-user-cancel"
-                onClick={this.closeModal}>CANCEL</button>
-              <button
                 className="update-user-submit"
-                onClick={this.handleUpdate}>I'M DONE</button>
+                onClick={this.handleUpdate}>Submit</button>
             </div>
           </fieldset>
+          <img className="preview-image" src={ image_url } />
         </form>
       </div>
     );

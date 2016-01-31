@@ -21,7 +21,7 @@ var AddAccountFormModal = React.createClass({
   },
 
   handleSubmit: function () {
-    var instId = this.props.location.query.id;
+    var instId = this.props.id;
 
     var account = {
       account_name: this.state.account_name,
@@ -32,8 +32,12 @@ var AddAccountFormModal = React.createClass({
 
   },
 
+  goBack: function () {
+    this.props.goBack();
+  },
+
   render: function () {
-    var institution = this.props.location.query.institution,
+    var institution = this.props.inst,
         passwordInputType = "password";
 
     if (this.state.checked) {
@@ -81,7 +85,7 @@ var AddAccountFormModal = React.createClass({
 
             <div className="submit">
               <button onClick={this.handleSubmit} >CONNECT SECURELY</button>
-              <Link className="go-back" to={"/"}>Go back</Link>
+              <p onClick={this.goBack} className="go-back" to={"/"}>Go back</p>
             </div>
           </fieldset>
         </form>

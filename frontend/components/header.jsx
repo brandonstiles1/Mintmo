@@ -1,6 +1,7 @@
 var React = require('react'),
     History = require('react-router').History,
-    EditUserFormModal = require('./modals/edit_user_form');
+    EditUserFormModal = require('./modals/edit_user_form'),
+    ModalIndex = require('./modals/modal_index');
 
 var CurrentUserStore = require('../stores/current_user_store'),
     SessionsApiUtil = require('../util/sessions_api_util');
@@ -54,7 +55,7 @@ var Header = React.createClass({
     }
 
     if (this.state.modalVisibile) {
-      modal = <EditUserFormModal toggleModal={this.toggleModal} />;
+      modal = <ModalIndex location="user" toggleModal={this.toggleModal} />;
     }
 
     if (CurrentUserStore.isLoggedIn()) {
