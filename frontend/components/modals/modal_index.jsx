@@ -1,7 +1,6 @@
 var React = require('react');
 
 var AddAccountModal = require('./add_account'),
-    AddAccountFormModal = require('./add_account_form'),
     EditUserFormModal = require('./edit_user_form');
 
 var ModalIndex = React.createClass({

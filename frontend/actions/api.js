@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/dispatcher'),
     AccountConstants = require('../constants/account'),
-    InstitutionConstants = require('../constants/account'),
+    InstitutionConstants = require('../constants/institution'),
     TransactionConstants = require('../constants/transaction');
 
 var ApiActions = {

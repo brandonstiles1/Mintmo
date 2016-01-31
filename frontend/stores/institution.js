@@ -11,7 +11,7 @@ InstitutionStore.all = function () {
 };
 
 var resetInstitutions = function (institutions) {
-  _institutions = institutions.slice();
+  _institutions = institutions;
 };
 
 var find = function (id) {

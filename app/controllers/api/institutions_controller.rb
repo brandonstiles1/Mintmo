@@ -3,11 +3,12 @@ class Api::InstitutionsController < ApplicationController
   before_action :redirect_logged_out_users
 
   def index
-    render json: Institution.all.to_json
+    @institutions = Institution.all
+    render :index
   end
 
   def create
-    @institution = Institution.new(institution_params)
+    @institution = current_user.institutions.new(institution_params)
 
     if @institution.save
       # redirect_to api_institution_url(@institution)
