@@ -48,6 +48,7 @@ var IndexSidebar = React.createClass({
   getMappedAccountTypes: function (accountTypes, accountBalances, accounts) {
     var that = this;
     var mappedAccountTypes = accountTypes.map(function(type){
+      var typeIcon = that.getTypeIcon(type);
       var balanceClass = ComponentActions.getAccountBalanceClass(accountBalances[type]);
       var expandedAccounts;
       if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
@@ -62,7 +63,7 @@ var IndexSidebar = React.createClass({
       return (
           <div key={type} className="account-balance-headers group" >
             <div onClick={that.toggleExpand.bind(null, type)} className="type-background group">
-              <h3   >{type}</h3>
+              <h3>{typeIcon}{type}</h3>
               <h4 className={balanceClass} >${accountBalances[type]}</h4>
             </div>
           {expandedAccounts}
@@ -72,6 +73,19 @@ var IndexSidebar = React.createClass({
 
     return mappedAccountTypes;
   },
+
+  getTypeIcon: function (type) {
+
+    if (type === "Cash") {
+      return <i className="fa fa-money"></i>;
+    } else if (type === "Credit Cards") {
+      return <i className="fa fa-credit-card-alt"></i>;
+    } else if (type === "Loan") {
+      return <i className="fa fa-home"></i>;
+    } else {
+      return <i className="fa fa-line-chart"></i>;
+    }
+  }
 
 });
 

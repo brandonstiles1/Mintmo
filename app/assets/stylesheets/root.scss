@@ -78,7 +78,7 @@
 .content-header-list > li {
   padding-bottom: 10px;
   margin: 45px 15px;
-  font-weight: 600;
+  font-weight: 500;
   float: left;
   font-size: 12px;
   color: #333;
@@ -87,6 +87,7 @@
 
 .content-header-list > li.content-header-list-selected {
   border-bottom: 3px solid #0ac775;
+  font-weight: 600;
 }
 
 // CONTENT
@@ -168,6 +169,10 @@
 
 .type-background {
   background: #f7f7f7;
+}
+
+i {
+  padding: 0 10px;
 }
 
 .root-content-main > h1 {
