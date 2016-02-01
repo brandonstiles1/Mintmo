@@ -44,7 +44,19 @@ var Search = React.createClass({
   },
 
   render: function() {
-    var that = this;
+    var that = this,
+        resultText = "",
+        results = SearchResultsStore.all(),
+        totalCount = SearchResultsStore.meta().totalCount;
+
+    if (results.length > 0) {
+      resultText = (
+        <div>
+          <p>Showing { results.length } out of { totalCount } transactions</p>
+          <button onClick={this.nextPage}>Next ></button>
+        </div>
+      );
+    }
 
     var searchResults = SearchResultsStore.all().map(function (searchResult, index) {
       if (index === that.state.formIndex) {
@@ -69,10 +81,9 @@ var Search = React.createClass({
           type="text"
           valueLink={this.linkState('query')}
           placeholder="Can't search yet" />
-        Displaying {SearchResultsStore.all().length} of
-        {SearchResultsStore.meta().totalCount}
+        {resultText}
         <button className="search-button" onClick={this.search}>Search</button>
-        <button onClick={this.nextPage}>Next ></button>
+
 
         <section className="transaction-table-body">
           { searchResults }

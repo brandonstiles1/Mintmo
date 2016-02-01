@@ -9,7 +9,8 @@ var AccountStore =require('../stores/account'),
     TransactionIndexItem = require('./transaction_index_item'),
     ComponentActions = require('../actions/component_actions'),
     TransactionItemForm = require('./transaction_form'),
-    TransactionStore =require('../stores/transaction');
+    TransactionStore = require('../stores/transaction'),
+    Search = require('./search');
 
 var AccountShow = React.createClass({
   mixins: [History],
@@ -132,6 +133,7 @@ var AccountShow = React.createClass({
           <h1>{account.name.slice(0,25)}...</h1>
           <h6>TOTAL BALANCE</h6>
           <h5>{account.balance}</h5>
+          <Search/>
           <table className="transaction-table group">
             <thead className="transaction-table-header">
               <tr >
