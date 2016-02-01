@@ -44,10 +44,10 @@ var ModalIndex = React.createClass({
           <ul className="modal-header-list group">
             <li
               className={accountsClass}
-              onClick={this.renderAccountBody} >Accounts</li>
+              onClick={this.renderAccountBody}><i id="fa-account-modal" className="fa fa-folder-open"></i><p>Accounts</p></li>
             <li
               className={userClass}
-              onClick={this.renderUserBody}>About Me</li>
+              onClick={this.renderUserBody}><i id="fa-user-modal" className="fa fa-user fa-modal"></i><p>About Me</p></li>
           </ul>
         </header>
         {modalBody}

@@ -22,6 +22,10 @@
   float: left;
 }
 
+.modal-header-list > li > p {
+  padding-top: 10px;
+}
+
 .modal-header-list > li:hover {
   cursor: pointer;
   background: url('https://images.mint.com/web-client/images/accounts/bg_overlay_tab_selected_hover.png') no-repeat 0 4px;
@@ -204,4 +208,16 @@ p.add-account-label {
 .go-back:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+#fa-account-modal,
+#fa-user-modal {
+  position: absolute;
+  font-size: 30px;
+  top: 10px;
+  left: 30px;
+}
+
+#fa-user-modal  {
+  left: 145px;
 }
