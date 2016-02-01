@@ -13,7 +13,10 @@ var TransactionIndex = React.createClass({
   getInitialState: function () {
     return {
       transactions: TransactionStore.all(),
-      formIndex: 0
+      formIndex: 0,
+      inSearch: false,
+      totalCount: null,
+      query: null
     };
   },
 
@@ -34,18 +37,20 @@ var TransactionIndex = React.createClass({
     this.setState({formIndex: index});
   },
 
-  handleSearch: function (transactions, query) {
+  handleSearch: function (transactions, query, totalCount) {
     if (query !== "")
-      this.setState({transactions: transactions});
+      this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount});
     else {
-      this.setState({transactions: TransactionStore.all()});
+      this.setState({transactions: TransactionStore.all(), inSearch: false});
     }
   },
 
   render: function () {
 
     var that = this,
-        transactions = this.state.transactions;
+    resultText = "",
+        transactions = this.state.transactions,
+        search =  <Search search={this.handleSearch} reset="true" />;
 
 
 
@@ -65,9 +70,21 @@ var TransactionIndex = React.createClass({
       }
     });
 
+    if (this.state.inSearch) {
+
+      resultText = (
+        <div>
+          <p>Showing { transactions.length } out of { this.state.totalCount } transactions that match {this.state.query}</p>
+          <button onClick={this.nextPage}>Next ></button>
+        </div>
+      );
+
+    }
+
     return (
       <div>
-        <Search search={that.handleSearch} />
+        {search}
+        {resultText}
         <table className="transaction-table">
           <thead className="transaction-table-header">
             <tr >

@@ -24,7 +24,10 @@ var AccountShow = React.createClass({
       allAccounts: AccountStore.all(),
       overviewClicked: false,
       transactionsClicked: true,
-      formIndex: 0
+      formIndex: 0,
+      inSearch: false,
+      totalCount: null,
+      query: null
     };
   },
 
@@ -33,13 +36,12 @@ var AccountShow = React.createClass({
     ApiUtil.fetchAccountTransactions(this.props.params.accountId);
     this.accountListener = AccountStore.addListener(this.onChange);
     this.transactionListener = TransactionStore.addListener(this.onChange);
-
   },
 
   componentWillReceiveProps: function (newProps) {
     ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
     ApiUtil.fetchAccountTransactions(newProps.params.accountId);
-    this.setState({formIndex: 0});
+    this.setState({formIndex: 0, inSearch: false});
   },
 
   onChange: function () {
@@ -47,8 +49,7 @@ var AccountShow = React.createClass({
     this.setState({
       account: AccountStore.find(accountId),
       allAccounts: AccountStore.all(),
-      transactions: TransactionStore.all(),
-      formIndex: 0
+      transactions: TransactionStore.all()
     });
   },
 
@@ -61,11 +62,11 @@ var AccountShow = React.createClass({
 
   },
 
-  handleSearch: function (transactions, query) {
+  handleSearch: function (transactions, query, totalCount) {
     if (query !== "")
-      this.setState({transactions: transactions});
+      this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount});
     else {
-      this.setState({transactions: TransactionStore.all()});
+      this.setState({transactions: TransactionStore.all(), inSearch: false});
     }
   },
 
@@ -91,14 +92,17 @@ var AccountShow = React.createClass({
   },
 
   render: function () {
+
     var that = this,
         account = this.state.account,
         transactions = this.state.transactions,
         accounts = this.state.allAccounts,
         transactionsClicked =this.state.transactionsClicked,
         overviewClicked =this.state.overviewClicked,
+        resultText = "",
         overviewClass = ComponentActions.getOverviewClass(overviewClicked),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
+        search,
         header =
           <Header
             overviewClicked={overviewClicked}
@@ -112,7 +116,21 @@ var AccountShow = React.createClass({
             transactionsClick={that.handleTransactionsClick}
             />;
 
-          if (!(account && transactions)) { return <div>SPINNER</div>; }
+    if (!(account && transactions)) { return <div>SPINNER</div>; }
+
+      if (this.state.inSearch) {
+
+        resultText = (
+          <div>
+            <p>Showing { transactions.length } out of { this.state.totalCount } transactions that match {this.state.query}</p>
+            <button onClick={this.nextPage}>Next ></button>
+          </div>
+        );
+
+      }
+
+    search = <Search search={this.handleSearch} account={account.id} />;
+
 
     var mappedBody = transactions.map(function(transaction, index) {
       if (index === that.state.formIndex) {
@@ -141,7 +159,8 @@ var AccountShow = React.createClass({
           <h1>{account.name.slice(0,25)}...</h1>
           <h6>TOTAL BALANCE</h6>
           <h5>{account.balance}</h5>
-          <Search search={this.handleSearch} account={account.id} />
+          {search}
+          {resultText}
           <table className="transaction-table group">
             <thead className="transaction-table-header">
               <tr >

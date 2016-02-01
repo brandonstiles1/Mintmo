@@ -7,23 +7,28 @@ var SearchResultsStore = require('../stores/search_results_store'),
     TransactionItemForm = require('./transaction_form');
 
 var Search = React.createClass({
-    mixins: [LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
-    getInitialState: function () {
-      return {
-        page: 1,
-        query: "",
-        results: SearchResultsStore.all(),
-        totalCount: SearchResultsStore.meta().totalCount
-      };
-    },
+  getInitialState: function () {
+
+    return {
+      page: 1,
+      query: "",
+      results: SearchResultsStore.all(),
+      totalCount: SearchResultsStore.meta().totalCount
+    };
+  },
 
   componentDidMount: function() {
     this.listener = SearchResultsStore.addListener(this._onChange);
   },
 
+  handleInput: function (event) {
+    this.setState({ query: event.currentTarget.value });
+  },
 
   _onChange: function() {
+
     var results = SearchResultsStore.all(),
         that = this;
 
@@ -34,24 +39,24 @@ var Search = React.createClass({
           filteredResults.push(result);
         }
       });
-      this.setState({results: filteredResults, totalCount: filteredResults.length});
-      this.props.search(this.state.results, this.state.query);
+      this.props.search(filteredResults, this.state.query, filteredResults.length);
+      this.setState({results: filteredResults, totalCount: filteredResults.length, query: ""});
     } else {
-      this.setState({results: results, totalCount: SearchResultsStore.meta().totalCount});
-      this.props.search(this.state.results, this.state.query);
+      this.props.search(results, this.state.query, SearchResultsStore.meta().totalCount);
+      this.setState({results: results, totalCount: SearchResultsStore.meta().totalCount, query: ""});
     }
+
   },
 
   search: function () {
     var query = this.state.query;
     if (query !== "") {
       SearchApiUtil.search(query, 1);
-      this.setState({
-        page: 1,
-        query: query,
-        formIndex: 0
-      });
+
     } else {
+      this.setState({
+        results: []
+      });
       this.props.search(this.state.results, this.state.query);
     }
 
@@ -75,45 +80,17 @@ var Search = React.createClass({
 
   render: function() {
     var that = this,
-        resultText = "",
         results = this.state.results,
-        totalCount = this.state.totalCount;
+        totalCount = this.state.totalCount,
+        query = this.state.query;
 
-
-    if (results.length > 0) {
-
-      resultText = (
-        <div>
-          <p>Showing { results.length } out of { totalCount } transactions</p>
-          <button onClick={this.nextPage}>Next ></button>
-        </div>
-      );
-    }
-
-    var searchResults = SearchResultsStore.all().map(function (searchResult, index) {
-      if (index === that.state.formIndex) {
-        return (
-          <TransactionItemForm
-              transaction={searchResult}
-              key={index} /> );
-      } else {
-        return (
-          <TransactionIndexItem
-            index={index}
-            onClick={that.makeFormIndex.bind(null, index)}
-            transaction={searchResult}
-            key={index} />
-        );
-      }
-    });
 
     return (
       <div className="search-component">
         <input
           type="text"
-          valueLink={this.linkState('query')}
+          onChange={this.handleInput} value={query}
           placeholder="Can't search yet" />
-        {resultText}
         <button className="search-button" onClick={this.search}>Search</button>
       </div>
     );
