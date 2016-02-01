@@ -39,7 +39,10 @@ var IndexSidebar = React.createClass({
 
     return (
       <section className="root-content-sidebar">
+        <header className="group">
         <h1>Accounts</h1>
+        <i className="fa fa-pencil"></i>
+        </header>
         {mappedAccountTypes}
       </section>
     );

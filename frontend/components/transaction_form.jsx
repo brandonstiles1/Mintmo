@@ -9,7 +9,15 @@ var TransactionItemForm = React.createClass({
   mixins: [LinkedStateMixin],
 
   getInitialState: function () {
-    var transaction = this.props.transaction,
+    return this.getStateFromProps(this.props);
+  },
+
+  componentDidMount: function() {
+    this.listener = TransactionStore.addListener(this._onChange);
+  },
+
+  getStateFromProps: function (props) {
+    var transaction = props.transaction,
         description = transaction.description,
         notes = transaction.notes,
         date = transaction.date,
@@ -26,11 +34,11 @@ var TransactionItemForm = React.createClass({
       id: id,
       date: date,
       amount: amount
-    };
+    }
   },
 
-  componentDidMount: function() {
-    this.listener = TransactionStore.addListener(this._onChange);
+  componentWillReceiveProps: function (newProps) {
+    this.setState(this.getStateFromProps(newProps));
   },
 
   _onChange: function() {

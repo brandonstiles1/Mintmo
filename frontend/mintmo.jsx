@@ -24,8 +24,9 @@ var routes = (
     <Route path="/" component={App} onEnter={_ensureLoggedIn}>
       <IndexRoute component={AccountIndex} />
       <Route path="accounts" component={AccountIndex} />
+      <Route path="type/:type" component={AccountIndex} />
       <Route path="accounts/:accountId" component={ AccountShow } />
-      <Route path="transactions"component={TransactionIndex} />
+      <Route path="transactions" component={TransactionIndex} />
     </Route>
   </Router>
 );

@@ -106,11 +106,13 @@
   border-right: 1px solid #ccc;
 }
 
-.root-content-sidebar > h1 {
+.root-content-sidebar > header > h1 {
+  float: left;
   padding: 20px 0;
   font-size: 18px;
   font-weight: bold;
 }
+
 .account-balance-headers {
   background: #f7f7f7;
   font-size: 15px;
@@ -173,6 +175,26 @@
 
 i {
   padding: 0 10px;
+}
+
+i.fa-pencil {
+  float: right;
+  color: #cdcdcd;
+  padding: 20px 40px 0 0;
+  font-size: 20px;
+}
+
+#show-pencil {
+  float: right;
+  color: #cdcdcd;
+  padding: 15px 15px 0 0;
+  font-size: 20px;
+}
+
+i.fa-pencil:hover,
+#show-pencil:hover {
+  cursor: pointer;
+  color: #aaa;
 }
 
 .root-content-main > h1 {

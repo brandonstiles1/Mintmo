@@ -52,8 +52,10 @@ var AccountShowSidebar = React.createClass({
       <section className="root-content-sidebar-show">
         <h1>Type</h1>
         {mappedAccountTypes}
+        <header className="group">
         <h1>Accounts</h1>
-
+        <i id="show-pencil" className="fa fa-pencil"></i>
+        </header>
         <h3 onClick={this.handleAllAccountsClick} className={allAccountsClass}>All Accounts</h3>
 
         {transactionMappedAccounts}
