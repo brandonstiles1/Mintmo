@@ -7,8 +7,17 @@ var AccountTypeIndex = require('../account_type_index'),
 var AccountShowSidebar = React.createClass({
   mixins: [History],
 
+  getInitialState: function () {
+    return {
+      typeClicked: false,
+      accountId: this.props.accountId || null,
+      allAccounts: this.props.showAllAccounts || null
+    };
+  },
+
   handleAccountTypeClick: function (type) {
 
+    this.setState({typeClicked: type, accountId: null, allAccounts: null});
   },
 
   handleAllAccountsClick: function () {
@@ -20,6 +29,7 @@ var AccountShowSidebar = React.createClass({
   },
 
   handleAccountClick: function (account) {
+    this.setState({typeClicked: false, accountId: null, allAccounts: null});
     this.history.pushState(null, 'accounts/' + account.id, {});
   },
 
@@ -33,7 +43,7 @@ var AccountShowSidebar = React.createClass({
         mappedAccountTypes = this.getMappedAccountTypes(accountTypes),
         transactionMappedAccounts = this.getTransactionMappedAccounts(accountsArr);
 
-    if (this.props.showAllAccounts) {
+    if (this.state.allAccounts) {
       allAccountsClass = "account-types-show-type selected-account";
     }
 
@@ -68,9 +78,9 @@ var AccountShowSidebar = React.createClass({
     var that = this;
     var transactionMappedAccounts = accountsArr.map(function(account, index){
       var accountClass = "account-types-show-type";
-      var accountId = parseInt(that.props.accountId);
+      var accountId = parseInt(that.state.accountId);
 
-      if (account.id === accountId) {
+      if (account.id === accountId || account.account_type === that.state.typeClicked) {
         accountClass = "account-types-show-type selected-account";
       }
       return (
