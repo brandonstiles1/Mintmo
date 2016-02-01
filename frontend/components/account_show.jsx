@@ -34,6 +34,7 @@ var AccountShow = React.createClass({
   },
 
   componentDidMount: function () {
+    ApiUtil.fetchAccounts();
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
     ApiUtil.fetchAccountTransactions(this.props.params.accountId);
     this.accountListener = AccountStore.addListener(this.onChange);
