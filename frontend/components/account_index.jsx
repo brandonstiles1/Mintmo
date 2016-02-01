@@ -55,6 +55,7 @@ var AccountIndex = React.createClass({
     this.storeListener.remove();
   },
 
+
   render: function () {
 
     var that = this,
@@ -111,7 +112,7 @@ var AccountIndex = React.createClass({
           <section className="root-content-main">
           <header className="root-content-main-header">
             <h1>All Transactions</h1>
-            <Search />
+
           </header>
             <TransactionIndex />
           </section>

@@ -4,13 +4,17 @@ var React = require('react'),
 var TransactionStore = require('../stores/transaction'),
     ApiUtil  = require('../util/api_util'),
     TransactionIndexItem = require('./transaction_index_item'),
-    TransactionItemForm = require('./transaction_form');
+    TransactionItemForm = require('./transaction_form'),
+    Search = require('./search');
 
 var TransactionIndex = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
-    return { transactions: TransactionStore.all(), formIndex: 0};
+    return {
+      transactions: TransactionStore.all(),
+      formIndex: 0
+    };
   },
 
   componentDidMount: function () {
@@ -30,10 +34,20 @@ var TransactionIndex = React.createClass({
     this.setState({formIndex: index});
   },
 
+  handleSearch: function (transactions, query) {
+    if (query !== "")
+      this.setState({transactions: transactions});
+    else {
+      this.setState({transactions: TransactionStore.all()});
+    }
+  },
+
   render: function () {
 
     var that = this,
         transactions = this.state.transactions;
+
+
 
     var mappedBody = transactions.map(function(transaction, index) {
       if (index === that.state.formIndex) {
@@ -53,6 +67,7 @@ var TransactionIndex = React.createClass({
 
     return (
       <div>
+        <Search search={that.handleSearch} />
         <table className="transaction-table">
           <thead className="transaction-table-header">
             <tr >

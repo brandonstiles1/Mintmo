@@ -9,23 +9,50 @@ var SearchResultsStore = require('../stores/search_results_store'),
 var Search = React.createClass({
     mixins: [LinkedStateMixin],
 
+    getInitialState: function () {
+      return {
+        page: 1,
+        query: "",
+        results: SearchResultsStore.all(),
+        totalCount: SearchResultsStore.meta().totalCount
+      };
+    },
+
   componentDidMount: function() {
     this.listener = SearchResultsStore.addListener(this._onChange);
   },
 
-  getInitialState: function () {
-    return {page: 1, query: ""};
-  },
 
   _onChange: function() {
-    this.forceUpdate();
+    var results = SearchResultsStore.all(),
+        that = this;
+
+    if (this.props.account) {
+      filteredResults = [];
+      results.forEach(function(result) {
+        if (result.account_id === that.props.account) {
+          filteredResults.push(result);
+        }
+      });
+      this.setState({results: filteredResults, totalCount: filteredResults.length});
+      this.props.search(this.state.results, this.state.query);
+    } else {
+      this.setState({results: results, totalCount: SearchResultsStore.meta().totalCount});
+      this.props.search(this.state.results, this.state.query);
+    }
   },
 
   search: function () {
     var query = this.state.query;
+
     SearchApiUtil.search(query, 1);
 
-    this.setState({page: 1, query: query, formIndex: 0});
+    this.setState({
+      page: 1,
+      query: query,
+      formIndex: 0
+    });
+
   },
 
   nextPage: function () {
@@ -46,10 +73,12 @@ var Search = React.createClass({
   render: function() {
     var that = this,
         resultText = "",
-        results = SearchResultsStore.all(),
-        totalCount = SearchResultsStore.meta().totalCount;
+        results = this.state.results,
+        totalCount = this.state.totalCount;
+
 
     if (results.length > 0) {
+
       resultText = (
         <div>
           <p>Showing { results.length } out of { totalCount } transactions</p>
@@ -62,7 +91,7 @@ var Search = React.createClass({
       if (index === that.state.formIndex) {
         return (
           <TransactionItemForm
-              transaction={transaction}
+              transaction={searchResult}
               key={index} /> );
       } else {
         return (
@@ -83,11 +112,6 @@ var Search = React.createClass({
           placeholder="Can't search yet" />
         {resultText}
         <button className="search-button" onClick={this.search}>Search</button>
-
-
-        <section className="transaction-table-body">
-          { searchResults }
-        </section>
       </div>
     );
   }

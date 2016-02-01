@@ -23,6 +23,13 @@ class Transaction < ActiveRecord::Base
 
   default_scope { order('date DESC') }
 
+  def institution_id
+
+    institution.id
+  end
+
+
   include PgSearch
-  multisearchable :against => [:description, :category, :amount, :date]
+  multisearchable :against => [:description, :category, :amount, :date, :account_id]
+
 end

@@ -61,6 +61,14 @@ var AccountShow = React.createClass({
 
   },
 
+  handleSearch: function (transactions, query) {
+    if (query !== "")
+      this.setState({transactions: transactions});
+    else {
+      this.setState({transactions: TransactionStore.all()});
+    }
+  },
+
   handleOverviewClick: function () {
     this.history.pushState(null, 'accounts', {});
   },
@@ -133,7 +141,7 @@ var AccountShow = React.createClass({
           <h1>{account.name.slice(0,25)}...</h1>
           <h6>TOTAL BALANCE</h6>
           <h5>{account.balance}</h5>
-          <Search/>
+          <Search search={this.handleSearch} account={account.id} />
           <table className="transaction-table group">
             <thead className="transaction-table-header">
               <tr >

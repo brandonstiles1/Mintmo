@@ -27,7 +27,7 @@ student_Loan = Institution.create!(
 paypal = Institution.create!(
   name: "Paypal",
   url: "https://www.paypal.com/home",
-  logo_url: "https://www.paypalobjects.com/webstatic/icon/pp258.png"
+  logo_url: "http://logok.org/wp-content/uploads/2014/05/Paypal-logo-pp-2014.png"
 )
 
 capital_one = Institution.create!(
