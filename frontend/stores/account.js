@@ -51,6 +51,11 @@ AccountStore.all = function () {
 
 };
 
+AccountStore.allByIdx = function () {
+  return $.extend({}, _accountsIdx);
+
+};
+
 AccountStore.find = function (id) {
   return _accountsIdx[id];
 };

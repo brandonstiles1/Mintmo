@@ -68,6 +68,10 @@ module.exports = {
     return accountBalances;
   },
 
+  filterTypeTransactions: function(accounts, transactions) {
+
+  },
+
   getAccountsArr: function (accounts) {
     var accountsArr = [];
 

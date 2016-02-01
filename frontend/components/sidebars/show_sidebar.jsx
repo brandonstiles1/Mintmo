@@ -16,8 +16,8 @@ var AccountShowSidebar = React.createClass({
   },
 
   handleAccountTypeClick: function (type) {
-
     this.setState({typeClicked: type, accountId: null, allAccounts: null});
+    this.props.accountTypeClick(type);
   },
 
   handleAllAccountsClick: function () {
@@ -63,11 +63,15 @@ var AccountShowSidebar = React.createClass({
   getMappedAccountTypes: function (accountTypes) {
     var that = this;
     var mappedAccountTypes = accountTypes.map(function(type){
+      var accountClass = "account-types-show-type";
+      if (type === that.state.typeClicked) {
+        accountClass = "account-types-show-type selected-account";
+      }
       return (
         <h3
           onClick={that.handleAccountTypeClick.bind(null, type)}
           key={type}
-          className="account-types-show-type">{type}</h3>
+          className={accountClass}>{type}</h3>
       );
     });
 

@@ -27,7 +27,9 @@ var AccountShow = React.createClass({
       formIndex: 0,
       inSearch: false,
       totalCount: null,
-      query: null
+      query: null,
+      filterAccountType: false,
+      typeIds: null
     };
   },
 
@@ -58,8 +60,13 @@ var AccountShow = React.createClass({
     this.transactionListener.remove();
   },
 
-  handleAccountTypeClick: function () {
+  handleAccountTypeClick: function (type) {
+    var typeAccounts = this.state.allAccounts[type];
+    var typeIds = typeAccounts.map(function(account) {
+      return account.id;
+    });
 
+    this.setState({filterAccountType: type, typeIds: typeIds, inSearch: false});
   },
 
   handleSearch: function (transactions, query, totalCount) {
@@ -79,7 +86,7 @@ var AccountShow = React.createClass({
   },
 
   handleAccountClick: function () {
-    this.setState({accountClicked: true});
+    this.setState({accountClicked: true, filterAccountType: false});
   },
 
   handleAllAccountsClick: function (e) {
@@ -103,6 +110,7 @@ var AccountShow = React.createClass({
         overviewClass = ComponentActions.getOverviewClass(overviewClicked),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
         search,
+        headerText,
         header =
           <Header
             overviewClicked={overviewClicked}
@@ -111,6 +119,7 @@ var AccountShow = React.createClass({
             transactionsClick={this.handleTransactionsClick}/>,
           sidebar =
           <AccountShowSidebar
+            accountTypeClick={this.handleAccountTypeClick}
             accountId={this.props.params.accountId}
             accounts={that.state.allAccounts}
             accountClick={that.handleAccountClick}
@@ -131,6 +140,7 @@ var AccountShow = React.createClass({
       }
 
     search = <Search search={this.handleSearch} account={account.id} />;
+    headerText = <h1>{account.name}</h1>;
 
 
     var mappedBody = transactions.map(function(transaction, index) {
@@ -149,35 +159,58 @@ var AccountShow = React.createClass({
       }
     });
 
-    return (
-      <div>
-        {header}
-      <main className="root-content group">
+    if (this.state.filterAccountType) {
 
-        {sidebar}
+      headerText = <h1>All {this.state.filterAccountType} Accounts</h1>;
+      return (
+        <div>
+          {header}
+        <main className="root-content group">
 
-        <section className="root-content-main">
-          <h1>{account.name}</h1>
-          <h6>TOTAL BALANCE</h6>
-          <h5>{account.balance}</h5>
-          {search}
-          {resultText}
-          <table className="transaction-table group">
-            <thead className="transaction-table-header">
-              <tr >
-                <th className="date">Date</th>
-                <th className="description">Description</th>
-                <th className="category">Category</th>
-                <th className="amount">Amount</th>
-              </tr>
-            </thead>
-            <tbody className="transaction-table-body">
-              {mappedBody}
-            </tbody>
-          </table>
-        </section>
-      </main>
-    </div>);
+          {sidebar}
+
+          <section className="root-content-main">
+            {headerText}
+            <h6>TOTAL BALANCE</h6>
+            <h5>{account.balance}</h5>
+            <TransactionIndex
+              filterAccountType={this.state.filterAccountType}
+              typeIds={this.state.typeIds} />
+          </section>
+        </main>
+      </div>);
+    } else {
+      return (
+        <div>
+          {header}
+          <main className="root-content group">
+
+            {sidebar}
+
+            <section className="root-content-main">
+              {headerText}
+              <h6>TOTAL BALANCE</h6>
+              <h5>{account.balance}</h5>
+              {search}
+              {resultText}
+              <table className="transaction-table group">
+                <thead className="transaction-table-header">
+                  <tr >
+                    <th className="date">Date</th>
+                    <th className="description">Description</th>
+                    <th className="category">Category</th>
+                    <th className="amount">Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="transaction-table-body">
+                  {mappedBody}
+                </tbody>
+              </table>
+            </section>
+          </main>
+        </div>);
+    }
+
   }
 
 });

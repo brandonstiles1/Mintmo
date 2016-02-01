@@ -52,7 +52,16 @@ var TransactionIndex = React.createClass({
         transactions = this.state.transactions,
         search =  <Search search={this.handleSearch} reset="true" />;
 
-
+    if (this.props.filterAccountType) {
+      
+      var newTransactions = [];
+      transactions.forEach(function(transaction) {
+        if (transaction.account_type === that.props.filterAccountType) {
+          newTransactions.push(transaction);
+        }
+      });
+      transactions = newTransactions;
+    }
 
     var mappedBody = transactions.map(function(transaction, index) {
       if (index === that.state.formIndex) {
