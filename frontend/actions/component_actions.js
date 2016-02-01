@@ -19,7 +19,7 @@ module.exports = {
   },
 
   generateBalance: function () {
-    return Math.floor(Math.random() * (25000 + 3999) - 4000) - 0.05;
+    return Math.floor(Math.random() * (25000 + 3999) - 4000);
   },
 
   generateAccountType: function () {
