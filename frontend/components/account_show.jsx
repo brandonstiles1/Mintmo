@@ -156,7 +156,7 @@ var AccountShow = React.createClass({
         {sidebar}
 
         <section className="root-content-main">
-          <h1>{account.name.slice(0,25)}...</h1>
+          <h1>{account.name}</h1>
           <h6>TOTAL BALANCE</h6>
           <h5>{account.balance}</h5>
           {search}

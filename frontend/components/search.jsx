@@ -90,7 +90,7 @@ var Search = React.createClass({
         <input
           type="text"
           onChange={this.handleInput} value={query}
-          placeholder="Can't search yet" />
+          placeholder="Search for a transaction" />
         <button className="search-button" onClick={this.search}>Search</button>
       </div>
     );

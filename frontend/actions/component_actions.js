@@ -48,6 +48,14 @@ module.exports = {
     return sum;
   },
 
+  sliceAccountName: function (accountName) {
+    if (accountName.length > 18) {
+      return accountName.slice(0, 18) + "...";
+    } else {
+      return accountName;
+    }
+  },
+
   getAccountBalances: function (accounts) {
     var accountBalances = {};
     var that = this;
