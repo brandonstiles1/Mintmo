@@ -117,6 +117,10 @@
   cursor: pointer;
 }
 
+.account-type-account:hover {
+  cursor:default;
+}
+
 .account-type-account > p1 {
   float: left;
   color: black;

@@ -44,12 +44,21 @@ button.edit-details-submit {
 }
 
 
+button.update-user-submit {
+  text-transform: uppercase;
+}
 
-button.edit-details-submit:hover {
+button.edit-details-submit:hover,
+ footer > button:hover,
+ button.update-user-submit:hover,
+ button.search-button:hover {
   cursor: pointer;
   background: #42c0db;
   color: #e9f8fb;
 }
+
+
+
 
 
 tr.edit-form {

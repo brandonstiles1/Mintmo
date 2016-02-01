@@ -187,6 +187,12 @@ p.add-account-label {
 .add-account-submit {
   float: left;
 }
+
+.add-account-submit:hover {
+  background: #42c0db;
+  color: #e9f8fb;
+}
+
 .go-back {
   float: left;
   margin: 10px 0 0 40px;
