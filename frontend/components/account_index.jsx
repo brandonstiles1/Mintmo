@@ -87,6 +87,7 @@ var AccountIndex = React.createClass({
           {header}
           <main className="root-content group">
             <AccountShowSidebar
+              showAllAccounts="true"
               allAccountsClick={that.handleAllAccountsClick}
               accounts={that.state.accounts}
               accountClick={that.handleAccountClick}

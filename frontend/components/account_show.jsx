@@ -111,6 +111,7 @@ var AccountShow = React.createClass({
             transactionsClick={this.handleTransactionsClick}/>,
           sidebar =
           <AccountShowSidebar
+            accountId={this.props.params.accountId}
             accounts={that.state.allAccounts}
             accountClick={that.handleAccountClick}
             transactionsClick={that.handleTransactionsClick}

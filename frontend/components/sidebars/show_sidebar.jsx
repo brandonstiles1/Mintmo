@@ -29,18 +29,22 @@ var AccountShowSidebar = React.createClass({
         accounts = this.props.accounts,
         accountTypes = ComponentActions.getAccountTypes(accounts),
         accountsArr = ComponentActions.getAccountsArr(accounts),
+        allAccountsClass = "account-types-show-type",
         mappedAccountTypes = this.getMappedAccountTypes(accountTypes),
         transactionMappedAccounts = this.getTransactionMappedAccounts(accountsArr);
 
+    if (this.props.showAllAccounts) {
+      allAccountsClass = "account-types-show-type selected-account";
+    }
 
     return (
       <section className="root-content-sidebar-show">
         <h1>Type</h1>
         {mappedAccountTypes}
         <h1>Accounts</h1>
-        <a onClick={this.handleAllAccountsClick} href="#">
-          <h3 className="account-types-show-type">All Accounts</h3>
-        </a>
+
+        <h3 onClick={this.handleAllAccountsClick} className={allAccountsClass}>All Accounts</h3>
+
         {transactionMappedAccounts}
       </section>
     );
@@ -63,11 +67,17 @@ var AccountShowSidebar = React.createClass({
   getTransactionMappedAccounts: function (accountsArr) {
     var that = this;
     var transactionMappedAccounts = accountsArr.map(function(account, index){
+      var accountClass = "account-types-show-type";
+      var accountId = parseInt(that.props.accountId);
+
+      if (account.id === accountId) {
+        accountClass = "account-types-show-type selected-account";
+      }
       return (
         <a key={index} href={"#/accounts/" + account.id}>
           <h3
             onClick={that.handleAccountClick.bind(null, account)}
-            className="account-types-show-type">{account.name}</h3>
+            className={accountClass}>{account.name}</h3>
         </a>
       );
     });

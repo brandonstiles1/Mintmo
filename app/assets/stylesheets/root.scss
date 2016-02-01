@@ -106,6 +106,7 @@
 }
 
 .root-content-sidebar > h1 {
+  padding: 20px 0;
   font-size: 18px;
   font-weight: bold;
 }
@@ -167,4 +168,9 @@
 
 .type-background {
   background: #f7f7f7;
+}
+
+.root-content-main > h1 {
+  font-size: 22px;
+  font-weight: 600;
 }
