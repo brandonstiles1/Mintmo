@@ -48,7 +48,7 @@ var IndexSidebar = React.createClass({
   getMappedAccountTypes: function (accountTypes, accountBalances, accounts) {
     var that = this;
     var mappedAccountTypes = accountTypes.map(function(type){
-      var balanceClass = (accountBalances[type] > 0) ? "account-balance" : "account-balance-neg group";
+      var balanceClass = ComponentActions.getAccountBalanceClass(accountBalances[type]);
       var expandedAccounts;
       if (that.state.expanded[type] === undefined || that.state.expanded[type]) {
         expandedAccounts = (

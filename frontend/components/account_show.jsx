@@ -109,6 +109,7 @@ var AccountShow = React.createClass({
         transactionsClicked =this.state.transactionsClicked,
         overviewClicked =this.state.overviewClicked,
         resultText = "",
+        balanceClass = "",
         overviewClass = ComponentActions.getOverviewClass(overviewClicked),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
         search,
@@ -162,6 +163,7 @@ var AccountShow = React.createClass({
     });
 
     if (this.state.filterAccountType) {
+      balanceClass = (this.typeBalance > 0) ? "" : "neg";
 
       headerText = <h1>All {this.state.filterAccountType} Accounts</h1>;
       return (
@@ -174,7 +176,7 @@ var AccountShow = React.createClass({
           <section className="root-content-main">
             {headerText}
             <h6>TOTAL BALANCE</h6>
-            <h5>${this.typeBalance}</h5>
+            <h5 className={balanceClass}>${this.typeBalance}</h5>
             <TransactionIndex
               filterAccountType={this.state.filterAccountType}
               typeIds={this.state.typeIds} />
@@ -182,6 +184,7 @@ var AccountShow = React.createClass({
         </main>
       </div>);
     } else {
+      balanceClass = (account.balance_n > 0) ? "" : "neg";
       return (
         <div>
           {header}
@@ -192,7 +195,7 @@ var AccountShow = React.createClass({
             <section className="root-content-main">
               {headerText}
               <h6>TOTAL BALANCE</h6>
-              <h5>{account.balance}</h5>
+              <h5 className={balanceClass}>{account.balance}</h5>
               {search}
               {resultText}
               <table className="transaction-table group">

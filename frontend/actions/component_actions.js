@@ -68,8 +68,12 @@ module.exports = {
     return accountBalances;
   },
 
-  filterTypeTransactions: function(accounts, transactions) {
-
+  getAccountBalanceClass: function(accountBalance) {
+    if (accountBalance > 0) {
+      return "account-balance";
+    } else {
+      return "account-balance-neg group";
+    }
   },
 
   getAccountsArr: function (accounts) {
