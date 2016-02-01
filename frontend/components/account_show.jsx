@@ -62,9 +62,11 @@ var AccountShow = React.createClass({
 
   handleAccountTypeClick: function (type) {
     var typeAccounts = this.state.allAccounts[type];
+    this.typeBalance = 0;
     var typeIds = typeAccounts.map(function(account) {
+      this.typeBalance += parseInt(account.balance_n);
       return account.id;
-    });
+    }.bind(this));
 
     this.setState({filterAccountType: type, typeIds: typeIds, inSearch: false});
   },
@@ -86,7 +88,7 @@ var AccountShow = React.createClass({
   },
 
   handleAccountClick: function () {
-    this.setState({accountClicked: true, filterAccountType: false});
+    this.setState({accountClicked: true, filterAccountType: false, inSearch: false});
   },
 
   handleAllAccountsClick: function (e) {
@@ -172,7 +174,7 @@ var AccountShow = React.createClass({
           <section className="root-content-main">
             {headerText}
             <h6>TOTAL BALANCE</h6>
-            <h5>{account.balance}</h5>
+            <h5>${this.typeBalance}</h5>
             <TransactionIndex
               filterAccountType={this.state.filterAccountType}
               typeIds={this.state.typeIds} />

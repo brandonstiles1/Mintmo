@@ -29,7 +29,8 @@ var AccountShowSidebar = React.createClass({
   },
 
   handleAccountClick: function (account) {
-    this.setState({typeClicked: false, accountId: null, allAccounts: null});
+    this.setState({typeClicked: false, allAccounts: null, accountId: account.id});
+    this.props.accountClick();
     this.history.pushState(null, 'accounts/' + account.id, {});
   },
 
