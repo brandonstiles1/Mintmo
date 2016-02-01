@@ -44,14 +44,17 @@ var Search = React.createClass({
 
   search: function () {
     var query = this.state.query;
+    if (query !== "") {
+      SearchApiUtil.search(query, 1);
+      this.setState({
+        page: 1,
+        query: query,
+        formIndex: 0
+      });
+    } else {
+      this.props.search(this.state.results, this.state.query);
+    }
 
-    SearchApiUtil.search(query, 1);
-
-    this.setState({
-      page: 1,
-      query: query,
-      formIndex: 0
-    });
 
   },
 
