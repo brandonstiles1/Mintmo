@@ -6,6 +6,7 @@ var AddAccountModal = require('./add_account'),
 var ModalIndex = React.createClass({
 
   getInitialState: function () {
+    this.initalLocation = this.props.location;
     return { modalBody: this.props.location, location: this.props.location };
   },
 
@@ -15,13 +16,13 @@ var ModalIndex = React.createClass({
 
   renderAccountBody: function () {
     if (this.state.modalBody !== "accounts") {
-      this.setState({modalBody: "accounts"});
+      this.setState({modalBody: "accounts", location: "accountIndex"});
     }
   },
 
   renderUserBody: function () {
     if (this.state.modalBody !== "user") {
-      this.setState({modalBody: "user"});
+      this.setState({modalBody: "user", location: "user"});
     }
   },
 
@@ -36,17 +37,23 @@ var ModalIndex = React.createClass({
 
     if (this.state.location === "user") {
       userClass = "selected";
+      accountsClass = "";
     } else if (this.state.location === "accountIndex"){
       accountsClass = "selected";
-      divClass = "modal-account-index";
+      userClass = "";
     } else if (this.state.location === "accountShow") {
-      divClass = "modal-account-show";
       accountsClass = "selected";
+      userClass = "";
+    }
+    if (this.initalLocation === "accountIndex") {
+      divClass = "modal-account-index";
+    } else if (this.initalLocation === "accountShow") {
+      divClass = "modal-account-show";
     }
 
     return (
       <div>
-        <div className="transparent-wrapper"></div>
+        <div onClick={this.closeModal} className="transparent-wrapper"></div>
         <div className={divClass}>
           <header className="modal-index-header">
             <ul className="modal-header-list group">
