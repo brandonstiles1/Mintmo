@@ -59,8 +59,6 @@ var Search = React.createClass({
       });
       this.props.search(this.state.results, this.state.query);
     }
-
-
   },
 
   nextPage: function () {

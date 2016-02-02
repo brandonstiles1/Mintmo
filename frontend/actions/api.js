@@ -42,7 +42,8 @@ var ApiActions = {
   receiveAllTransactions: function (transactions) {
     AppDispatcher.dispatch({
       actionType: TransactionConstants.TRANSACTIONS_RECEIVED,
-      transactions: transactions
+      transactions: transactions,
+      meta: {totalCount: transactions[0].total_count}
     });
   },
 

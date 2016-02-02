@@ -6,11 +6,16 @@ var AppDispatcher = require('../dispatcher/dispatcher'),
 var _transactions = [];
 var _transactionsIdx = {};
 var _transactionsByAccountId = {};
+var _meta = {};
 
 var TransactionStore = new Store(AppDispatcher);
 
 TransactionStore.all = function () {
   return _transactions.slice();
+};
+
+TransactionStore.meta = function () {
+  return _meta;
 };
 
 var resetTransactions = function (transactions) {
@@ -58,6 +63,7 @@ TransactionStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case TransactionConstants.TRANSACTIONS_RECEIVED:
       resetTransactions(payload.transactions);
+      _meta = payload.meta;
       TransactionStore.__emitChange();
       break;
     case TransactionConstants.TRANSACTION_RECEIVED:

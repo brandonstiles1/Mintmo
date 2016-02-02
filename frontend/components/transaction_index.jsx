@@ -17,17 +17,26 @@ var TransactionIndex = React.createClass({
       formIndex: 0,
       inSearch: false,
       totalCount: null,
-      query: null
+      query: null,
+      page: 1,
+      totalCountOutSearch: TransactionStore.meta().totalCount
     };
   },
 
   componentDidMount: function () {
-    ApiUtil.fetchTransactions();
+    ApiUtil.fetchTransactions(this.state.page);
     this.storeListener = TransactionStore.addListener(this.onChange);
   },
 
+  nextPage: function () {
+    var nextPage = this.state.page + 1;
+    ApiUtil.fetchTransactions(nextPage);
+
+    this.setState({page: nextPage});
+  },
+
   onChange: function () {
-    this.setState({ transactions: TransactionStore.all() });
+    this.setState({ transactions: TransactionStore.all(), totalCountOutSearch: TransactionStore.meta().totalCount });
   },
 
   componentWillUnmount: function () {
@@ -35,7 +44,7 @@ var TransactionIndex = React.createClass({
   },
 
   componentWillReceiveProps: function () {
-    this.setState({ inSearch: false, transactions: TransactionStore.all() });
+    this.setState({ inSearch: false, transactions: TransactionStore.all(), totalCountOutSearch: TransactionStore.meta().totalCount });
   },
 
   makeFormIndex: function (index) {
@@ -53,9 +62,11 @@ var TransactionIndex = React.createClass({
   render: function () {
 
     var that = this,
-    resultText = "",
+        resultText = "",
         transactions = this.state.transactions,
         search =  <Search search={this.handleSearch} reset="true" />;
+
+    var totalCount = (this.state.inSearch) ? this.state.totalCount : this.state.totalCountOutSearch;
 
     if (this.props.filterAccountType) {
 
@@ -84,11 +95,17 @@ var TransactionIndex = React.createClass({
       }
     });
 
+    var button = (totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";
     if (this.state.inSearch) {
-      var button = (this.state.totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";
       resultText = (
         <div className="search-result-text">
           <p>Showing { transactions.length } out of { this.state.totalCount } transaction(s) that match "{this.state.query}" {button}</p>
+        </div>
+      );
+    } else {
+      resultText = (
+        <div className="search-result-text">
+          <p>Showing { transactions.length } out of { totalCount } transaction(s) {button}</p>
         </div>
       );
     }

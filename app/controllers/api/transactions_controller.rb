@@ -3,21 +3,12 @@ class Api::TransactionsController < ApplicationController
   before_action :redirect_logged_out_users
 
   def index
-    @transactions = current_user.transactions
-      .includes(:institution, :account)
+    @transactions = current_user.transactions.includes(:institution, :account)
+    @count = @transactions.count
+    @transactions = @transactions.page(params[:page])
 
     render :index
   end
-
-  # def create
-  #   @transaction = current_user.transactions.create!(transaction_params)
-  #   @transaction.save!
-  #   render json: @transaction.to_json
-  # end
-  #
-  # def new
-  #   @transaction = current_user.transactions.new
-  # end
 
   def update
     @transaction = Transaction.includes(:institution, :account).find(params[:transaction][:id])
@@ -29,13 +20,6 @@ class Api::TransactionsController < ApplicationController
     @transaction = Transaction.includes(:institution, :account).find(params[:id])
     render :show
   end
-
-  # def destroy
-  #   @transaction = Transaction.find(params[:id])
-  #   @transaction.destroy!
-  #   @transactions = current_user.transactions
-  #   render :index
-  # end
 
   private
   def transaction_params

@@ -15,6 +15,8 @@
 #
 
 class Transaction < ActiveRecord::Base
+  attr_accessor :total_count
+
   validates :account, :amount, :description, :date, presence: true
 
   belongs_to :account
