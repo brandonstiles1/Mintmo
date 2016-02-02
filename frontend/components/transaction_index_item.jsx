@@ -28,7 +28,7 @@ var TransactionIndexItem = React.createClass({
         <td className="date">{date}</td>
         <td className="description">{transaction.description}</td>
         <td className={categoryClass}>{transaction.category}</td>
-        <td className="amount">{transaction.amount}</td>
+        <td className="amount">{accounting.formatMoney(transaction.amount)}</td>
       </tr>
     );
   }

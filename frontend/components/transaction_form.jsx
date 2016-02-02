@@ -81,8 +81,8 @@ var TransactionItemForm = React.createClass({
       category: category,
       notes: this.state.notes,
       date: this.state.date,
-      amount: this.state.amount,
-      amount_n: this.state.amount_n
+      amount: parseFloat(this.state.amount_n),
+      amount_n: parseFloat(this.state.amount_n)
     };
 
 
@@ -114,10 +114,9 @@ var TransactionItemForm = React.createClass({
   },
 
   render: function () {
-    debugger
 
     var transaction = this.props.transaction,
-        date = ComponentActions.formatDate(this.initialState.date),
+        date = ComponentActions.formatDate(this.state.date),
         postEvent = this.updateTransaction;
 
 
@@ -153,9 +152,6 @@ var TransactionItemForm = React.createClass({
     return (
       <tr className="edit-form">
         <td className="date">
-          <input
-            type="hidden"
-            valueLink={this.linkState('date')} />
           {date}
         </td>
         <td className="description">
