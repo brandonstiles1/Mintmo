@@ -11,6 +11,7 @@ var TransactionIndex = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
+
     return {
       transactions: TransactionStore.all(),
       formIndex: 0,
@@ -33,6 +34,10 @@ var TransactionIndex = React.createClass({
     this.storeListener.remove();
   },
 
+  componentWillReceiveProps: function () {
+    this.setState({ inSearch: false, transactions: TransactionStore.all() });
+  },
+
   makeFormIndex: function (index) {
     this.setState({formIndex: index});
   },
@@ -53,7 +58,7 @@ var TransactionIndex = React.createClass({
         search =  <Search search={this.handleSearch} reset="true" />;
 
     if (this.props.filterAccountType) {
-      
+
       var newTransactions = [];
       transactions.forEach(function(transaction) {
         if (transaction.account_type === that.props.filterAccountType) {
@@ -80,18 +85,16 @@ var TransactionIndex = React.createClass({
     });
 
     if (this.state.inSearch) {
-
+      var button = (this.state.totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";
       resultText = (
-        <div>
-          <p>Showing { transactions.length } out of { this.state.totalCount } transactions that match {this.state.query}</p>
-          <button onClick={this.nextPage}>Next ></button>
+        <div className="search-result-text">
+          <p>Showing { transactions.length } out of { this.state.totalCount } transaction(s) that match "{this.state.query}" {button}</p>
         </div>
       );
-
     }
 
     return (
-      <div>
+      <div className="group">
         {search}
         {resultText}
         <table className="transaction-table">

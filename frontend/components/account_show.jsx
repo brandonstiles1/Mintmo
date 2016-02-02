@@ -69,7 +69,8 @@ var AccountShow = React.createClass({
       return account.id;
     }.bind(this));
 
-    this.setState({filterAccountType: type, typeIds: typeIds, inSearch: false});
+
+    this.setState({filterAccountType: type, typeIds: typeIds, inSearch: false, totalCount: null});
   },
 
   handleSearch: function (transactions, query, totalCount) {
@@ -131,13 +132,13 @@ var AccountShow = React.createClass({
             />;
 
     if (!(account && transactions)) { return <div>SPINNER</div>; }
-
+      
       if (this.state.inSearch) {
 
+        var button = (this.state.totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";
         resultText = (
-          <div>
-            <p>Showing { transactions.length } out of { this.state.totalCount } transactions that match {this.state.query}</p>
-            <button onClick={this.nextPage}>Next ></button>
+          <div className="search-result-text">
+            <p>Showing { transactions.length } out of { this.state.totalCount } transaction(s) that match "{this.state.query}" {button}</p>
           </div>
         );
 
@@ -193,7 +194,7 @@ var AccountShow = React.createClass({
 
             {sidebar}
 
-            <section className="root-content-main">
+            <section className="root-content-main group">
               {headerText}
               <h6>TOTAL BALANCE</h6>
               <h5 className={balanceClass}>{account.balance}</h5>

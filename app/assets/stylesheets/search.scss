@@ -30,3 +30,18 @@
   text-align: center;
   cursor: pointer;
 }
+
+.search-result-text {
+  color: #666666;
+  font-size: 14px;
+  margin: 50px 0 20px 0;
+  display: block;
+  width: 450px;
+}
+
+
+
+.search-result-text > p > button {
+  cursor: pointer;
+  text-decoration: underline;
+}

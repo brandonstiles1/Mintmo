@@ -13,8 +13,7 @@
   font-size: 22px;
   font-weight: 600;
   display: block;
-  min-height: 63px;
-  border-bottom: 1px solid #dddddd;
+  margin-bottom: 20px;
 }
 
 .root-content-sidebar-show {
@@ -56,6 +55,7 @@
 }
 
 h5 {
+  float: left;
   font-size: 22px;
   color: #4ba90a;
   font-weight: normal;
@@ -64,6 +64,7 @@ h5 {
 }
 
 h6 {
+
   font-weight: bold;
   color: #999;
   font-size: 11px;
@@ -150,5 +151,6 @@ tr.transaction-row-odd {
 }
 
 h5.neg {
+  float: left;
   color: black;
 }
