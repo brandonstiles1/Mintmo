@@ -154,19 +154,23 @@ var EditUserFormModal = React.createClass({
   },
 
   handleUpdate: function () {
-    var user = new FormData();
+    var user = new FormData(),
+        userId = this.state.id;
 
-    if ( typeof this.state.imageFile !== "undefined" ) {
+    if ( typeof this.state.imageFile !== "undefined"  && this.state.imageFile !== null) {
+      debugger
       user.append("user[avatar]", this.state.imageFile);
     }
 
-    user.append("user[id]", this.state.id);
+    user.append("user[id]", userId);
     user.append("user[fname]", this.state.fname);
     user.append("user[lname]", this.state.lname);
     user.append("user[gender]", this.state.gender);
     user.append("user[age]", this.state.age);
 
-    UsersApiUtil.updateUser(user, this.closeModal);
+    UsersApiUtil.updateUser(user, userId, this.closeModal);
+
+
   }
 
 });

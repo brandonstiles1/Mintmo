@@ -28,9 +28,11 @@ var ModalIndex = React.createClass({
   render: function () {
     var accountsClass= "",
         userClass= "",
-        divClass = "modal-index";
+        divClass = "modal-index",
+        editUserForm = <EditUserFormModal toggleModal={this.closeModal}/>,
+        addAccountModal = <AddAccountModal toggleModal={this.closeModal}/>;
 
-    var modalBody = (this.state.modalBody === "user") ? <EditUserFormModal /> : <AddAccountModal />;
+    var modalBody = (this.state.modalBody === "user") ? editUserForm : addAccountModal;
 
     if (this.state.location === "user") {
       userClass = "selected";

@@ -38,9 +38,10 @@ var UsersApiUtil = {
     });
   },
 
-  updateUser: function (user, callback) {
+  updateUser: function (user, userId, callback) {
+
     $.ajax({
-      url: '/api/users/' + user.id,
+      url: '/api/users/' + userId,
       type: 'patch',
       processData: false,
       contentType: false,
