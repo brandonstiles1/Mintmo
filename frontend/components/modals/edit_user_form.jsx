@@ -158,7 +158,6 @@ var EditUserFormModal = React.createClass({
         userId = this.state.id;
 
     if ( typeof this.state.imageFile !== "undefined"  && this.state.imageFile !== null) {
-      debugger
       user.append("user[avatar]", this.state.imageFile);
     }
 

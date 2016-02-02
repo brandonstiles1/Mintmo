@@ -64,6 +64,7 @@ var AccountIndex = React.createClass({
         overviewClicked = this.state.overviewClicked,
         transactionsClicked = this.state.transactionsClicked,
         overviewClass = ComponentActions.getOverviewClass(overviewClicked),
+        accountsArr = ComponentActions.getAccountsArr(accounts),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
         modal = <div></div>;
         header =
@@ -73,7 +74,9 @@ var AccountIndex = React.createClass({
             overviewClick={this.handleOverviewClick}
             transactionsClick={this.handleTransactionsClick}/>;
 
-    if (accountClicked) {
+    if (accountsArr.length === 0) {
+      return this.newUserWelcome();
+    } else if (accountClicked) {
       return (
         <div>
           {header}
@@ -120,6 +123,28 @@ var AccountIndex = React.createClass({
         </main>
       </div>);
     }
+  },
+
+  newUserWelcome: function () {
+    return (
+      <div>
+        {header}
+        <main className="root-content group">
+          <IndexSidebar
+            accounts={that.state.accounts}
+            accountClick={that.handleAccountClick}
+            transactionsClick={that.handleTransactionsClick}
+            />
+
+          <section className="root-content-main">
+          <header className="root-content-main-header">
+            <h1>Welcome to Mintmo</h1>
+
+          </header>
+            <TransactionIndex />
+          </section>
+        </main>
+      </div>);
   }
 
 });
