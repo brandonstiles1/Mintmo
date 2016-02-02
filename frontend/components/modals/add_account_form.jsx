@@ -32,8 +32,12 @@ var AddAccountFormModal = React.createClass({
       institution_id: instId
     };
 
-    ApiUtil.createAccount(account);
+    ApiUtil.createAccount(account, this.navToNewAccount);
 
+  },
+
+  navToNewAccount: function (id) {
+    this.history.pushState(null, 'accounts/' + id, {});
   },
 
   goBack: function () {

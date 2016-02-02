@@ -85,7 +85,7 @@ var ApiUtil = {
    });
   },
 
-  createAccount: function (account) {
+  createAccount: function (account, callback) {
 
     $.ajax({
       type: "post",
@@ -94,6 +94,7 @@ var ApiUtil = {
       data: { account: account },
       success: function (account) {
         ApiActions.receiveAccount(account);
+        callback && callback(account.id);
       }
     });
   }
