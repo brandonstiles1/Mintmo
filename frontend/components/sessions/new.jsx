@@ -55,6 +55,7 @@ var SessionForm = React.createClass({
 
             <div className="submit">
               <button>LOG IN</button>
+              <a href="/auth/facebook">Log in with facebook</a>
             </div>
           </fieldset>
         </form>
@@ -64,7 +65,6 @@ var SessionForm = React.createClass({
           <input type="hidden" name="user[password]" value="password" />
           <div className="submit">
             <button>LOG IN AS GUEST</button>
-            <a href="/auth/facebook">Log in w facebook</a>
           </div>
         </form>
       </section>

@@ -57,6 +57,7 @@ var UserForm = React.createClass({
 
                 <div className="submit">
                   <button>SIGN UP</button>
+                  <a href="/auth/facebook">Sign up with facebook</a>
                 </div>
               </fieldset>
             </form>
