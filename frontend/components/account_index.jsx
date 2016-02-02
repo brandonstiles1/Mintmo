@@ -131,17 +131,16 @@ var AccountIndex = React.createClass({
         {header}
         <main className="root-content group">
           <IndexSidebar
-            accounts={that.state.accounts}
-            accountClick={that.handleAccountClick}
-            transactionsClick={that.handleTransactionsClick}
+            accounts={this.state.accounts}
+            accountClick={this.handleAccountClick}
+            transactionsClick={this.handleTransactionsClick}
             />
 
           <section className="root-content-main">
           <header className="root-content-main-header">
             <h1>Welcome to Mintmo</h1>
-
+            <p>Adding something to repush to heroku</p>
           </header>
-            <TransactionIndex />
           </section>
         </main>
       </div>);
