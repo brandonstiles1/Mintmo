@@ -139,8 +139,11 @@ var AccountIndex = React.createClass({
           <section className="root-content-main">
           <header className="root-content-main-header">
             <h1>Welcome to Mintmo</h1>
-            <p>Adding something to repush to heroku</p>
           </header>
+          <section>
+            <p className="get-started">Let's get started! Try adding some accounts by clicking the pencil icon in the left sidebar. To improve the financial advice we provide, update your profile by clicking account on the navbar above.</p>
+
+          </section>
           </section>
         </main>
       </div>);
