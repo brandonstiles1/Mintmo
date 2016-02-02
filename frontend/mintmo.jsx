@@ -14,7 +14,8 @@ var App = require('./app'),
     CurrentUserStore = require('./stores/current_user_store'),
     SessionsApiUtil = require('./util/sessions_api_util'),
     SessionForm = require('./components/sessions/new'),
-    UserForm = require('./components/users/user_form');
+    UserForm = require('./components/users/user_form'),
+    ModalIndex = require('./components/modals/modal_index');
 
 
 var routes = (
@@ -31,7 +32,7 @@ var routes = (
   </Router>
 );
 
-
+// <Route path="settings" component={ModalIndex} />
 
 window.init = function () {
   ReactDOM.render(

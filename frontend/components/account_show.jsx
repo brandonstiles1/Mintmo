@@ -42,9 +42,15 @@ var AccountShow = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
-    ApiUtil.fetchAccountTransactions(newProps.params.accountId);
-    this.setState({formIndex: 0, inSearch: false});
+    var newId = newProps.params.accountId;
+    
+    if (typeof AccountStore.find(newId) === "undefined") {
+      this.history.pushState(null, '/', {});
+    } else {
+      ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
+      ApiUtil.fetchAccountTransactions(newProps.params.accountId);
+      this.setState({formIndex: 0, inSearch: false});
+    }
   },
 
   onChange: function () {
@@ -132,7 +138,7 @@ var AccountShow = React.createClass({
             />;
 
     if (!(account && transactions)) { return <div>SPINNER</div>; }
-      
+
       if (this.state.inSearch) {
 
         var button = (this.state.totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";

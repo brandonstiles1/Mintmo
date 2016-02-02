@@ -48,8 +48,10 @@ var EditAccountModal = React.createClass({
   },
 
   destroyAccount: function (account) {
-    this.history.setState(null, '/', {});
-    ApiUtil.deleteAccount(account);
+
+    ApiUtil.deleteAccount(account, function () {
+      this.history.setState(null, '/', {});
+    }.bind(this));
   },
 
   render: function () {
