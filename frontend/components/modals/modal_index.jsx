@@ -1,7 +1,8 @@
 var React = require('react');
 
 var AddAccountModal = require('./add_account'),
-    EditUserFormModal = require('./edit_user_form');
+    EditUserFormModal = require('./edit_user_form'),
+    EditAccountModal = require('./edit_account_modal');
 
 var ModalIndex = React.createClass({
 
@@ -31,7 +32,7 @@ var ModalIndex = React.createClass({
         userClass= "",
         divClass = "modal-index",
         editUserForm = <EditUserFormModal toggleModal={this.closeModal}/>,
-        addAccountModal = <AddAccountModal toggleModal={this.closeModal}/>;
+        addAccountModal = <EditAccountModal toggleModal={this.closeModal}/>;
 
     var modalBody = (this.state.modalBody === "user") ? editUserForm : addAccountModal;
 

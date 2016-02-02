@@ -24,6 +24,25 @@ var resetAccounts = function (accounts) {
   });
 };
 
+var removeAccount = function (account) {
+  var type = account.account_type;
+  var idx = -1;
+
+  for (var i = 0; i < _accounts[type].length; i++) {
+    if (_accounts[type][i].id === account.id) {
+      idx = i;
+    }
+  }
+
+  if (idx !== -1) {
+    _accounts[type].splice(idx, 1);
+  }
+
+  delete _accountsIdx[account.id];
+
+
+};
+
 var addAccount = function (account) {
   _accountsIdx[account.id] = $.extend({}, _accountsIdx[account.id], account);
 
@@ -76,6 +95,10 @@ AccountStore.__onDispatch = function (payload) {
       break;
     case AccountConstants.ACCOUNT_RETRIEVED:
       addAccount(payload.account);
+      AccountStore.__emitChange();
+      break;
+    case AccountConstants.ACCOUNT_REMOVED:
+      removeAccount(payload.account);
       AccountStore.__emitChange();
       break;
   }

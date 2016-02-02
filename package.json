@@ -36,8 +36,10 @@
     "react": "^0.14.6",
     "react-addons-linked-state-mixin": "^0.14.6",
     "react-chartjs": "^0.7.3",
+    "react-click-outside": "^2.1.0",
     "react-dom": "^0.14.6",
     "react-history": "^1.0.0",
+    "react-onclickoutside": "^4.5.0",
     "react-router": "^1.0.3",
     "webpack": "^1.12.12"
   }

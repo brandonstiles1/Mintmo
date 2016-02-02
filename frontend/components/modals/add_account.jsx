@@ -1,5 +1,4 @@
-var React = require('react'),
-    Link = require('react-router').Link;
+var React = require('react');
 
 var InstitutionStore = require('../../stores/institution'),
     AddAccountFormModal = require('./add_account_form'),
@@ -31,7 +30,12 @@ var AddAccountModal = React.createClass({
     this.setState({institution: null});
   },
 
+  goBack: function () {
+    this.props.goBack();
+  },
+
   render: function () {
+
     var inst = this.state.institution,
         insts = this.state.institutions,
         that = this;
@@ -68,6 +72,7 @@ var AddAccountModal = React.createClass({
           <ul className="modal-edit-institutions">
             {institutions}
           </ul>
+          <p onClick={this.goBack} className="go-back" to={"/"}>Go back</p>
         </div>
       );
     }

@@ -97,6 +97,19 @@ var ApiUtil = {
         callback && callback(account.id);
       }
     });
+  },
+
+  deleteAccount: function (account, callback) {
+    $.ajax({
+     type: "delete",
+     url: "/api/accounts/" + account.id,
+     dataType: "json",
+     success: function () {
+       ApiActions.removeAccount(account);
+       callback && callback();
+     }
+   });
+
   }
 
 };

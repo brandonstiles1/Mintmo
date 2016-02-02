@@ -11,6 +11,13 @@ var ApiActions = {
     });
   },
 
+  removeAccount: function (account){
+    AppDispatcher.dispatch({
+      actionType: AccountConstants.ACCOUNT_REMOVED,
+      account: account
+    });
+  },
+
   receiveAccountTransactions: function (transactions){
     AppDispatcher.dispatch({
       actionType: TransactionConstants.ACCOUNT_TRANSACTIONS_RECEIVED,

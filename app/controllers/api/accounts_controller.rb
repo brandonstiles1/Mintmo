@@ -30,8 +30,9 @@ class Api::AccountsController < ApplicationController
   end
 
   def destroy
-    @account = Account.find(params[:id])
-    @account.destroy!
+
+    @destroy_account = Account.find(params[:id])
+    @destroy_account.destroy!
     @accounts = current_user.accounts
     render :index
   end

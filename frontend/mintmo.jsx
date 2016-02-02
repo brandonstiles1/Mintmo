@@ -31,6 +31,8 @@ var routes = (
   </Router>
 );
 
+
+
 window.init = function () {
   ReactDOM.render(
   routes,

@@ -1,12 +1,13 @@
 var React = require('react'),
-    LinkedStateMixin = require('react-addons-linked-state-mixin');
+    LinkedStateMixin = require('react-addons-linked-state-mixin'),
+    ClickOutside = require('react-onclickoutside');
 
 var TransactionStore = require('../stores/transaction'),
     ApiUtil  = require('../util/api_util'),
     ComponentActions = require('../actions/component_actions');
 
 var TransactionItemForm = React.createClass({
-  mixins: [LinkedStateMixin],
+  mixins: [LinkedStateMixin, ClickOutside],
 
   getInitialState: function () {
     this.initialState = this.getStateFromProps(this.props);
@@ -87,6 +88,10 @@ var TransactionItemForm = React.createClass({
         }
   },
 
+  handleClickOutside: function () {
+    this.updateTransaction();
+  },
+
   isUpdated: function (transaction) {
     var start = this.initialState;
 
@@ -140,7 +145,7 @@ var TransactionItemForm = React.createClass({
     }
 
     return (
-      <tr onMouseLeave={postEvent} className="edit-form">
+      <tr className="edit-form">
         <td className="date">
           <input
             type="hidden"
