@@ -33,6 +33,8 @@ gem 'font-awesome-rails'
 gem 'kaminari'
 gem 'accountingjs-rails'
 gem 'pg_search'
+gem 'omniauth-facebook'
+gem 'open_uri_redirections'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

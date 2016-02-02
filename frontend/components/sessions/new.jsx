@@ -64,6 +64,7 @@ var SessionForm = React.createClass({
           <input type="hidden" name="user[password]" value="password" />
           <div className="submit">
             <button>LOG IN AS GUEST</button>
+            <a href="/auth/facebook">Log in w facebook</a>
           </div>
         </form>
       </section>

@@ -16,6 +16,8 @@
 #  lname               :string
 #  gender              :string
 #  age                 :string
+#  provider            :string
+#  uid                 :string
 #
 
 class User < ActiveRecord::Base
@@ -29,6 +31,7 @@ class User < ActiveRecord::Base
   validates :email, format: { with: /\A([^@\s]+)@(([-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   validates :password, length: { minimum: 6, allow_nil: true }
   validates :gender, inclusion: %w(Male Female), if: -> { gender }
+  validates_uniqueness_of :uid, scope: :provider, if: -> { uid }
 
   after_initialize :ensure_session_token
 
@@ -60,10 +63,43 @@ class User < ActiveRecord::Base
    BCrypt::Password.new(self.password_digest).is_password?(password)
   end
 
+  def self.find_or_create_by_auth_hash(auth_hash)
+
+    provider = auth_hash.provider
+    uid = auth_hash.uid
+
+    user = User.find_by(provider: provider, uid: uid)
+    return user if user
+
+    fname = auth_hash.info.name.split(" ").first
+    lname = auth_hash.info.name.split(" ").last
+    avatar_url = process_uri(auth_hash.info.image)
+    avatar = URI.parse(avatar_url)
+    email = auth_hash.info.name.gsub(" ", ".").downcase + "@facebook.com"
+
+    User.create(
+      provider: provider,
+      uid: uid,
+      email: email,
+      password: SecureRandom::urlsafe_base64,
+      avatar: avatar,
+      fname: fname,
+      lname: lname
+    )
+  end
+
   def self.find_by_credentials(email, password)
    user = User.find_by_email(email)
    return nil unless user && user.is_password?(password)
    user
+  end
+
+  def self.process_uri(uri)
+    require 'open-uri'
+    require 'open_uri_redirections'
+    open(uri, :allow_redirections => :safe) do |r|
+      r.base_uri.to_s
+    end
   end
 
 end

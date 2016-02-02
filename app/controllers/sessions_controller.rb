@@ -22,6 +22,13 @@ class SessionsController < ApplicationController
     end
   end
 
+  def omniauth_facebook
+    @user = User.find_or_create_by_auth_hash(auth_hash)
+    
+    log_in_user!(@user)
+    redirect_to root_url + '#/'
+  end
+
   def destroy
     logout!
     flash.now[:message] = "Peace!"
@@ -32,5 +39,10 @@ class SessionsController < ApplicationController
     if logged_in?
       redirect_to root_url
     end
+  end
+
+  private
+  def auth_hash
+    request.env['omniauth.auth']
   end
 end
