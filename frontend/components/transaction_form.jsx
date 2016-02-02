@@ -9,7 +9,8 @@ var TransactionItemForm = React.createClass({
   mixins: [LinkedStateMixin],
 
   getInitialState: function () {
-    return this.getStateFromProps(this.props);
+    this.initialState = this.getStateFromProps(this.props);
+    return this.initialState;
   },
 
   componentDidMount: function() {
@@ -59,22 +60,43 @@ var TransactionItemForm = React.createClass({
   },
 
   updateTransaction: function () {
+    var category = this.state.category,
+        description = this.state.description;
 
-    var category = this.state.category;
     if (category === "") {
       category = "UNCATEGORIZED";
     }
 
+    if (description === "") {
+      description = "Description cannot be blank"
+    }
+
+
+
     var transaction = {
       id: this.state.id,
-      description: this.state.description,
+      description: description,
       category: category,
       notes: this.state.notes,
       date: this.state.date,
       amount: this.state.amount
     };
 
-    ApiUtil.updateTransaction(transaction);
+    if (this.isUpdated(transaction)) {
+          ApiUtil.updateTransaction(transaction);
+        }
+  },
+
+  isUpdated: function (transaction) {
+    var start = this.initialState;
+
+    if (start.description !== transaction.description ||
+        start.notes !== transaction.notes ||
+        start.category !== transaction.category) {
+          return true;
+      } else {
+        return false;
+      }
   },
 
   updateTransactionNotes: function () {
@@ -84,7 +106,8 @@ var TransactionItemForm = React.createClass({
 
   render: function () {
     var transaction = this.props.transaction,
-        date = ComponentActions.formatDate(this.state.date);
+        date = ComponentActions.formatDate(this.state.date),
+        postEvent = this.updateTransaction;
 
 
     var editDetails = (
@@ -94,6 +117,7 @@ var TransactionItemForm = React.createClass({
     );
 
     if (this.state.showEditDetails) {
+      postEvent = "";
       editDetails = (
         <p className="edit-details-show group">
           <h7 className="edit-notes group">
@@ -116,7 +140,7 @@ var TransactionItemForm = React.createClass({
     }
 
     return (
-      <tr className="edit-form">
+      <tr onMouseLeave={postEvent} className="edit-form">
         <td className="date">
           <input
             type="hidden"
@@ -125,7 +149,6 @@ var TransactionItemForm = React.createClass({
         </td>
         <td className="description">
           <input
-            onKeyUp={this.updateTransaction}
             type="text"
             placeholder="Description"
             valueLink={this.linkState('description')} />
@@ -133,7 +156,6 @@ var TransactionItemForm = React.createClass({
         </td>
         <td className="category">
           <input
-            onKeyUp={this.updateTransaction}
             type="text"
             valueLink={this.linkState('category')} />
         </td>
