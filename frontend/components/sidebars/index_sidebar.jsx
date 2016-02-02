@@ -1,11 +1,16 @@
 var React = require('react');
 
 var AccountTypeIndex = require('../account_type_index'),
-    ComponentActions = require('../../actions/component_actions');
+    ComponentActions = require('../../actions/component_actions'),
+    ModalIndex = require('../modals/modal_index');
 
 var IndexSidebar = React.createClass({
   getInitialState: function () {
-    return { expanded: {} };
+    return { expanded: {}, modalVisibile: false };
+  },
+
+  toggleModal: function () {
+    this.setState({modalVisibile: !this.state.modalVisibile});
   },
 
   toggleExpand: function (type) {
@@ -35,13 +40,19 @@ var IndexSidebar = React.createClass({
         accountTypes = ComponentActions.getAccountTypes(accounts),
         accountBalances = ComponentActions.getAccountBalances(accounts),
         accountsArr = ComponentActions.getAccountsArr(accounts),
-        mappedAccountTypes = this.getMappedAccountTypes(accountTypes, accountBalances, accounts);
+        mappedAccountTypes = this.getMappedAccountTypes(accountTypes, accountBalances, accounts),
+        modal = <div></div>;
+
+    if (this.state.modalVisibile) {
+      modal = <ModalIndex location="accountIndex" toggleModal={this.toggleModal} />;
+    }
 
     return (
       <section className="root-content-sidebar">
+        {modal}
         <header className="group">
         <h1>Accounts</h1>
-        <i className="fa fa-pencil"></i>
+        <i onClick={this.toggleModal} className="fa fa-pencil"></i>
         </header>
         {mappedAccountTypes}
       </section>

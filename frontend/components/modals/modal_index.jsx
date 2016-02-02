@@ -6,7 +6,7 @@ var AddAccountModal = require('./add_account'),
 var ModalIndex = React.createClass({
 
   getInitialState: function () {
-    return { modalBody: this.props.location };
+    return { modalBody: this.props.location, location: this.props.location };
   },
 
   closeModal: function () {
@@ -26,36 +26,44 @@ var ModalIndex = React.createClass({
   },
 
   render: function () {
-    var modalBody,
-        accountsClass="",
-        userClass="";
+    var accountsClass= "",
+        userClass= "",
+        divClass = "modal-index";
 
-    if (this.state.modalBody === "user") {
-      modalBody = <EditUserFormModal />;
+    var modalBody = (this.state.modalBody === "user") ? <EditUserFormModal /> : <AddAccountModal />;
+
+    if (this.state.location === "user") {
       userClass = "selected";
-    } else {
-      modalBody = <AddAccountModal />;
+    } else if (this.state.location === "accountIndex"){
+      accountsClass = "selected";
+      divClass = "modal-account-index";
+    } else if (this.state.location === "accountShow") {
+      divClass = "modal-account-show";
       accountsClass = "selected";
     }
 
     return (
-      <div className="modal-index">
-        <header className="modal-index-header">
-          <ul className="modal-header-list group">
-            <li
-              className={accountsClass}
-              onClick={this.renderAccountBody}><i id="fa-account-modal" className="fa fa-folder-open"></i><p>Accounts</p></li>
-            <li
-              className={userClass}
-              onClick={this.renderUserBody}><i id="fa-user-modal" className="fa fa-user fa-modal"></i><p>About Me</p></li>
-          </ul>
-        </header>
-        {modalBody}
-        <footer className="modal-index-footer submit group">
-          <button
-            onClick={this.closeModal}>Close</button>
-        </footer>
+      <div>
+        <div className="transparent-wrapper"></div>
+        <div className={divClass}>
+          <header className="modal-index-header">
+            <ul className="modal-header-list group">
+              <li
+                className={accountsClass}
+                onClick={this.renderAccountBody}><i id="fa-account-modal" className="fa fa-folder-open"></i><p>Accounts</p></li>
+              <li
+                className={userClass}
+                onClick={this.renderUserBody}><i id="fa-user-modal" className="fa fa-user fa-modal"></i><p>About Me</p></li>
+            </ul>
+          </header>
+          {modalBody}
+          <footer className="modal-index-footer submit group">
+            <button
+              onClick={this.closeModal}>Close</button>
+          </footer>
+        </div>
       </div>
+
     );
   }
 });

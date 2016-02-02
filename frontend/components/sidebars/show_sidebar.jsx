@@ -2,7 +2,8 @@ var React = require('react'),
     History = require('react-router').History;
 
 var AccountTypeIndex = require('../account_type_index'),
-    ComponentActions = require('../../actions/component_actions');
+    ComponentActions = require('../../actions/component_actions'),
+    ModalIndex = require('../modals/modal_index');
 
 var AccountShowSidebar = React.createClass({
   mixins: [History],
@@ -11,8 +12,13 @@ var AccountShowSidebar = React.createClass({
     return {
       typeClicked: false,
       accountId: this.props.accountId || null,
-      allAccounts: this.props.showAllAccounts || null
+      allAccounts: this.props.showAllAccounts || null,
+      modalVisibile: false
     };
+  },
+
+  toggleModal: function () {
+    this.setState({modalVisibile: !this.state.modalVisibile});
   },
 
   handleAccountTypeClick: function (type) {
@@ -42,7 +48,12 @@ var AccountShowSidebar = React.createClass({
         accountsArr = ComponentActions.getAccountsArr(accounts),
         allAccountsClass = "account-types-show-type",
         mappedAccountTypes = this.getMappedAccountTypes(accountTypes),
-        transactionMappedAccounts = this.getTransactionMappedAccounts(accountsArr);
+        transactionMappedAccounts = this.getTransactionMappedAccounts(accountsArr),
+        modal = <div></div>;
+
+    if (this.state.modalVisibile) {
+      modal = <ModalIndex location="accountShow" toggleModal={this.toggleModal} />;
+    }
 
     if (this.state.allAccounts) {
       allAccountsClass = "account-types-show-type selected-account";
@@ -50,11 +61,12 @@ var AccountShowSidebar = React.createClass({
 
     return (
       <section className="root-content-sidebar-show">
+        {modal}
         <h1>Type</h1>
         {mappedAccountTypes}
         <header className="group">
         <h1>Accounts</h1>
-        <i id="show-pencil" className="fa fa-pencil"></i>
+        <i onClick={this.toggleModal} id="show-pencil" className="fa fa-pencil"></i>
         </header>
         <h3 onClick={this.handleAllAccountsClick} className={allAccountsClass}>All Accounts</h3>
 

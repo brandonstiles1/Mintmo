@@ -24,7 +24,6 @@ class Transaction < ActiveRecord::Base
   default_scope { order('date DESC') }
 
   def institution_id
-
     institution.id
   end
 

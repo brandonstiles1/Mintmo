@@ -65,13 +65,13 @@ var AccountIndex = React.createClass({
         transactionsClicked = this.state.transactionsClicked,
         overviewClass = ComponentActions.getOverviewClass(overviewClicked),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
+        modal = <div></div>;
         header =
           <Header
             overviewClicked={overviewClicked}
             transactionsClicked={transactionsClicked}
             overviewClick={this.handleOverviewClick}
             transactionsClick={this.handleTransactionsClick}/>;
-
 
     if (accountClicked) {
       return (
