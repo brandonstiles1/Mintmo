@@ -113,7 +113,7 @@ t3 = Transaction.create!(
   amount: -64.75,
   description: "Tinder Date",
   date: "Wed, 27 Jan 2016 15:42:16 UTC +00:00",
-  category: "Tryina Get It"
+  category: "Romance"
 )
 
 t4 = Transaction.create!(
@@ -127,9 +127,9 @@ t4 = Transaction.create!(
 t5 = Transaction.create!(
   account_id: paypal_checking.id,
   amount: 19.95,
-  description: "Stupid shit on eBay",
+  description: "Frivolous Amazon Prime Purchase",
   date: "Wed, 27 Jan 2016 15:34:16 UTC +00:00",
-  category: "Financial"
+  category: "Self Help"
 )
 
 t6 = Transaction.create!(
@@ -144,7 +144,7 @@ t7 = Transaction.create!(
   amount: 69.69,
   description: "Wink wink wink",
   date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
-  category: "Tryina Get It"
+  category: "Romance"
 )
 
 t8 = Transaction.create!(
@@ -152,7 +152,7 @@ t8 = Transaction.create!(
   amount: 69.69,
   description: "Wink wink wink",
   date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
-  category: "Tryina Get It"
+  category: "Romance"
 )
 
 t9 = Transaction.create!(

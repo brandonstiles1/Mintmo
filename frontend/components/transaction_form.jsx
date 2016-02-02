@@ -26,6 +26,7 @@ var TransactionItemForm = React.createClass({
         category = transaction.category,
         date = transaction.date
         amount = transaction.amount,
+        amount_n = transaction.amount_n
         id = transaction.id;
 
     return {
@@ -35,7 +36,8 @@ var TransactionItemForm = React.createClass({
       category: category,
       id: id,
       date: date,
-      amount: amount
+      amount: amount,
+      amount_n: amount_n
     }
   },
 
@@ -73,15 +75,17 @@ var TransactionItemForm = React.createClass({
     }
 
 
-
     var transaction = {
       id: this.state.id,
       description: description,
       category: category,
       notes: this.state.notes,
       date: this.state.date,
-      amount: this.state.amount
+      amount: this.state.amount,
+      amount_n: this.state.amount_n
     };
+
+
 
     if (this.isUpdated(transaction)) {
           ApiUtil.updateTransaction(transaction);
@@ -110,8 +114,10 @@ var TransactionItemForm = React.createClass({
   },
 
   render: function () {
+    debugger
+
     var transaction = this.props.transaction,
-        date = ComponentActions.formatDate(this.state.date),
+        date = ComponentActions.formatDate(this.initialState.date),
         postEvent = this.updateTransaction;
 
 
@@ -165,10 +171,7 @@ var TransactionItemForm = React.createClass({
             valueLink={this.linkState('category')} />
         </td>
           <td className="amount">
-            <input
-              type="hidden"
-              valueLink={this.linkState('amount')} />
-            {this.state.amount}
+            {accounting.formatMoney(this.state.amount_n)}
           </td>
       </tr>
     );

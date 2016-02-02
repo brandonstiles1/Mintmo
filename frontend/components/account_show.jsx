@@ -43,7 +43,7 @@ var AccountShow = React.createClass({
 
   componentWillReceiveProps: function (newProps) {
     var newId = newProps.params.accountId;
-    
+
     if (typeof AccountStore.find(newId) === "undefined") {
       this.history.pushState(null, '/', {});
     } else {
@@ -184,7 +184,7 @@ var AccountShow = React.createClass({
           <section className="root-content-main">
             {headerText}
             <h6>TOTAL BALANCE</h6>
-            <h5 className={balanceClass}>${this.typeBalance}</h5>
+            <h5 className={balanceClass}>{accounting.formatMoney(this.typeBalance)}</h5>
             <TransactionIndex
               filterAccountType={this.state.filterAccountType}
               typeIds={this.state.typeIds} />
@@ -203,7 +203,7 @@ var AccountShow = React.createClass({
             <section className="root-content-main group">
               {headerText}
               <h6>TOTAL BALANCE</h6>
-              <h5 className={balanceClass}>{account.balance}</h5>
+              <h5 className={balanceClass}>{accounting.formatMoney(account.balance_n)}</h5>
               {search}
               {resultText}
               <table className="transaction-table group">

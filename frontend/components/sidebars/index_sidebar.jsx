@@ -78,7 +78,7 @@ var IndexSidebar = React.createClass({
           <div key={type} className="account-balance-headers group" >
             <div onClick={that.toggleExpand.bind(null, type)} className="type-background group">
               <h3>{typeIcon}{type}</h3>
-              <h4 className={balanceClass} >${accountBalances[type]}</h4>
+              <h4 className={balanceClass} > {accounting.formatMoney(accountBalances[type])}</h4>
             </div>
           {expandedAccounts}
         </div>

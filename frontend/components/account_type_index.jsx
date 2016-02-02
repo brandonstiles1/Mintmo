@@ -34,7 +34,7 @@ var AccountTypeIndex = React.createClass({
       return (
         <li className="account-type-account group" key={index}  >
           <p1 onClick={that.showAccount.bind(null, account)} >{ComponentActions.sliceAccountName(account.name)}</p1>
-          <p2 >{account.balance}</p2>
+          <p2 >{accounting.formatMoney(account.balance_n)}</p2>
         </li>);
     });
 
