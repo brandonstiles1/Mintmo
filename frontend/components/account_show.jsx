@@ -93,7 +93,6 @@ var AccountShow = React.createClass({
 
   componentWillUnmount: function () {
     this.accountListener.remove();
-    this.transactionListener.remove();
   },
 
   handleAccountTypeClick: function (type) {
