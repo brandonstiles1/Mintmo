@@ -1,5 +1,29 @@
+var Chart = require('chart.js');
+
 var React = require('react'),
     PieChart = require('react-chartjs').Pie;
+
+
+Chart.defaults.global.scaleLabel = function(label){
+    return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.multiTooltipTemplate = function (label) {
+  return label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+var chartOptions = {
+  animation: true,
+  animationEasing: "easeOutQuart",
+  showTooltips: true,
+  scaleShowLabels: true,
+  scaleLabel: function(label) {
+    return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  },
+  datasetLabel: function(label) {
+    return label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+};
 
 var ComponentActions = require('../../actions/component_actions'),
     TransactionStore = require('../../stores/transaction'),
@@ -20,6 +44,9 @@ var _colors = {
   4: "#e6b245"
 };
 
+
+
+
 var TransactionsPieChart = React.createClass({
 
 
@@ -28,12 +55,13 @@ var TransactionsPieChart = React.createClass({
   },
 
   componentDidMount: function () {
+
     ApiUtil.fetchTransactions(this.state.page);
     this.storeListener = TransactionStore.addListener(this.onChange);
   },
 
   onChange: function () {
-    this.setState({ transactions: TransactionStore.all() });
+    this.setState({ transactions: TransactionStore.all()});
   },
 
   componentWillUnmount: function () {
@@ -84,18 +112,31 @@ var TransactionsPieChart = React.createClass({
   },
 
 
+  getChartOptions: function () {
+    return (
+      [{
+        scaleLabel: function (label) {
+          return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        multiTooltipTemplate: function (label) {
+          return label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+      }]
+    );
+  },
 
   render: function() {
-    return <PieChart data={this.getChartData()} width="600" height="250"/>;
+
+    return (
+      <div>
+        <h1>Top 5 Transaction Categories</h1>
+        <PieChart data={this.getChartData()} options={chartOptions} ref="chart" width="550" height="200"/>
+      </div>
+
+    );
   }
 });
 
-// TransactionsPieChart.defaults.global.scaleLabel = function (label) {
-//     return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-// };
-//
-// TransactionsPieChart.defaults.global.multiTooltipTemplate = function (label) {
-//     return label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-// };
+
 
 module.exports = TransactionsPieChart;
