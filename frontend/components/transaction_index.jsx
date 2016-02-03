@@ -13,12 +13,13 @@ var TransactionIndex = React.createClass({
   getInitialState: function () {
 
     return {
-      transactions: this.props.accountType || TransactionStore.all(),
+      transactions: TransactionStore.all(),
       formIndex: 0,
       inSearch: false,
       totalCount: TransactionStore.all().length,
       query: null,
-      page: 1
+      page: 1,
+      filterAccountType: this.props.filterAccountType || false
     };
   },
 
@@ -64,11 +65,14 @@ var TransactionIndex = React.createClass({
     this.storeListener.remove();
   },
 
-  componentWillReceiveProps: function () {
+  componentWillReceiveProps: function (newProps) {
+
+    ApiUtil.fetchTransactions(this.state.page);
     this.setState({
       inSearch: false,
-      transactions: TransactionStore.all(),
-      totalCount: TransactionStore.all().length
+      // transactions: TransactionStore.all(),
+      // totalCount: TransactionStore.all().length,
+      filterAccountType: newProps.filterAccountType || false
     });
   },
 
@@ -95,7 +99,8 @@ var TransactionIndex = React.createClass({
 
 
   render: function () {
-
+    // console.log("state transactions:");
+    // console.log(this.state.transactions.length);
     var that = this,
         page = this.state.page,
         firstResult = (page - 1) * 25,
@@ -105,7 +110,7 @@ var TransactionIndex = React.createClass({
         search =  <Search search={this.handleSearch} />;
 
 
-    if (this.props.filterAccountType) {
+    if (this.state.filterAccountType) {
       var newTransactions = this.filterTransactionsByType();
       lastResult = (newTransactions.length > firstResult + 25) ? firstResult + 25 : newTransactions.length;
       transactions = newTransactions.slice(firstResult, lastResult);
@@ -137,16 +142,21 @@ var TransactionIndex = React.createClass({
   },
 
   filterTransactionsByType: function () {
+    console.log(this.state.transactions.length);
     var newTransactions = [];
     this.state.transactions.forEach(function(transaction) {
-      if (transaction.account_type === this.props.filterAccountType) {
+      if (!transaction.account_type) {debugger}
+      if (transaction.account_type === this.state.filterAccountType) {
         newTransactions.push(transaction);
       }
     }.bind(this));
+    console.log(newTransactions.length);
     return newTransactions;
   },
 
   mapBody: function (transactions) {
+    // console.log("filtered transactions:");
+    // console.log(transactions.length);
     var that = this;
 
     var mappedBody = transactions.map(function(transaction, index) {
@@ -172,7 +182,7 @@ var TransactionIndex = React.createClass({
     var buttonNext = "",
         page = this.state.page,
         inSearch = this.state.inSearch,
-        filterAccountType = this.props.filterAccountType;
+        filterAccountType = this.state.filterAccountType;
 
     var buttonBack = (page > 1) ? <button onClick={this.backPage}> Back </button> : "";
 

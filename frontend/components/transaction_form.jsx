@@ -28,6 +28,10 @@ var TransactionItemForm = React.createClass({
         amount = transaction.amount,
         amount_n = transaction.amount_n
         id = transaction.id;
+        account_id = transaction.account_id,
+        account_type = transaction.account_type;
+
+      
 
     return {
       showEditDetails: false,
@@ -37,7 +41,9 @@ var TransactionItemForm = React.createClass({
       id: id,
       date: date,
       amount: amount,
-      amount_n: amount_n
+      amount_n: amount_n,
+      account_id: account_id,
+      account_type: account_type
     }
   },
 
@@ -82,7 +88,9 @@ var TransactionItemForm = React.createClass({
       notes: this.state.notes,
       date: this.state.date,
       amount: parseFloat(this.state.amount_n),
-      amount_n: parseFloat(this.state.amount_n)
+      amount_n: parseFloat(this.state.amount_n),
+      account_id: this.state.account_id,
+      account_type: this.state.account_type
     };
 
 

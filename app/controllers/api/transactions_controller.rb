@@ -27,7 +27,8 @@ class Api::TransactionsController < ApplicationController
       :notes,
       :date,
       :is_private?,
-      :category
+      :category,
+      :account_id
     )
   end
 

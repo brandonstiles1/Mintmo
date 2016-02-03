@@ -50,6 +50,10 @@ var AccountIndex = React.createClass({
     this.storeListener = AccountStore.addListener(this.onChange);
   },
 
+  componentWillReceiveProps: function (newProps) {
+    ApiUtil.fetchAccounts();
+  },
+
   onChange: function () {
     this.setState({accounts: AccountStore.all()});
   },
@@ -125,8 +129,8 @@ var AccountIndex = React.createClass({
       var balanceClass = (this.typeBalance > 0) ? "" : "neg";
 
       return (
-        <header>
-          <h1>All {this.state.filterAccountType} Accounts</h1>
+        <header >
+          <h1 id="float-none">All {this.state.filterAccountType} Accounts</h1>
           <h6>TOTAL BALANCE</h6>
           <h5 className={balanceClass}>{accounting.formatMoney(this.typeBalance)}</h5>
         </header>
