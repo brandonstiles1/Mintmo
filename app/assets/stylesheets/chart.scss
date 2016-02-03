@@ -1,0 +1,64 @@
+.legend > li {
+  font-size: 14px;
+  padding: 0 5px 10px 5px;
+}
+
+ul.legend {
+  position: absolute;
+  top: 110px;
+}
+
+
+.legend {
+  float: left;
+}
+
+.legend > li > p {
+  float: left;
+}
+
+.chart-header {
+
+}
+
+.h45e661,
+ .h45cae6,
+ .he645ca,
+ .he66145,
+ .he6b245 {
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  margin-right: 10px;
+}
+
+.h45e661 {
+  background: #45e661;
+}
+
+.h45cae6 {
+  background: #45cae6;
+}
+
+.he645ca {
+  background: #e645ca;
+}
+
+.he66145 {
+  background: #e66145;
+}
+
+.he6b245 {
+  background: #e6b245;
+}
+
+.chart {
+  float: right;
+}
+
+h1.chart-header {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}

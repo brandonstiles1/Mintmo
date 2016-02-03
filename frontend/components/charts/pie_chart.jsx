@@ -1,16 +1,9 @@
-var Chart = require('chart.js');
-
 var React = require('react'),
     PieChart = require('react-chartjs').Pie;
 
-
-Chart.defaults.global.scaleLabel = function(label){
-    return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
-Chart.defaults.global.responsive = true;
-Chart.defaults.global.multiTooltipTemplate = function (label) {
-  return label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
+var ComponentActions = require('../../actions/component_actions'),
+TransactionStore = require('../../stores/transaction'),
+ApiUtil  = require('../../util/api_util');
 
 var chartOptions = {
   animation: true,
@@ -25,9 +18,6 @@ var chartOptions = {
   }
 };
 
-var ComponentActions = require('../../actions/component_actions'),
-    TransactionStore = require('../../stores/transaction'),
-    ApiUtil  = require('../../util/api_util');
 
 var _highlights = {
   0: "#45e661",
@@ -45,8 +35,6 @@ var _colors = {
 };
 
 
-
-
 var TransactionsPieChart = React.createClass({
 
 
@@ -55,7 +43,6 @@ var TransactionsPieChart = React.createClass({
   },
 
   componentDidMount: function () {
-
     ApiUtil.fetchTransactions(this.state.page);
     this.storeListener = TransactionStore.addListener(this.onChange);
   },
@@ -68,37 +55,34 @@ var TransactionsPieChart = React.createClass({
     this.storeListener.remove();
   },
 
-  cashData: function () {
-
-    var accountBalance = this.state.accountBalances;
-    if (!accountBalance.Cash) return -1;
-
-    return (
-      {
-        value: accountBalance.Cash,
-        label: "Cash",
-        highlight: "#FF5A5E",
-        color:"#F7464A"
-      }
-    );
+  generateLegend: function () {
+    var that = this;
+    return Object.keys(this.transCats).map(function(cat, index) {
+      var color = that.getColor(index);
+      color = "h" + color.slice(1, color.length);
+      return (
+        <li className="group" key={index}>
+          <div className={color}></div><p>{cat}: {accounting.formatMoney(that.transCats[cat])}</p>
+        </li>
+      );
+    });
   },
 
 
   getChartData: function () {
     var that = this;
-    var transCats = ComponentActions.getTopTransactionCategories(this.state.transactions);
+    this.transCats = ComponentActions.getTopTransactionCategories(this.state.transactions);
     var data = [];
-    Object.keys(transCats).forEach(function(cat, index) {
+    Object.keys(this.transCats).forEach(function(cat, index) {
       data.push(
         {
-          value: transCats[cat],
+          value: that.transCats[cat],
           label: cat,
           highlight: that.getHighlight(index),
           color: that.getColor(index)
         }
       );
     });
-
 
     return data;
   },
@@ -110,7 +94,6 @@ var TransactionsPieChart = React.createClass({
   getColor: function (index) {
     return _colors[index];
   },
-
 
   getChartOptions: function () {
     return (
@@ -129,8 +112,11 @@ var TransactionsPieChart = React.createClass({
 
     return (
       <div>
-        <h1>Top 5 Transaction Categories</h1>
-        <PieChart data={this.getChartData()} options={chartOptions} ref="chart" width="550" height="200"/>
+        <h1 className="chart-header group">Top 5 Transaction Categories</h1>
+        <PieChart data={this.getChartData()} options={chartOptions} className="chart" width="550" height="200"/>
+        <ul className="legend">
+          {this.generateLegend()}
+        </ul>
       </div>
 
     );
