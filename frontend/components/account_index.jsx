@@ -22,7 +22,9 @@ var AccountIndex = React.createClass({
       expanded: {},
       overviewClicked: true,
       transactionsClicked: false,
-      accountClicked: false
+      accountClicked: false,
+      filterAccountType: false,
+      typeIds: null
     };
   },
 
@@ -58,7 +60,6 @@ var AccountIndex = React.createClass({
 
 
   render: function () {
-
     var that = this,
         accounts = this.state.accounts,
         accountClicked = this.state.accountClicked,
@@ -68,17 +69,12 @@ var AccountIndex = React.createClass({
         accountsArr = ComponentActions.getAccountsArr(accounts),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
         modal = <div></div>;
-        header =
-          <Header
-            overviewClicked={overviewClicked}
-            transactionsClicked={transactionsClicked}
-            overviewClick={this.handleOverviewClick}
-            transactionsClick={this.handleTransactionsClick}/>;
+        header = this.header();
 
     if (accountsArr.length === 0) {
       return this.newUserWelcome();
     } else if (accountClicked) {
-      
+
       return (
         <div>
           {header}
@@ -87,35 +83,27 @@ var AccountIndex = React.createClass({
         </div>
       );
     } else if (transactionsClicked){
-
-      return (
-        <div>
-          {header}
-          <main className="root-content group">
-            <AccountShowSidebar
-              showAllAccounts="true"
-              allAccountsClick={that.handleAllAccountsClick}
-              accounts={that.state.accounts}
-              accountClick={that.handleAccountClick}
-              transactionsClick={that.handleTransactionsClick}
-              />
-        <section className="root-content-main">
-          <h1>Transactions</h1>
-          <TransactionIndex />
-        </section>
-      </main>
-      <Footer />
-    </div>);
+      var headerText = this.headerText();
+        return (
+          <div>
+            {header}
+            <main className="root-content group">
+              {this.accountShowSidebar()}
+              <section className="root-content-main">
+                {headerText}
+                <TransactionIndex
+                  filterAccountType={this.state.filterAccountType}
+                  typeIds={this.state.typeIds} />
+              </section>
+            </main>
+            <Footer />
+          </div>);
     } else {
     return (
       <div>
         {header}
         <main className="root-content group">
-          <IndexSidebar
-            accounts={that.state.accounts}
-            accountClick={that.handleAccountClick}
-            transactionsClick={that.handleTransactionsClick}
-            />
+          {this.indexSidebar()}
 
           <section className="root-content-main">
           <header className="root-content-main-header">
@@ -130,16 +118,29 @@ var AccountIndex = React.createClass({
     }
   },
 
+  headerText: function () {
+    if (!this.state.filterAccountType) {
+      return <h1>Transactions</h1>;
+    } else {
+      var balanceClass = (this.typeBalance > 0) ? "" : "neg";
+
+      return (
+        <header>
+          <h1>All {this.state.filterAccountType} Accounts</h1>
+          <h6>TOTAL BALANCE</h6>
+          <h5 className={balanceClass}>{accounting.formatMoney(this.typeBalance)}</h5>
+        </header>
+      );
+      }
+  },
+
+
   newUserWelcome: function () {
     return (
       <div>
         {header}
         <main className="root-content group">
-          <IndexSidebar
-            accounts={this.state.accounts}
-            accountClick={this.handleAccountClick}
-            transactionsClick={this.handleTransactionsClick}
-            />
+          {this.indexSidebar()}
 
           <section className="root-content-main">
           <header className="root-content-main-header">
@@ -153,9 +154,59 @@ var AccountIndex = React.createClass({
         </main>
         <Footer/>
       </div>);
-  }
+  },
+
+  accountShowSidebar: function () {
+    return (
+      <AccountShowSidebar
+        accountTypeClick={this.handleAccountTypeClick}
+        showAllAccounts="true"
+        allAccountsClick={this.handleAllAccountsClick}
+        accounts={this.state.accounts}
+        accountClick={this.handleAccountClick}
+        transactionsClick={this.handleTransactionsClick}
+        />
+    );
+  },
+
+  header: function () {
+    var overviewClicked = this.state.overviewClicked,
+        transactionsClicked = this.state.transactionsClicked;
+
+    return (
+      <Header
+        overviewClicked={overviewClicked}
+        transactionsClicked={transactionsClicked}
+        overviewClick={this.handleOverviewClick}
+        transactionsClick={this.handleTransactionsClick}/>
+    );
+  },
+
+  indexSidebar: function () {
+    return (
+      <IndexSidebar
+        accounts={this.state.accounts}
+        accountClick={this.handleAccountClick}
+        transactionsClick={this.handleTransactionsClick}
+        />
+    );
+  },
+
+  handleAccountTypeClick: function (type) {
+
+    var typeAccounts = this.state.accounts[type];
+    this.typeBalance = 0;
+    var typeIds = typeAccounts.map(function(account) {
+      this.typeBalance += parseInt(account.balance_n);
+      return account.id;
+    }.bind(this));
+
+    this.setState({filterAccountType: type, typeIds: typeIds});
+  },
 
 });
+
+
 
 
 module.exports = AccountIndex;

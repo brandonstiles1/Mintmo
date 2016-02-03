@@ -13,7 +13,7 @@ var TransactionIndex = React.createClass({
   getInitialState: function () {
 
     return {
-      transactions: TransactionStore.all(),
+      transactions: this.props.accountType || TransactionStore.all(),
       formIndex: 0,
       inSearch: false,
       totalCount: TransactionStore.all().length,
@@ -142,7 +142,7 @@ var TransactionIndex = React.createClass({
       if (transaction.account_type === this.props.filterAccountType) {
         newTransactions.push(transaction);
       }
-    });
+    }.bind(this));
     return newTransactions;
   },
 
