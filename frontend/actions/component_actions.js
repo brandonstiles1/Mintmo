@@ -21,7 +21,7 @@ module.exports = {
         catAmounts[transaction.category] = 0;
       }
       categoriesIdx[transaction.category] = transaction;
-      catAmounts[transaction.category] += parseInt(transaction.amount_n);
+      catAmounts[transaction.category] += Math.abs(parseFloat(transaction.amount_n));
     }
   });
 

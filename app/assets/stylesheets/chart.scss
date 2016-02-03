@@ -1,11 +1,15 @@
 .legend > li {
   font-size: 14px;
-  padding: 0 5px 10px 5px;
+  padding: 5px;
 }
 
 ul.legend {
+  padding: 2px;
   position: absolute;
   top: 110px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  background: -webkit-linear-gradient(top, #fff, #f7f7f7);
 }
 
 
@@ -15,6 +19,15 @@ ul.legend {
 
 .legend > li > p {
   float: left;
+}
+
+.chart-legend-cat {
+  font-weight: 600;
+}
+
+.legend > li > p:last-child {
+  float: right;
+  margin-left: 10px;
 }
 
 .chart-header {
@@ -55,6 +68,7 @@ ul.legend {
 
 .chart {
   float: right;
+  margin-bottom: 20px;
 }
 
 h1.chart-header {

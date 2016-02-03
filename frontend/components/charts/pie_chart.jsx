@@ -62,7 +62,9 @@ var TransactionsPieChart = React.createClass({
       color = "h" + color.slice(1, color.length);
       return (
         <li className="group" key={index}>
-          <div className={color}></div><p>{cat}: {accounting.formatMoney(that.transCats[cat])}</p>
+          <div className={color} ></div>
+          <p className="chart-legend-cat">{cat} </p>
+          <p>{accounting.formatMoney(that.transCats[cat])}</p>
         </li>
       );
     });
