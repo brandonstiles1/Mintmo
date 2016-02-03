@@ -111,7 +111,7 @@ var TransactionsPieChart = React.createClass({
   render: function() {
 
     return (
-      <div>
+      <div className="group">
         <h1 className="chart-header group">Top 5 Transaction Categories</h1>
         <PieChart data={this.getChartData()} options={chartOptions} className="chart" width="550" height="200"/>
         <ul className="legend">
