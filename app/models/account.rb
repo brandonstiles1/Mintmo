@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
       category = CATEGORY_TYPES.sample
       description = Faker::Commerce.product_name
       date = Faker::Date.backward(rand(1000))
-      amount = ((rand(10000)/100.23) - 50).round(2)
+      amount = ((rand(10000)/100) - (50 + (rand(1..100) / 100.0))).round(2)
 
       self.transactions.create(
         category: category,

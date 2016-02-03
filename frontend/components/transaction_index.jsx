@@ -39,9 +39,10 @@ var TransactionIndex = React.createClass({
 
   onChange: function () {
     if (this.state.inSearch) {
+      var transactions = this.findNewTransactions();
       this.setState({
-        transactions: this.findNewTransactions(),
-        totalCount: newTransactions.length
+        transactions: transactions,
+        totalCount: transactions.length
       });
     } else {
       this.setState({
