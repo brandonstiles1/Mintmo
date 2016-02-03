@@ -1,0 +1,22 @@
+.footer {
+  padding: 20px;
+  margin-top: 20px;
+  background: #f7f7f7;
+  color: #666666;
+  font-size: 12px;
+}
+
+.footer-links {
+  margin-left: 250px;
+}
+
+.footer-links > li {
+  padding: 10px 100px;
+  float: left;
+}
+
+.footer-links > li > a {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+}

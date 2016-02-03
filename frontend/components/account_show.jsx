@@ -10,6 +10,7 @@ var AccountStore =require('../stores/account'),
     ComponentActions = require('../actions/component_actions'),
     TransactionItemForm = require('./transaction_form'),
     TransactionStore = require('../stores/transaction'),
+    Footer = require('./footer'),
     Search = require('./search');
 
 var AccountShow = React.createClass({
@@ -190,6 +191,7 @@ var AccountShow = React.createClass({
               typeIds={this.state.typeIds} />
           </section>
         </main>
+        <Footer />
       </div>);
     } else {
       balanceClass = (account.balance_n > 0) ? "" : "neg";
@@ -221,6 +223,7 @@ var AccountShow = React.createClass({
               </table>
             </section>
           </main>
+          <Footer />
         </div>);
     }
 

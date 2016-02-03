@@ -57,6 +57,7 @@ var AddAccountModal = React.createClass({
     if (inst) {
       return (
         <AddAccountFormModal
+          toggleModal={this.props.toggleModal}
           goBack={this.unselectInstitution}
           inst={inst.name}
           logo={inst.logo_url}

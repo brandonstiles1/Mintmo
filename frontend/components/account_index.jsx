@@ -10,7 +10,8 @@ var AccountStore = require('../stores/account'),
     AccountShow = require('./account_show'),
     Header = require('./header'),
     ComponentActions = require('../actions/component_actions'),
-    Search = require('./search');
+    Search = require('./search'),
+    Footer = require('./footer');
 
 var AccountIndex = React.createClass({
   mixins: [History],
@@ -77,10 +78,12 @@ var AccountIndex = React.createClass({
     if (accountsArr.length === 0) {
       return this.newUserWelcome();
     } else if (accountClicked) {
+      
       return (
         <div>
           {header}
           <AccountShow />
+          <Footer />
         </div>
       );
     } else if (transactionsClicked){
@@ -101,6 +104,7 @@ var AccountIndex = React.createClass({
           <TransactionIndex />
         </section>
       </main>
+      <Footer />
     </div>);
     } else {
     return (
@@ -121,6 +125,7 @@ var AccountIndex = React.createClass({
             <TransactionIndex />
           </section>
         </main>
+        <Footer />
       </div>);
     }
   },
@@ -146,6 +151,7 @@ var AccountIndex = React.createClass({
           </section>
           </section>
         </main>
+        <Footer/>
       </div>);
   }
 
