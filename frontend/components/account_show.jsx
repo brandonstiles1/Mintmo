@@ -27,10 +27,11 @@ var AccountShow = React.createClass({
       transactionsClicked: true,
       formIndex: 0,
       inSearch: false,
-      totalCount: null,
+      totalCount: TransactionStore.all().length,
       query: null,
       filterAccountType: false,
-      typeIds: null
+      typeIds: null,
+      page: 1
     };
   },
 
@@ -39,7 +40,16 @@ var AccountShow = React.createClass({
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
     ApiUtil.fetchAccountTransactions(this.props.params.accountId);
     this.accountListener = AccountStore.addListener(this.onChange);
-    this.transactionListener = TransactionStore.addListener(this.onChange);
+  },
+
+  nextPage: function () {
+    var nextPage = this.state.page + 1;
+    this.setState({page: nextPage});
+  },
+
+  backPage: function () {
+    var backPage = this.state.page - 1;
+    this.setState({page: backPage});
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -56,11 +66,29 @@ var AccountShow = React.createClass({
 
   onChange: function () {
     var accountId = this.props.params.accountId;
-    this.setState({
-      account: AccountStore.find(accountId),
-      allAccounts: AccountStore.all(),
-      transactions: TransactionStore.all()
+    if (this.state.inSearch) {
+      var transactions = this.findNewTransactions();
+      this.setState({
+        transactions: transactions,
+        totalCount: transactions.length
+      });
+    } else {
+      this.setState({
+        account: AccountStore.find(accountId),
+        allAccounts: AccountStore.all(),
+        transactions: TransactionStore.all(),
+        totalCount: TransactionStore.all().length
+      });
+    }
+  },
+
+  findNewTransactions: function () {
+
+    var newTransactions = [];
+    this.state.transactions.forEach(function(transaction) {
+      newTransactions.push(TransactionStore.find(transaction.id));
     });
+    return newTransactions;
   },
 
   componentWillUnmount: function () {
@@ -76,15 +104,31 @@ var AccountShow = React.createClass({
       return account.id;
     }.bind(this));
 
-
-    this.setState({filterAccountType: type, typeIds: typeIds, inSearch: false, totalCount: null});
+    this.setState({
+      filterAccountType: type,
+      typeIds: typeIds,
+      inSearch: false,
+      totalCount: null
+    });
   },
 
   handleSearch: function (transactions, query, totalCount) {
-    if (query !== "")
-      this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount});
+    if (query !== "") {
+      this.setState({
+        transactions: transactions,
+        query: query,
+        inSearch: true,
+        totalCount: totalCount,
+        page: 1
+      });
+    }
     else {
-      this.setState({transactions: TransactionStore.all(), inSearch: false});
+      this.setState({
+        transactions: TransactionStore.all(),
+        inSearch: false,
+        page: 1,
+        totalCount: TransactionStore.all().length
+      });
     }
   },
 
@@ -97,7 +141,11 @@ var AccountShow = React.createClass({
   },
 
   handleAccountClick: function () {
-    this.setState({accountClicked: true, filterAccountType: false, inSearch: false});
+    this.setState({
+      accountClicked: true,
+      filterAccountType: false,
+      inSearch: false
+    });
   },
 
   handleAllAccountsClick: function (e) {
@@ -112,69 +160,40 @@ var AccountShow = React.createClass({
   render: function () {
 
     var that = this,
+        page = this.state.page,
         account = this.state.account,
         transactions = this.state.transactions,
         accounts = this.state.allAccounts,
         transactionsClicked =this.state.transactionsClicked,
         overviewClicked =this.state.overviewClicked,
-        resultText = "",
-        balanceClass = "",
+        inSearch = this.state.inSearch,
         overviewClass = ComponentActions.getOverviewClass(overviewClicked),
         transactionClass = ComponentActions.getTransactionClass(transactionsClicked),
-        search,
-        headerText,
-        header =
-          <Header
-            overviewClicked={overviewClicked}
-            overviewClick={this.handleOverviewClick}
-            transactionsClicked={transactionsClicked}
-            transactionsClick={this.handleTransactionsClick}/>,
-          sidebar =
-          <AccountShowSidebar
-            accountTypeClick={this.handleAccountTypeClick}
-            accountId={this.props.params.accountId}
-            accounts={that.state.allAccounts}
-            accountClick={that.handleAccountClick}
-            transactionsClick={that.handleTransactionsClick}
-            />;
+        header = this.header(),
+        sidebar = this.accountShowSidebar();
 
     if (!(account && transactions)) { return <div>SPINNER</div>; }
 
-      if (this.state.inSearch) {
-
-        var button = (this.state.totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";
-        resultText = (
-          <div className="search-result-text">
-            <p>Showing { transactions.length } out of { this.state.totalCount } transaction(s) that match "{this.state.query}" {button}</p>
-          </div>
-        );
-
-      }
-
-    search = <Search search={this.handleSearch} account={account.id} />;
-    headerText = <h1>{account.name}</h1>;
-
-
-    var mappedBody = transactions.map(function(transaction, index) {
-      if (index === that.state.formIndex) {
-        return (
-          <TransactionItemForm
-              transaction={transaction}
-              key={index} /> );
-      } else {
-        return (
-          <TransactionIndexItem
-            index={index}
-            onClick={that.makeFormIndex.bind(null, index)}
-            transaction={transaction}
-            key={index} /> );
-      }
-    });
+    var headerText = this.headerText(),
+        search = <Search search={this.handleSearch} account={account.id} />,
+        totalCount = this.state.totalCount,
+        firstResult = (page - 1) * 25,
+        lastResult = (transactions.length > firstResult + 25) ? firstResult + 25 : transactions.length,
+        resultText = this.resultText(transactions, firstResult, totalCount, lastResult),
+        slicedTransactions = transactions.slice( firstResult, lastResult );
 
     if (this.state.filterAccountType) {
-      balanceClass = (this.typeBalance > 0) ? "" : "neg";
+      var newTransactions = this.filterTransactionsByType();
+      lastResult = (newTransactions.length > firstResult + 25) ? firstResult + 25 : newTransactions.length;
+      transactions = newTransactions.slice(firstResult, lastResult);
+      totalCount = newTransactions.length;
+    }
 
-      headerText = <h1>All {this.state.filterAccountType} Accounts</h1>;
+
+    var mappedBody = this.mapBody(slicedTransactions);
+
+    if (this.state.filterAccountType) {
+
       return (
         <div>
           {header}
@@ -184,8 +203,7 @@ var AccountShow = React.createClass({
 
           <section className="root-content-main">
             {headerText}
-            <h6>TOTAL BALANCE</h6>
-            <h5 className={balanceClass}>{accounting.formatMoney(this.typeBalance)}</h5>
+
             <TransactionIndex
               filterAccountType={this.state.filterAccountType}
               typeIds={this.state.typeIds} />
@@ -194,7 +212,7 @@ var AccountShow = React.createClass({
         <Footer />
       </div>);
     } else {
-      balanceClass = (account.balance_n > 0) ? "" : "neg";
+
       return (
         <div>
           {header}
@@ -204,8 +222,6 @@ var AccountShow = React.createClass({
 
             <section className="root-content-main group">
               {headerText}
-              <h6>TOTAL BALANCE</h6>
-              <h5 className={balanceClass}>{accounting.formatMoney(account.balance_n)}</h5>
               {search}
               {resultText}
               <table className="transaction-table group">
@@ -227,6 +243,127 @@ var AccountShow = React.createClass({
         </div>);
     }
 
+  },
+
+  header: function () {
+    var overviewClicked = this.state.overviewClicked,
+        transactionsClicked = this.state.transactionsClicked;
+
+    return (
+      <Header
+        overviewClicked={overviewClicked}
+        transactionsClicked={transactionsClicked}
+        overviewClick={this.handleOverviewClick}
+        transactionsClick={this.handleTransactionsClick}/>
+    );
+  },
+
+  filterTransactionsByType: function () {
+    var newTransactions = [];
+    this.state.transactions.forEach(function(transaction) {
+      if (transaction.account_type === this.state.filterAccountType) {
+        newTransactions.push(transaction);
+      }
+    }.bind(this));
+    return newTransactions;
+  },
+
+  accountShowSidebar: function () {
+    return (
+      <AccountShowSidebar
+        accountTypeClick={this.handleAccountTypeClick}
+        accountId={this.props.params.accountId}
+        accounts={this.state.allAccounts}
+        accountClick={this.handleAccountClick}
+        transactionsClick={this.handleTransactionsClick}
+        />
+    );
+  },
+
+  headerText: function () {
+    var account = this.state.account,
+        filterAccountType = this.state.filterAccountType,
+        balanceClass;
+
+    if (!filterAccountType) {
+
+      balanceClass = (account.balance_n > 0) ? "" : "neg";
+      return (
+        <header>
+          <h1>{account.name}</h1>
+          <h6>TOTAL BALANCE</h6>
+          <h5 className={balanceClass}>{accounting.formatMoney(account.balance_n)}</h5>
+        </header>
+      );
+    } else {
+      balanceClass = (this.typeBalance > 0) ? "" : "neg";
+      return (
+        <header>
+          <h1>All {filterAccountType} Accounts</h1>
+          <h6>TOTAL BALANCE</h6>
+          <h5 className={balanceClass}>{accounting.formatMoney(account.balance_n)}</h5>
+        </header>
+      );
+    }
+  },
+
+  mapBody: function (transactions) {
+    var that = this;
+
+    var mappedBody = transactions.map(function(transaction, index) {
+      if (index === that.state.formIndex) {
+        return (
+          <TransactionItemForm
+              transaction={transaction}
+              key={index} /> );
+      } else {
+        return (
+          <TransactionIndexItem
+            index={index}
+            onClick={that.makeFormIndex.bind(null, index)}
+            transaction={transaction}
+            key={index} /> );
+      }
+    });
+
+    return mappedBody;
+  },
+
+  resultText: function (transactions, firstResult, totalCount, lastResult) {
+    var buttonNext = "",
+        page = this.state.page,
+        inSearch = this.state.inSearch,
+        filterAccountType = this.state.filterAccountType;
+
+    var buttonBack = (page > 1) ? <button onClick={this.backPage}> Back </button> : "";
+
+    if (totalCount > (25 * page)) {
+      buttonNext = <button onClick={this.nextPage}>Next </button>;
+      }
+
+    if ( filterAccountType ) {
+      if (!inSearch) {
+        return "";
+      } else {
+        return (
+          <div className="search-result-text">
+            <p>Showing { firstResult + 1 } - { lastResult }  of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+          </div>
+        );
+      }
+    } else if (inSearch) {
+      return (
+        <div className="search-result-text">
+          <p>Showing { transactions.length } out of { totalCount } transaction(s) that match "{this.state.query}" {buttonBack} {buttonNext}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="search-result-text">
+          <p>Showing { firstResult + 1 } - { lastResult } of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+        </div>
+      );
+    }
   }
 
 });

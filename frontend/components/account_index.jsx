@@ -50,10 +50,6 @@ var AccountIndex = React.createClass({
     this.storeListener = AccountStore.addListener(this.onChange);
   },
 
-  componentWillReceiveProps: function (newProps) {
-    ApiUtil.fetchAccounts();
-  },
-
   onChange: function () {
     this.setState({accounts: AccountStore.all()});
   },

@@ -70,8 +70,6 @@ var TransactionIndex = React.createClass({
     ApiUtil.fetchTransactions(this.state.page);
     this.setState({
       inSearch: false,
-      // transactions: TransactionStore.all(),
-      // totalCount: TransactionStore.all().length,
       filterAccountType: newProps.filterAccountType || false
     });
   },
@@ -99,8 +97,6 @@ var TransactionIndex = React.createClass({
 
 
   render: function () {
-    // console.log("state transactions:");
-    // console.log(this.state.transactions.length);
     var that = this,
         page = this.state.page,
         firstResult = (page - 1) * 25,
@@ -142,21 +138,16 @@ var TransactionIndex = React.createClass({
   },
 
   filterTransactionsByType: function () {
-    console.log(this.state.transactions.length);
     var newTransactions = [];
     this.state.transactions.forEach(function(transaction) {
-      if (!transaction.account_type) {debugger}
       if (transaction.account_type === this.state.filterAccountType) {
         newTransactions.push(transaction);
       }
     }.bind(this));
-    console.log(newTransactions.length);
     return newTransactions;
   },
 
   mapBody: function (transactions) {
-    // console.log("filtered transactions:");
-    // console.log(transactions.length);
     var that = this;
 
     var mappedBody = transactions.map(function(transaction, index) {
