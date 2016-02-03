@@ -79,11 +79,11 @@ var TransactionIndex = React.createClass({
         page = this.state.page,
         firstResult = (page - 1) * 25,
         lastResult = (this.state.transactions.length > firstResult + 25) ? firstResult + 25 : this.state.transactions.length,
-        transactions = this.state.transactions.slice(firstResult, lastResult ),
+        transactions = this.state.transactions.slice( firstResult, lastResult ),
         inSearch = this.state.inSearch,
         buttonNext = "",
         totalCount = this.state.totalCount,
-        search =  <Search search={this.handleSearch} reset="true" />;
+        search =  <Search search={this.handleSearch} />;
 
 
     if (this.props.filterAccountType) {
