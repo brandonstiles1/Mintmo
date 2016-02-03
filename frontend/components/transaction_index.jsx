@@ -39,15 +39,24 @@ var TransactionIndex = React.createClass({
 
   onChange: function () {
     if (this.state.inSearch) {
-      var newTransactions = [];
-      this.state.transactions.forEach(function(transaction) {
-        newTransactions.push(TransactionStore.find(transaction.id));
+      this.setState({
+        transactions: this.findNewTransactions(),
+        totalCount: newTransactions.length
       });
-
-      this.setState({ transactions: newTransactions, totalCount: newTransactions.length});
     } else {
-      this.setState({ transactions: TransactionStore.all(), totalCount: TransactionStore.all().length});
+      this.setState({
+        transactions: TransactionStore.all(),
+        totalCount: TransactionStore.all().length
+      });
     }
+  },
+
+  findNewTransactions: function () {
+    var newTransactions = [];
+    this.state.transactions.forEach(function(transaction) {
+      newTransactions.push(TransactionStore.find(transaction.id));
+    });
+    return newTransactions;
   },
 
   componentWillUnmount: function () {
@@ -55,8 +64,11 @@ var TransactionIndex = React.createClass({
   },
 
   componentWillReceiveProps: function () {
-
-    this.setState({ inSearch: false, transactions: TransactionStore.all(), totalCount: TransactionStore.all().length });
+    this.setState({
+      inSearch: false,
+      transactions: TransactionStore.all(),
+      totalCount: TransactionStore.all().length
+    });
   },
 
   makeFormIndex: function (index) {
@@ -65,87 +77,42 @@ var TransactionIndex = React.createClass({
 
   handleSearch: function (transactions, query, totalCount) {
     if (query !== "")
-      this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount, page: 1});
+      this.setState({
+        transactions: transactions,
+        query: query,
+        inSearch: true,
+        totalCount: totalCount,
+        page: 1});
     else {
-
-      this.setState({transactions: TransactionStore.all(), inSearch: false, page: 1, totalCount: TransactionStore.all().length});
+      this.setState({
+        transactions: TransactionStore.all(),
+        inSearch: false,
+        page: 1,
+        totalCount: TransactionStore.all().length});
     }
   },
+
 
   render: function () {
 
     var that = this,
-        resultText = "",
         page = this.state.page,
         firstResult = (page - 1) * 25,
         lastResult = (this.state.transactions.length > firstResult + 25) ? firstResult + 25 : this.state.transactions.length,
         transactions = this.state.transactions.slice( firstResult, lastResult ),
-        inSearch = this.state.inSearch,
-        buttonNext = "",
         totalCount = this.state.totalCount,
         search =  <Search search={this.handleSearch} />;
 
 
     if (this.props.filterAccountType) {
-
-      var newTransactions = [];
-      this.state.transactions.forEach(function(transaction) {
-        if (transaction.account_type === that.props.filterAccountType) {
-          newTransactions.push(transaction);
-        }
-      });
+      var newTransactions = this.filterTransactionsByType();
       lastResult = (newTransactions.length > firstResult + 25) ? firstResult + 25 : newTransactions.length;
       transactions = newTransactions.slice(firstResult, lastResult);
       totalCount = newTransactions.length;
     }
 
-    var mappedBody = transactions.map(function(transaction, index) {
-      if (index === that.state.formIndex) {
-        return (
-          <TransactionItemForm
-              transaction={transaction}
-              key={index} /> );
-      } else {
-        return (
-          <TransactionIndexItem
-            index={index}
-            onClick={that.makeFormIndex.bind(null, index)}
-            transaction={transaction}
-            key={index} /> );
-      }
-    });
-
-    var buttonBack = (page > 1) ? <button onClick={this.backPage}> Back </button> : "";
-    if (!this.props.filterAccountType) {
-      if ( inSearch ) {
-        if (totalCount > (25 * page)) {
-          buttonNext = <button onClick={this.nextPage}>Next </button>;
-          }
-          resultText = (
-            <div className="search-result-text">
-              <p>Showing { transactions.length } out of { totalCount } transaction(s) that match "{this.state.query}" {buttonBack} {buttonNext}</p>
-            </div>
-          );
-        } else {
-          if (totalCount > (25 * page)) {
-            buttonNext = <button onClick={this.nextPage}>Next </button>;
-            }
-            resultText = (
-              <div className="search-result-text">
-                <p>Showing { firstResult + 1 } - { lastResult } of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
-              </div>
-            );
-          }
-    } else {
-      if (totalCount > (25 * page)) {
-        buttonNext = <button onClick={this.nextPage}>Next </button>;
-        }
-      resultText = (
-        <div className="search-result-text">
-          <p>Showing { firstResult + 1 } - { lastResult }  of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
-        </div>
-      );
-    }
+    var mappedBody = this.mapBody(transactions);
+    var resultText = this.resultText(transactions, firstResult, totalCount, lastResult);
 
     return (
       <div className="group">
@@ -166,6 +133,71 @@ var TransactionIndex = React.createClass({
         </table>
       </div>
     );
+  },
+
+  filterTransactionsByType: function () {
+    var newTransactions = [];
+    this.state.transactions.forEach(function(transaction) {
+      if (transaction.account_type === this.props.filterAccountType) {
+        newTransactions.push(transaction);
+      }
+    });
+    return newTransactions;
+  },
+
+  mapBody: function (transactions) {
+    var that = this;
+
+    var mappedBody = transactions.map(function(transaction, index) {
+      if (index === that.state.formIndex) {
+        return (
+          <TransactionItemForm
+              transaction={transaction}
+              key={index} /> );
+      } else {
+        return (
+          <TransactionIndexItem
+            index={index}
+            onClick={that.makeFormIndex.bind(null, index)}
+            transaction={transaction}
+            key={index} /> );
+      }
+    });
+
+    return mappedBody;
+  },
+
+  resultText: function (transactions, firstResult, totalCount, lastResult) {
+    var buttonNext = "",
+        page = this.state.page,
+        inSearch = this.state.inSearch,
+        filterAccountType = this.props.filterAccountType;
+
+    var buttonBack = (page > 1) ? <button onClick={this.backPage}> Back </button> : "";
+
+    if (totalCount > (25 * page)) {
+      buttonNext = <button onClick={this.nextPage}>Next </button>;
+      }
+
+    if ( filterAccountType ) {
+      return (
+        <div className="search-result-text">
+          <p>Showing { firstResult + 1 } - { lastResult }  of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+        </div>
+      );
+    } else if (inSearch) {
+      return (
+        <div className="search-result-text">
+          <p>Showing { transactions.length } out of { totalCount } transaction(s) that match "{this.state.query}" {buttonBack} {buttonNext}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="search-result-text">
+          <p>Showing { firstResult + 1 } - { lastResult } of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+        </div>
+      );
+    }
   }
 
 });
