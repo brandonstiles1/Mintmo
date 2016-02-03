@@ -53,8 +53,8 @@ class Account < ActiveRecord::Base
     20.times do |time|
       category = CATEGORY_TYPES.sample
       description = Faker::Commerce.product_name
-      date = Faker::Date.backward(rand(100))
-      amount = (rand(10000)/100) - 50
+      date = Faker::Date.backward(rand(1000))
+      amount = ((rand(10000)/100.23) - 50).round(2)
 
       self.transactions.create(
         category: category,
@@ -63,6 +63,14 @@ class Account < ActiveRecord::Base
         amount: amount
       )
     end
+  end
+
+  def correct_balance
+    new_balance = 0
+    self.transactions.each do |transaction|
+      new_balance += transaction.amount
+    end
+    self.balance = new_balance
   end
 
 end

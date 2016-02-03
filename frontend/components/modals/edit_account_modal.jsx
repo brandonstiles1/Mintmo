@@ -65,8 +65,6 @@ var EditAccountModal = React.createClass({
         accounts,
         editAccount = <div></div>;
 
-
-
     if (!accts) {
       accounts =  (
         <div>
@@ -77,13 +75,17 @@ var EditAccountModal = React.createClass({
         accounts = accts.map(function(account, index) {
 
         if (that.state.account && account.id === that.state.account.id ) {
+
           return (
             <li
               className="group"
               onClick={that.selectAccount.bind(null, account)}
               key={index}>
-              <p>{account.name}</p>
-              <button className="search-button" onClick={that.destroyAccount.bind(null, account)}>Delete Account</button>
+              <h1 className="edit-account-header">{account.name}</h1>
+              <p className="edit-account-details"><strong>Institution:</strong> {account.institution}</p>
+              <p className="edit-account-details"><strong>Account Type</strong>: {account.account_type}</p>
+              <p className="edit-account-details"><strong>Balance</strong>: {accounting.formatMoney(account.balance)}</p>
+              <button className="edit-account-delete" onClick={that.destroyAccount.bind(null, account)}>Delete Account</button>
             </li>
           );
         } else {
@@ -104,9 +106,9 @@ var EditAccountModal = React.createClass({
     return (
       <div className="modal-edit-form">
         <h1 className="main-header-account">
-          <button className="search-button" onClick={this.renderAddAccountModal}>+ Add Account</button>
+          <button className="add-new-account-button" onClick={this.renderAddAccountModal}>+ Add Account</button>
         </h1>
-        <ul className="modal-edit-institutions">
+        <ul className="edit-account-list">
           {accounts}
         </ul>
 

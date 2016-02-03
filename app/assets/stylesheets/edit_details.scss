@@ -13,7 +13,8 @@
 
 
 
-button.edit-details-cancel {
+button.edit-details-cancel,
+button.edit-account-delete {
   float: left;
   padding: 7px 8px 6px 5px;
   font-size: 11px;
@@ -25,11 +26,20 @@ button.edit-details-cancel {
   margin-left: 375px;
 }
 
-button.edit-details-cancel:hover {
+button.edit-details-cancel:hover,
+button.edit-account-delete:hover {
   color: white;
   background: #999;
   cursor: pointer;
 }
+
+button.edit-account-delete {
+  margin-left: 0;
+  text-transform: uppercase;
+  width: 652px;
+  cursor: pointer;
+}
+
 button.edit-details-submit {
   float: right;
   padding: 7px 8px 6px 5px;
@@ -126,6 +136,8 @@ button.edit-details {
 button.edit-details:hover {
   background: #2e2e2e;
 }
+
+
 
 .edit-details-show {
   position: absolute;

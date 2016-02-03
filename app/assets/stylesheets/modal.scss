@@ -160,14 +160,16 @@ ul.modal-edit-institutions {
   margin-top: 20px;
 }
 
-.modal-edit-institutions > li {
+.modal-edit-institutions > li,
+.add-new-account-button {
   margin: 20px 20px 20px 0;
   border-radius: 3px;
   border: 1px solid #ccc;
   background: #45cae6;
 }
 
-.modal-edit-institutions > li:hover {
+.modal-edit-institutions > li:hover,
+.add-new-account-button:hover {
   cursor: pointer;
   background: #42c0db;
   color: #e9f8fb;
@@ -251,4 +253,45 @@ p.add-account-label {
 
 #fa-user-modal  {
   left: 141px;
+}
+
+.add-new-account-button {
+  text-align: center;
+  color: white;
+  width: 708px;
+  height: 40px;
+  font-weight: 600px;
+  text-transform: uppercase;
+  font-size: 20px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+}
+
+ul.edit-account-list > li {
+  margin: 20px 20px 20px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: -webkit-linear-gradient(top, #fff, #f7f7f7);
+  color: #666666;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+  padding: 20px;
+}
+
+ul.edit-account-list > li:hover {
+  cursor: pointer;
+  background: #e8e8e8;
+}
+
+.edit-account-header {
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+
+.edit-account-details > strong {
+  font-weight: 600;
+}
+
+.edit-account-details {
+  margin: 10px 0;
 }

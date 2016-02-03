@@ -89,12 +89,14 @@ var TransactionIndex = React.createClass({
     if (this.props.filterAccountType) {
 
       var newTransactions = [];
-      transactions.forEach(function(transaction) {
+      this.state.transactions.forEach(function(transaction) {
         if (transaction.account_type === that.props.filterAccountType) {
           newTransactions.push(transaction);
         }
       });
-      transactions = newTransactions;
+      lastResult = (newTransactions.length > firstResult + 25) ? firstResult + 25 : newTransactions.length;
+      transactions = newTransactions.slice(firstResult, lastResult);
+      totalCount = newTransactions.length;
     }
 
     var mappedBody = transactions.map(function(transaction, index) {
@@ -135,9 +137,12 @@ var TransactionIndex = React.createClass({
             );
           }
     } else {
+      if (totalCount > (25 * page)) {
+        buttonNext = <button onClick={this.nextPage}>Next </button>;
+        }
       resultText = (
         <div className="search-result-text">
-          <p>Showing { firstResult } - { lastResult }  of { transactions.length } transaction(s) {buttonBack} {buttonNext}</p>
+          <p>Showing { firstResult + 1 } - { lastResult }  of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
         </div>
       );
     }
