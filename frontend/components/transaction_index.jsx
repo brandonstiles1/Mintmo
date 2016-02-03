@@ -24,7 +24,7 @@ var TransactionIndex = React.createClass({
   },
 
   componentDidMount: function () {
-    ApiUtil.fetchTransactions(this.state.page);
+    ApiUtil.fetchTransactions();
     this.storeListener = TransactionStore.addListener(this.onChange);
   },
 
@@ -67,7 +67,7 @@ var TransactionIndex = React.createClass({
 
   componentWillReceiveProps: function (newProps) {
 
-    ApiUtil.fetchTransactions(this.state.page);
+    // ApiUtil.fetchTransactions(this.state.page);
     this.setState({
       inSearch: false,
       filterAccountType: newProps.filterAccountType || false

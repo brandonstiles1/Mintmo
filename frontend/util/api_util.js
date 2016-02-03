@@ -25,12 +25,11 @@ var ApiUtil = {
 
   },
 
-  fetchTransactions: function (page) {
+  fetchTransactions: function () {
     $.ajax({
      type: "get",
      url: "/api/transactions",
      dataType: "json",
-     data: {page: page},
      success: function (transactions) {
        ApiActions.receiveAllTransactions(transactions);
      }

@@ -11,7 +11,8 @@ var AccountStore = require('../stores/account'),
     Header = require('./header'),
     ComponentActions = require('../actions/component_actions'),
     Search = require('./search'),
-    Footer = require('./footer');
+    Footer = require('./footer'),
+    PieChart = require('./charts/pie_chart');
 
 var AccountIndex = React.createClass({
   mixins: [History],
@@ -107,6 +108,7 @@ var AccountIndex = React.createClass({
 
           <section className="root-content-main">
           <header className="root-content-main-header">
+            <PieChart/>
             <h1>All Transactions</h1>
 
           </header>

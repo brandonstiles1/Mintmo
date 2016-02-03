@@ -10,6 +10,29 @@ module.exports = {
     }
   },
 
+  getTopTransactionCategories: function (transactions) {
+    var categoriesIdx = {};
+    var catAmounts = {};
+    var transCats = {};
+    transactions.forEach(function(transaction) {
+    if (transaction.category !== "UNCATEGORIZED") {
+      if (!categoriesIdx[transaction.category]) {
+        categoriesIdx[transaction.category] = [];
+        catAmounts[transaction.category] = 0;
+      }
+      categoriesIdx[transaction.category] = transaction;
+      catAmounts[transaction.category] += parseInt(transaction.amount_n);
+    }
+  });
+
+    var keysSorted = Object.keys(catAmounts).sort(function(a,b){return catAmounts[b] - catAmounts[a];}).slice(0, 5);
+    keysSorted.forEach(function(category) {
+      transCats[category] = catAmounts[category];
+    });
+
+    return transCats;
+  },
+
   getTransactionClass: function (clicked) {
     if (clicked) {
       return "content-header-list-selected";

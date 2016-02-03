@@ -53,7 +53,7 @@ class Account < ActiveRecord::Base
     20.times do |time|
       category = CATEGORY_TYPES.sample
       description = Faker::Commerce.product_name
-      date = Faker::Date.backward(rand(1000))
+      date = Faker::Date.backward(rand(150))
       amount = ((rand(10000)/100) - (50 + (rand(1..100) / 100.0))).round(2)
 
       self.transactions.create(

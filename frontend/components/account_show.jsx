@@ -39,7 +39,9 @@ var AccountShow = React.createClass({
     ApiUtil.fetchAccounts();
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
     ApiUtil.fetchAccountTransactions(this.props.params.accountId);
-    this.accountListener = AccountStore.addListener(this.onChange);
+    this.transactionListener = TransactionStore.addListener(this.onChange);
+    // this.accountListener = AccountStore.addListener(this.onChange);
+
   },
 
   nextPage: function () {
@@ -92,7 +94,7 @@ var AccountShow = React.createClass({
   },
 
   componentWillUnmount: function () {
-    this.accountListener.remove();
+    this.transactionListener.remove();
   },
 
   handleAccountTypeClick: function (type) {
@@ -204,6 +206,7 @@ var AccountShow = React.createClass({
             {headerText}
 
             <TransactionIndex
+              transactions={this.state.transactions}
               filterAccountType={this.state.filterAccountType}
               typeIds={this.state.typeIds} />
           </section>
