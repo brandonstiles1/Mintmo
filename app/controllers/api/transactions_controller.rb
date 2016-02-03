@@ -4,9 +4,6 @@ class Api::TransactionsController < ApplicationController
 
   def index
     @transactions = current_user.transactions.includes(:institution, :account)
-    @count = @transactions.count
-    @transactions = @transactions.page(params[:page])
-
     render :index
   end
 

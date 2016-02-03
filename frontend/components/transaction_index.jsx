@@ -16,10 +16,9 @@ var TransactionIndex = React.createClass({
       transactions: TransactionStore.all(),
       formIndex: 0,
       inSearch: false,
-      totalCount: null,
+      totalCount: TransactionStore.all().length,
       query: null,
-      page: 1,
-      totalCountOutSearch: TransactionStore.meta().totalCount
+      page: 1
     };
   },
 
@@ -30,13 +29,16 @@ var TransactionIndex = React.createClass({
 
   nextPage: function () {
     var nextPage = this.state.page + 1;
-    ApiUtil.fetchTransactions(nextPage);
-
     this.setState({page: nextPage});
   },
 
+  backPage: function () {
+    var backPage = this.state.page - 1;
+    this.setState({page: backPage});
+  },
+
   onChange: function () {
-    this.setState({ transactions: TransactionStore.all(), totalCountOutSearch: TransactionStore.meta().totalCount });
+    this.setState({ transactions: TransactionStore.all(), totalCount: TransactionStore.all().length});
   },
 
   componentWillUnmount: function () {
@@ -44,7 +46,7 @@ var TransactionIndex = React.createClass({
   },
 
   componentWillReceiveProps: function () {
-    this.setState({ inSearch: false, transactions: TransactionStore.all(), totalCountOutSearch: TransactionStore.meta().totalCount });
+    this.setState({ inSearch: false, transactions: TransactionStore.all(), totalCount: TransactionStore.all().length });
   },
 
   makeFormIndex: function (index) {
@@ -53,9 +55,9 @@ var TransactionIndex = React.createClass({
 
   handleSearch: function (transactions, query, totalCount) {
     if (query !== "")
-      this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount});
+      this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount, page: 1});
     else {
-      this.setState({transactions: TransactionStore.all(), inSearch: false});
+      this.setState({transactions: TransactionStore.all(), inSearch: false, page: 1});
     }
   },
 
@@ -63,10 +65,14 @@ var TransactionIndex = React.createClass({
 
     var that = this,
         resultText = "",
-        transactions = this.state.transactions,
+        page = this.state.page,
+        firstResult = (page - 1) * 25,
+        transactions = this.state.transactions.slice(firstResult, firstResult + 25 ),
+        inSearch = this.state.inSearch,
+        buttonNext = "",
+        totalCount = this.state.totalCount,
         search =  <Search search={this.handleSearch} reset="true" />;
 
-    var totalCount = (this.state.inSearch) ? this.state.totalCount : this.state.totalCountOutSearch;
 
     if (this.props.filterAccountType) {
 
@@ -95,17 +101,31 @@ var TransactionIndex = React.createClass({
       }
     });
 
-    var button = (totalCount > transactions.length) ? <button onClick={this.nextPage}>Next ></button> : "";
-    if (this.state.inSearch) {
-      resultText = (
-        <div className="search-result-text">
-          <p>Showing { transactions.length } out of { this.state.totalCount } transaction(s) that match "{this.state.query}" {button}</p>
-        </div>
-      );
+    var buttonBack = (page > 1) ? <button onClick={this.backPage}> Back </button> : "";
+    if (!this.props.filterAccountType) {
+      if ( inSearch ) {
+        if (totalCount > (25 * page)) {
+          buttonNext = <button onClick={this.nextPage}>Next </button>;
+          }
+          resultText = (
+            <div className="search-result-text">
+              <p>Showing { transactions.length } out of { totalCount } transaction(s) that match "{this.state.query}" {buttonBack} {buttonNext}</p>
+            </div>
+          );
+        } else {
+          if (totalCount > (25 * page)) {
+            buttonNext = <button onClick={this.nextPage}>Next </button>;
+            }
+            resultText = (
+              <div className="search-result-text">
+                <p>Showing { transactions.length } out of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+              </div>
+            );
+          }
     } else {
       resultText = (
         <div className="search-result-text">
-          <p>Showing { transactions.length } out of { totalCount } transaction(s) {button}</p>
+          <p>Showing { transactions.length } out of { transactions.length } transaction(s) {buttonBack} {buttonNext}</p>
         </div>
       );
     }
