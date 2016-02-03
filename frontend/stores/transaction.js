@@ -35,7 +35,7 @@ var resetAccountTransactions = function (transactions) {
   });
 };
 
-var find = function (id) {
+TransactionStore.find = function (id) {
   return _transactionsIdx[id];
 };
 

@@ -38,7 +38,16 @@ var TransactionIndex = React.createClass({
   },
 
   onChange: function () {
-    this.setState({ transactions: TransactionStore.all(), totalCount: TransactionStore.all().length});
+    if (this.state.inSearch) {
+      var newTransactions = [];
+      this.state.transactions.forEach(function(transaction) {
+        newTransactions.push(TransactionStore.find(transaction.id));
+      });
+
+      this.setState({ transactions: newTransactions, totalCount: newTransactions.length});
+    } else {
+      this.setState({ transactions: TransactionStore.all(), totalCount: TransactionStore.all().length});
+    }
   },
 
   componentWillUnmount: function () {
@@ -46,6 +55,7 @@ var TransactionIndex = React.createClass({
   },
 
   componentWillReceiveProps: function () {
+
     this.setState({ inSearch: false, transactions: TransactionStore.all(), totalCount: TransactionStore.all().length });
   },
 
@@ -57,7 +67,8 @@ var TransactionIndex = React.createClass({
     if (query !== "")
       this.setState({transactions: transactions, query: query, inSearch: true, totalCount: totalCount, page: 1});
     else {
-      this.setState({transactions: TransactionStore.all(), inSearch: false, page: 1});
+
+      this.setState({transactions: TransactionStore.all(), inSearch: false, page: 1, totalCount: TransactionStore.all().length});
     }
   },
 
@@ -67,7 +78,8 @@ var TransactionIndex = React.createClass({
         resultText = "",
         page = this.state.page,
         firstResult = (page - 1) * 25,
-        transactions = this.state.transactions.slice(firstResult, firstResult + 25 ),
+        lastResult = (this.state.transactions.length > firstResult + 25) ? firstResult + 25 : this.state.transactions.length,
+        transactions = this.state.transactions.slice(firstResult, lastResult ),
         inSearch = this.state.inSearch,
         buttonNext = "",
         totalCount = this.state.totalCount,
@@ -118,14 +130,14 @@ var TransactionIndex = React.createClass({
             }
             resultText = (
               <div className="search-result-text">
-                <p>Showing { transactions.length } out of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+                <p>Showing { firstResult + 1 } - { lastResult } of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
               </div>
             );
           }
     } else {
       resultText = (
         <div className="search-result-text">
-          <p>Showing { transactions.length } out of { transactions.length } transaction(s) {buttonBack} {buttonNext}</p>
+          <p>Showing { firstResult } - { lastResult }  of { transactions.length } transaction(s) {buttonBack} {buttonNext}</p>
         </div>
       );
     }
