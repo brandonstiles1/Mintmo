@@ -1,10 +1,30 @@
 var React = require('react');
 var History = require('react-router').History;
-var UsersStore = require('../../stores/users_store');
-var UsersApiUtil = require('../../util/users_api_util');
+
+var UsersStore = require('../../stores/users_store'),
+    UsersApiUtil = require('../../util/users_api_util'),
+    FlashStore = require('../../stores/flash'),
+    FlashActions = require('../../actions/flash_actions');
 
 var UserForm = React.createClass({
   mixins: [History],
+
+  getInitialState: function () {
+    return {flash: FlashStore.all()};
+  },
+
+  componentDidMount: function () {
+    this.flashListener = FlashStore.addListener(this._updateFlash);
+  },
+
+  componentWillUnmount: function () {
+    this.flashListener.remove();
+    FlashActions.receiveFlash([]);
+  },
+
+  _updateFlash: function () {
+    this.setState({flash: FlashStore.all()});
+  },
 
   submit: function (e) {
     e.preventDefault();
@@ -17,7 +37,17 @@ var UserForm = React.createClass({
   },
 
   render: function() {
-
+    var errors;
+    if (this.state.flash.length > 0) {
+      var messages = this.state.flash.map(function(error, index) {
+        return <li key={index}>{error}</li>;
+      });
+      errors = (
+        <ul className="user-form-errors">
+          {messages}
+        </ul>
+      );
+    }
     return (
       <div>
         <header className="header">
@@ -42,7 +72,7 @@ var UserForm = React.createClass({
             <h1 className="main-header">See all your finances in one place & create a budget</h1>
 
             <form className="form group" onSubmit={ this.submit }>
-
+              {errors}
               <fieldset className="form-fieldset">
 
                 <div className="input">

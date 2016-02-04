@@ -1,5 +1,6 @@
 var UserActions = require('../actions/user_actions'),
-    CurrentUserActions = require('../actions/current_user_actions');
+    CurrentUserActions = require('../actions/current_user_actions'),
+    FlashActions = require("../actions/flash_actions");
 
 var UsersApiUtil = {
   fetchUsers: function () {
@@ -34,6 +35,10 @@ var UsersApiUtil = {
         UserActions.receiveUser(user);
         CurrentUserActions.receiveCurrentUser(user);
         callback && callback();
+      },
+      error: function (data) {
+        debugger
+        FlashActions.receiveFlash(data.responseJSON.errors);
       }
     });
   },

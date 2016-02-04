@@ -19,7 +19,7 @@ class Api::UsersController < ApplicationController
       log_in_user!(@user)
       render :show
     else
-      render json: ["Incorrect email/password combination."], status: 401
+      render json: {errors: @user.errors.full_messages}.to_json, status: 422
     end
   end
 

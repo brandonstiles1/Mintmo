@@ -71,27 +71,17 @@ class User < ActiveRecord::Base
     user = User.find_by(provider: provider, uid: uid)
     return user if user
 
-    fname = auth_hash.info.name.split(" ").first || ""
-    lname = auth_hash.info.name.split(" ").last || ""
+    user = user.new(provider: provider, uid: uid)
+    user.fname = auth_hash.info.name.split(" ").first || ""
+    user.lname = auth_hash.info.name.split(" ").last || ""
 
     if auth_hash.info.image
       avatar_url = process_uri(auth_hash.info.image)
-      avatar = URI.parse(avatar_url)
-    else
-      avatar = URI.parse(self.avatar.default_url)
+      user.avatar = URI.parse(avatar_url)
     end
 
-    email = auth_hash.info.name.gsub(" ", ".").downcase + "@facebook.com"
-
-    User.create(
-      provider: provider,
-      uid: uid,
-      email: email,
-      password: SecureRandom::urlsafe_base64,
-      avatar: avatar,
-      fname: fname,
-      lname: lname
-    )
+    user.email = auth_hash.info.name.gsub(" ", ".").downcase + "@facebook.com"
+    user.save!
   end
 
   def self.find_by_credentials(email, password)
