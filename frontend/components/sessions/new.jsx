@@ -1,9 +1,29 @@
 var React = require('react');
 var History = require('react-router').History;
-var SessionsApiUtil = require('./../../util/sessions_api_util');
+var SessionsApiUtil = require('./../../util/sessions_api_util'),
+    FlashStore = require('../../stores/flash'),
+    FlashActions = require('../../actions/flash_actions');
+
 
 var SessionForm = React.createClass({
   mixins: [History],
+
+  getInitialState: function () {
+    return {flash: FlashStore.all()};
+  },
+
+  componentDidMount: function () {
+    this.flashListener = FlashStore.addListener(this._updateFlash);
+  },
+
+  componentWillUnmount: function () {
+    this.flashListener.remove();
+    FlashActions.receiveFlash([]);
+  },
+
+  _updateFlash: function () {
+    this.setState({flash: FlashStore.all()});
+  },
 
   submit: function (e) {
     e.preventDefault();
@@ -16,6 +36,7 @@ var SessionForm = React.createClass({
 
 
   render: function() {
+
     return (
       <div>
         <header className="header">
@@ -39,7 +60,7 @@ var SessionForm = React.createClass({
             <h1 className="main-header">Log in to Mintmo</h1>
 
         <form className="form group" onSubmit={ this.submit }>
-
+           <p className="session-form-errors">{this.state.flash}</p>
           <fieldset className="form-fieldset">
 
             <div className="input">

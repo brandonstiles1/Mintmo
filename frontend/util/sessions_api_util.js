@@ -1,5 +1,6 @@
 var CurrentUserActions = require("./../actions/current_user_actions"),
-    UserActions = require("./../actions/user_actions");
+    UserActions = require("./../actions/user_actions"),
+    FlashActions = require("./../actions/flash_actions");
 
 var SessionsApiUtil = {
 
@@ -13,8 +14,10 @@ var SessionsApiUtil = {
         CurrentUserActions.receiveCurrentUser(currentUser);
         UserActions.receiveUser(currentUser);
         success && success();
+      },
+      error: function (data) {
+        FlashActions.receiveFlash(data.responseJSON);
       }
-
     });
   },
 
@@ -43,6 +46,7 @@ var SessionsApiUtil = {
         CurrentUserActions.receiveCurrentUser(currentUser);
         cb && cb(currentUser);
       }
+
     });
   }
 

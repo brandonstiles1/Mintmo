@@ -71,10 +71,16 @@ class User < ActiveRecord::Base
     user = User.find_by(provider: provider, uid: uid)
     return user if user
 
-    fname = auth_hash.info.name.split(" ").first
-    lname = auth_hash.info.name.split(" ").last
-    avatar_url = process_uri(auth_hash.info.image)
-    avatar = URI.parse(avatar_url)
+    fname = auth_hash.info.name.split(" ").first || ""
+    lname = auth_hash.info.name.split(" ").last || ""
+
+    if auth_hash.info.image
+      avatar_url = process_uri(auth_hash.info.image)
+      avatar = URI.parse(avatar_url)
+    else
+      avatar = URI.parse(self.avatar.default_url)
+    end
+
     email = auth_hash.info.name.gsub(" ", ".").downcase + "@facebook.com"
 
     User.create(
