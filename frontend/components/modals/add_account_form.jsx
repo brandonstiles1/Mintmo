@@ -121,6 +121,7 @@ var AddAccountFormModal = React.createClass({
 
               <div className="input show-pass group">
                 <input
+                  id="checkbox"
                   onChange={this.toggleShowPassword}
                   type="checkbox" />
                 <p>Show password</p>

@@ -219,13 +219,14 @@ p.add-account-label {
 .show-pass > p {
   float: left;
   margin-right: 375px;
-  margin-top: -17px;
+  margin-left: 25px;
+  margin-top: -15px;
+  font-size: 14px;
 }
 
-.show-pass > input {
+#checkbox {
   float: left;
   margin: 0;
-  margin-left: -10px;
   -webkit-appearance: checkbox;
   box-sizing:border-box;
 }
