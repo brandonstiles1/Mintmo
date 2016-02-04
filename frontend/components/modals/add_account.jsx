@@ -73,7 +73,7 @@ var AddAccountModal = React.createClass({
           <ul className="modal-edit-institutions">
             {institutions}
           </ul>
-          <p onClick={this.goBack} className="go-back" to={"/"}>Go back</p>
+          <p id="add-account-back" onClick={this.goBack} className="go-back" to={"/"}>Go back</p>
         </div>
       );
     }
