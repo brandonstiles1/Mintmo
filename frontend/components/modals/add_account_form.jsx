@@ -53,13 +53,17 @@ var AddAccountFormModal = React.createClass({
   },
 
   navToNewAccount: function (id) {
-
+    
     this.props.toggleModal();
     this.history.pushState(null, 'accounts/' + id, {});
   },
 
   goBack: function () {
     this.props.goBack();
+  },
+
+  submit: function (e) {
+    e.preventDefault();
   },
 
   render: function () {
