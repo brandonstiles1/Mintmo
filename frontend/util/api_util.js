@@ -1,4 +1,5 @@
-var ApiActions = require('../actions/api');
+var ApiActions = require('../actions/api'),
+    FlashActions = require("../actions/flash_actions");
 
 var ApiUtil = {
   fetchAccounts: function () {
@@ -95,6 +96,9 @@ var ApiUtil = {
       success: function (account) {
         ApiActions.receiveAccount(account);
         callback && callback(account.id);
+      },
+      error: function (data) {
+        FlashActions.receiveFlash(data.responseJSON.errors);
       }
     });
   },

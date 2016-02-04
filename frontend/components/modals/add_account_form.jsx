@@ -3,7 +3,9 @@ var React = require('react'),
     History = require('react-router').History;
 
 var ApiUtil = require('../../util/api_util'),
-    ComponentActions = require('../../actions/component_actions');
+    ComponentActions = require('../../actions/component_actions'),
+    FlashStore = require('../../stores/flash'),
+    FlashActions = require('../../actions/flash_actions');
 
 var AddAccountFormModal = React.createClass({
   mixins: [LinkedStateMixin, History],
@@ -14,8 +16,22 @@ var AddAccountFormModal = React.createClass({
       account_password: "",
       account_type: "",
       account_name: "",
-      checked: false
+      checked: false,
+      flash: FlashStore.all()
     };
+  },
+
+  componentDidMount: function () {
+    this.flashListener = FlashStore.addListener(this._updateFlash);
+  },
+
+  componentWillUnmount: function () {
+    this.flashListener.remove();
+    FlashActions.receiveFlash([]);
+  },
+
+  _updateFlash: function () {
+    this.setState({flash: FlashStore.all()});
   },
 
   toggleShowPassword: function () {
@@ -37,7 +53,7 @@ var AddAccountFormModal = React.createClass({
   },
 
   navToNewAccount: function (id) {
-    
+
     this.props.toggleModal();
     this.history.pushState(null, 'accounts/' + id, {});
   },
@@ -61,7 +77,7 @@ var AddAccountFormModal = React.createClass({
           { this.props.inst }
         </h1>
         <form className="modal-form group" onSubmit={ this.submit }>
-
+           <p className="session-form-errors">{this.state.flash}</p>
           <fieldset className="modal-form-fieldset">
 
             <div className="input">

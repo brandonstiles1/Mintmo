@@ -8,11 +8,16 @@ class Api::AccountsController < ApplicationController
   end
 
   def create
-    @account = current_user.accounts.create!(account_params)
-    @account.create_transactions
-    @account.correct_balance
-    @account = Account.includes(transactions: [:institution]).find(@account.id)
-    render :show
+    @account = current_user.accounts.new(account_params)
+
+    if @account.save
+      @account.create_transactions
+      @account.correct_balance
+      @account = Account.includes(transactions: [:institution]).find(@account.id)
+      render :show
+    else
+      render json: {errors: ["Account name can't be blank."]}.to_json, status: 422
+    end
   end
 
   def show

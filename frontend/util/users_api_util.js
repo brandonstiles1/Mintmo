@@ -37,7 +37,6 @@ var UsersApiUtil = {
         callback && callback();
       },
       error: function (data) {
-        debugger
         FlashActions.receiveFlash(data.responseJSON.errors);
       }
     });
