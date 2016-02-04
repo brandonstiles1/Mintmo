@@ -217,13 +217,17 @@ p.add-account-label {
   margin: 5px 0;
 }
 .show-pass > p {
-  float: right;
+  float: left;
   margin-right: 375px;
   margin-top: -17px;
 }
 
 .show-pass > input {
   float: left;
+  margin: 0;
+  margin-left: -10px;
+  -webkit-appearance: checkbox;
+  box-sizing:border-box;
 }
 
 .add-account-submit {
