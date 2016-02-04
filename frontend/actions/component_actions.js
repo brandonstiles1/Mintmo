@@ -27,7 +27,7 @@ module.exports = {
 
     var keysSorted = Object.keys(catAmounts).sort(function(a,b){return catAmounts[b] - catAmounts[a];}).slice(0, 5);
     keysSorted.forEach(function(category) {
-      transCats[category] = catAmounts[category];
+      transCats[category] = catAmounts[category].toFixed(2);
     });
 
     return transCats;
