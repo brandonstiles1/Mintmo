@@ -43,9 +43,12 @@ var UserForm = React.createClass({
         return <li key={index}>{error}</li>;
       });
       errors = (
-        <ul className="user-form-errors">
-          {messages}
-        </ul>
+        <div className="user-form-errors group">
+          <i className="fa fa-exclamation-triangle" />
+          <ul>
+            {messages}
+          </ul>
+        </div>
       );
     }
     return (

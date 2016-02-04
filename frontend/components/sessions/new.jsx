@@ -36,6 +36,16 @@ var SessionForm = React.createClass({
 
 
   render: function() {
+    var errors = "";
+    if (this.state.flash.length > 0) {
+      errors = (
+        <p className="session-form-errors group">
+          <i className="fa fa-exclamation-triangle" />
+          {this.state.flash}
+        </p>
+      );
+
+    }
 
     return (
       <div>
@@ -60,7 +70,7 @@ var SessionForm = React.createClass({
             <h1 className="main-header">Log in to Mintmo</h1>
 
         <form className="form group" onSubmit={ this.submit }>
-           <p className="session-form-errors">{this.state.flash}</p>
+           {errors}
           <fieldset className="form-fieldset">
 
             <div className="input">

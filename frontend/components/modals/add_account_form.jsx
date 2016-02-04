@@ -65,10 +65,21 @@ var AddAccountFormModal = React.createClass({
   render: function () {
     var institution = this.props.inst,
         logo = this.props.logo,
-        passwordInputType = "password";
+        passwordInputType = "password",
+        errors = "";
 
     if (this.state.checked) {
       passwordInputType = "text";
+    }
+
+    if (this.state.flash.length > 0) {
+      errors = (
+        <p className="session-form-errors">
+          <i className="fa fa-exclamation-triangle" />
+          {this.state.flash}
+        </p>
+      );
+
     }
 
     return (
@@ -77,7 +88,7 @@ var AddAccountFormModal = React.createClass({
           { this.props.inst }
         </h1>
         <form className="modal-form group" onSubmit={ this.submit }>
-           <p className="session-form-errors">{this.state.flash}</p>
+          {errors}
           <fieldset className="modal-form-fieldset">
 
             <div className="input">
