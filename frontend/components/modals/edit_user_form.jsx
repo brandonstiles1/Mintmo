@@ -55,7 +55,7 @@ var EditUserFormModal = React.createClass({
     var image_url = this.state.image_url;
 
     if (image_url === "/missing.png") {
-      image_url = "http://i.imgur.com/wKU086S.jpg";
+      image_url = window.Mintmo.imageUrls.missing;
     }
 
     var maleCheck = "",

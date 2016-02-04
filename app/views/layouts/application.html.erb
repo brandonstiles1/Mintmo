@@ -6,6 +6,16 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <link href="<%= asset_path("favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+  <script>
+    window.Mintmo = window.Mintmo || {};
+    var mintmoLogo =  "<%= image_url("mintmo.png") %>",
+        missing =  "<%= image_url("missing.png") %>";
+
+    window.Mintmo.imageUrls = {
+      mintmoLogo: mintmoLogo,
+      missing: missing
+    };
+  </script>
 </head>
 <body>
 

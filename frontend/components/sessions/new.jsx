@@ -22,7 +22,7 @@ var SessionForm = React.createClass({
           <nav className="header-nav group">
 
             <h1 className="header-logo">
-              <a href="/"><img className="mintmo-logo" src="http://i.imgur.com/lTEkRfz.png" alt="" /></a>
+              <a href="/"><img className="mintmo-logo" src={window.Mintmo.imageUrls.mintmoLogo} alt="" /></a>
             </h1>
 
             <ul className="header-list group">
