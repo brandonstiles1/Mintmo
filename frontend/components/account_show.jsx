@@ -303,7 +303,7 @@ var AccountShow = React.createClass({
         <header>
           <h1>All {filterAccountType} Accounts</h1>
           <h6>TOTAL BALANCE</h6>
-          <h5 className={balanceClass}>{accounting.formatMoney(account.balance_n)}</h5>
+          <h5 className={balanceClass}>{accounting.formatMoney(this.typeBalance)}</h5>
         </header>
       );
     }
