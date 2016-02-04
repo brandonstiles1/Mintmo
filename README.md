@@ -1,12 +1,12 @@
 # Mintmo
 
-[Mintmo][heroku]
+[Mintmo][mintmo]
 
-[heroku]: http://mintmo.herokuapp.com/
+[mintmo]: http://www.mymintmo.com/
 
 ## Summary
 
-[Mintmo][heroku] is a web application inspired by Mint built using Ruby on Rails
+[Mintmo][mintmo] is a web application inspired by Mint built using Ruby on Rails
 utilizing React.js/flux architecture. Mintmo allows users to:
 
 - [ ] Create an account

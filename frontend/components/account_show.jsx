@@ -31,7 +31,15 @@ var AccountShow = React.createClass({
       query: null,
       filterAccountType: false,
       typeIds: null,
-      page: 1
+      page: 1,
+      sortDate: false,
+      sortDateASC: false,
+      sortCat: false,
+      sortCatASC: false,
+      sortAmount: false,
+      sortAmountASC: false,
+      sortDesc: false,
+      sortDescASC: false
     };
   },
 
@@ -40,8 +48,6 @@ var AccountShow = React.createClass({
     ApiUtil.fetchAccount(parseInt(this.props.params.accountId));
     ApiUtil.fetchAccountTransactions(this.props.params.accountId);
     this.transactionListener = TransactionStore.addListener(this.onChange);
-    // this.accountListener = AccountStore.addListener(this.onChange);
-
   },
 
   nextPage: function () {
@@ -175,6 +181,16 @@ var AccountShow = React.createClass({
 
     if (!(account && transactions)) { return <div>SPINNER</div>; }
 
+      if (this.state.sortDate) {
+        transactions = this.sortDate();
+      } else if (this.state.sortCat) {
+        transactions = this.sortCat();
+      } else if (this.state.sortDesc) {
+        transactions = this.sortDesc();
+      } else if (this.state.sortAmount) {
+        transactions = this.sortAmount();
+      }
+
     var headerText = this.headerText(),
         search = <Search search={this.handleSearch} account={account.id} />,
         totalCount = this.state.totalCount,
@@ -229,10 +245,10 @@ var AccountShow = React.createClass({
               <table className="transaction-table group">
                 <thead className="transaction-table-header">
                   <tr >
-                    <th className="date">Date</th>
-                    <th className="description">Description</th>
-                    <th className="category">Category</th>
-                    <th className="amount">Amount</th>
+                    <th onClick={this.toggleSortState} className="date">Date</th>
+                    <th onClick={this.toggleSortState} className="description">Description</th>
+                    <th onClick={this.toggleSortState} className="category">Category</th>
+                    <th onClick={this.toggleSortState} className="amount">Amount</th>
                   </tr>
                 </thead>
                 <tbody className="transaction-table-body">
@@ -268,6 +284,92 @@ var AccountShow = React.createClass({
       }
     }.bind(this));
     return newTransactions;
+  },
+
+  toggleSortState: function (e) {
+    var column = e.target.className;
+
+
+    if (column === "date") {
+
+      this.setState({sortDate: true, sortDateASC: !this.state.sortDateASC, sortCat: false, sortDesc: false, sortAmount: false});
+    } else if (column === "description") {
+      this.setState({sortDate: false, sortCat: false, sortDesc: true, sortDescASC: !this.state.sortDescASC, sortAmount: false});
+    } else if (column === "category") {
+      this.setState({sortDate: false, sortCat: true, sortCatASC: !this.state.sortCatASC, sortDesc: false, sortAmount: false});
+    } else if( column === "amount") {
+      this.setState({sortDate: false, sortCat: false, sortDesc: false, sortAmount: true, sortAmountASC: !this.state.sortAmountASC});
+    }
+  },
+
+  sortDesc: function () {
+    var transactions = this.state.transactions;
+    if (this.state.sortDescASC) {
+      return (
+        transactions.sort(function(a,b) {
+          return a.description.toLowerCase().localeCompare(b.description.toLowerCase());
+        })
+      );
+    } else {
+      return (
+        transactions.sort(function(a,b) {
+         return b.description.toLowerCase().localeCompare(a.description.toLowerCase());
+       })
+      );
+    }
+  },
+
+  sortDate: function () {
+    var transactions = this.state.transactions;
+    if (this.state.sortDateASC) {
+      return (
+        transactions.sort(function(a,b) {
+          return new Date(a.date) - new Date(b.date);
+        })
+      );
+    } else {
+      return (
+        transactions.sort(function(a,b) {
+          return new Date(b.date) - new Date(a.date);
+        })
+      );
+    }
+  },
+
+  sortCat: function () {
+    var transactions = this.state.transactions;
+
+    if (this.state.sortCatASC) {
+      return (
+        transactions.sort(function(a,b) {
+          return a.category.toLowerCase().localeCompare(b.category.toLowerCase());
+        })
+      );
+    } else {
+      return (
+        transactions.sort(function(a,b) {
+          return b.category.toLowerCase().localeCompare(a.category.toLowerCase());
+        })
+      );
+    }
+  },
+
+  sortAmount: function () {
+    var transactions = this.state.transactions;
+
+    if (this.state.sortAmountASC) {
+      return (
+        transactions.sort(function(a,b) {
+          return a.amount_n - b.amount_n;
+        })
+      );
+    } else {
+      return (
+        transactions.sort(function(a,b) {
+          return b.amount_n - a.amount_n;
+        })
+      );
+    }
   },
 
   accountShowSidebar: function () {
@@ -349,20 +451,20 @@ var AccountShow = React.createClass({
       } else {
         return (
           <div className="search-result-text">
-            <p>Showing { firstResult + 1 } - { lastResult }  of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+            <p>Showing { firstResult + 1 } - { lastResult }  of { totalCount } transactions {buttonBack} {buttonNext}</p>
           </div>
         );
       }
     } else if (inSearch) {
       return (
         <div className="search-result-text">
-          <p>Showing { transactions.length } out of { totalCount } transaction(s) that match "{this.state.query}" {buttonBack} {buttonNext}</p>
+          <p>Showing { transactions.length } out of { totalCount } transactions that match "{this.state.query}" {buttonBack} {buttonNext}</p>
         </div>
       );
     } else {
       return (
         <div className="search-result-text">
-          <p>Showing { firstResult + 1 } - { lastResult } of { totalCount } transaction(s) {buttonBack} {buttonNext}</p>
+          <p>Showing { firstResult + 1 } - { lastResult } of { totalCount } transactions {buttonBack} {buttonNext}</p>
         </div>
       );
     }
