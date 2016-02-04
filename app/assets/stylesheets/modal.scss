@@ -17,11 +17,14 @@
 }
 
 .transparent-wrapper {
-  position: fixed;
+  position: absolute;
   z-index: 3;
-  width: 100vw;
-  height: 100vh;
+  left: -400px;
+  top: -200px;
+  width:130vw;
+  height: 130vh;
   opacity: 0.6;
+
   background: white;
 }
 
