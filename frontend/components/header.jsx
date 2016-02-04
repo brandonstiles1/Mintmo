@@ -80,7 +80,7 @@ var Header = React.createClass({
               <nav className="content-header-nav group">
 
                 <h1 className="content-header-logo">
-                  <a href="#"><img className="mintmo-logo" src={window.Mintmo.imageUrls.mintmoLogo} alt="" /></a>
+                  <img className="mintmo-logo" src={window.Mintmo.imageUrls.mintmoLogo} alt="" />
                 </h1>
 
                 <ul className="content-header-list group">
