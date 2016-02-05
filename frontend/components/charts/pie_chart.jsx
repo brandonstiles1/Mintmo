@@ -10,6 +10,7 @@ var chartOptions = {
   animationEasing: "easeOutQuart",
   showTooltips: true,
   scaleShowLabels: true,
+  tooltipTemplate: "<%=label%>: <%= Math.round(circumference / 6.283 * 100) %>%",
   scaleLabel: function(label) {
     return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   },
