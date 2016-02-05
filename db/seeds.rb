@@ -1,10 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'date'
 
 User.destroy_all
 u1 = User.create!(
@@ -47,7 +41,7 @@ cs_checking = Account.create!(
   name: "Charles Schwab Checking Account",
   institution_id: charles_schwab.id,
   user_id: u1.id,
-  balance: 2000.00,
+  balance: 2019.01,
   account_type: "Cash"
 )
 
@@ -135,31 +129,31 @@ t5 = Transaction.create!(
 t6 = Transaction.create!(
   account_id: paypal_checking.id,
   amount: 386.45,
-  description: "Blah blahhhh",
+  description: "Another Frivolous Amazon Prime Purchase",
   date: "Wed, 27 Jan 2016 16:42:16 UTC +00:00",
 )
 
 t7 = Transaction.create!(
   account_id: paypal_checking.id,
-  amount: 69.69,
-  description: "Wink wink wink",
+  amount: 10.00,
+  description: "Transfer from VISA SIGNATURE",
   date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
-  category: "Romance"
+  category: "Transfer"
 )
 
 t8 = Transaction.create!(
   account_id: paypal_checking.id,
-  amount: 69.69,
-  description: "Wink wink wink",
+  amount: 10.83,
+  description: "Delivery.com",
   date: "Wed, 27 Jan 2016 10:42:16 UTC +00:00",
-  category: "Romance"
+  category: "Food & Dining"
 )
 
 t9 = Transaction.create!(
   account_id: loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 11:42:16 UTC +00:00",
+  date: DateTime.now - 7,
   category: "Education"
 )
 
@@ -167,7 +161,7 @@ t10 = Transaction.create!(
   account_id: loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
+  date: DateTime.now - 14,
   category: "Education"
 )
 
@@ -175,7 +169,7 @@ t11 = Transaction.create!(
   account_id: loan1.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 21,
   category: "Education"
 )
 
@@ -183,7 +177,7 @@ t12 = Transaction.create!(
   account_id: loan2.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 12:42:16 UTC +00:00",
+  date:  DateTime.now - 7,
   category: "Education"
 )
 
@@ -191,7 +185,15 @@ t13 = Transaction.create!(
   account_id: loan2.id,
   amount: 340.69,
   description: "Student Loan Payment",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date:  DateTime.now - 14,
+  category: "Education"
+)
+
+t21 = Transaction.create!(
+  account_id: loan2.id,
+  amount: 340.69,
+  description: "Student Loan Payment",
+  date:  DateTime.now - 21,
   category: "Education"
 )
 
@@ -199,7 +201,7 @@ t14 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 30,
   category: "Retirement"
 )
 
@@ -207,7 +209,7 @@ t15 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 60,
   category: "Retirement"
 )
 
@@ -215,7 +217,7 @@ t16 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 90,
   category: "Retirement"
 )
 
@@ -223,7 +225,7 @@ t17 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 120,
   category: "Retirement"
 )
 
@@ -231,7 +233,7 @@ t18 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 150,
   category: "Retirement"
 )
 
@@ -239,7 +241,7 @@ t19 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 180,
   category: "Retirement"
 )
 
@@ -247,10 +249,12 @@ t20 = Transaction.create!(
   account_id: investment1.id,
   amount: 500.00,
   description: "401(k) Contribution",
-  date: "Wed, 27 Jan 2016 13:42:16 UTC +00:00",
+  date: DateTime.now - 210,
   category: "Retirement"
 )
 
 cs_checking.create_transactions
 credit_card1.create_transactions
 paypal_checking.create_transactions
+
+cs_checking.create_welcome_transaction

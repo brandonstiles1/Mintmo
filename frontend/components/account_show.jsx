@@ -179,7 +179,7 @@ var AccountShow = React.createClass({
         header = this.header(),
         sidebar = this.accountShowSidebar();
 
-    if (!(account && transactions)) { return <div>SPINNER</div>; }
+    if (!(account && transactions)) { return <div>To give you the freshest possible info, your accounts are now updating… this will only take a moment.</div>; }
 
       if (this.state.sortDate) {
         transactions = this.sortDate();

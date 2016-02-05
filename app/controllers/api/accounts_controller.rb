@@ -12,6 +12,7 @@ class Api::AccountsController < ApplicationController
 
     if @account.save
       @account.create_transactions
+      @account.create_welcome_transaction
       @account.correct_balance
       @account = Account.includes(transactions: [:institution]).find(@account.id)
       render :show

@@ -11,6 +11,7 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
+require 'date'
 
 ACCOUNT_TYPES = [
   "Cash",
@@ -20,7 +21,7 @@ ACCOUNT_TYPES = [
 ]
 
 CATEGORY_TYPES = [
-  "Restaurants",
+  "Food & Dining",
   "UNCATEGORIZED",
   "Transport",
   "Bills & Utilities",
@@ -63,6 +64,19 @@ class Account < ActiveRecord::Base
         amount: amount
       )
     end
+  end
+
+  def create_welcome_transaction
+    date = DateTime.now
+    amount = ((rand(10000)/100) - (50 + (rand(1..100) / 100.0))).round(2)
+
+    self.transactions.create(
+      category: "Welcome to Mintmo!",
+      description: "Edit descriptions by typing in here",
+      date: date,
+      amount: amount,
+      notes: "You can also add notes to transactions by clicking 'I'm Done' below."
+    )
   end
 
   def correct_balance
