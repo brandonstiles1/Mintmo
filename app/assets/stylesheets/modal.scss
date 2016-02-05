@@ -10,7 +10,7 @@
   width: 800px;
   top: 0;
   z-index: 3;
-  left: 435px;
+  left: 25vw;
   position: absolute;
   background: white;
   border: 1px solid #dddddd;
@@ -20,10 +20,10 @@
 .transparent-wrapper {
   position: absolute;
   z-index: 3;
-  left: -400px;
+  left: -500px;
   top: -200px;
-  width:130vw;
-  height: 130vh;
+  width:150vw;
+  height: 300vh;
   opacity: 0.6;
 
   background: white;
