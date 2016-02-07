@@ -65,7 +65,7 @@ var EditAccountModal = React.createClass({
         accounts,
         editAccount = <div></div>;
 
-    if (!accts) {
+    if (accts.length === 0) {
       accounts =  (
         <div>
           Looks like you haven't linked to any accounts yet. Get started by clicking the Add Account button above.
