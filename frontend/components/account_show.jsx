@@ -165,7 +165,7 @@ var AccountShow = React.createClass({
   },
 
   render: function () {
-    
+
     var that = this,
         page = this.state.page,
         account = this.state.account,
@@ -456,11 +456,19 @@ var AccountShow = React.createClass({
         );
       }
     } else if (inSearch) {
-      return (
-        <div className="search-result-text">
-          <p>Showing { transactions.length } out of { totalCount } transactions that match "{this.state.query}" {buttonBack} {buttonNext}</p>
-        </div>
-      );
+      if (transactions.length === 0) {
+        return (
+          <div className="search-result-text">
+            <p>No results for "{this.state.query}". Try searching for something else.</p>
+          </div>
+        );
+      } else {
+        return (
+          <div className="search-result-text">
+            <p>Showing { transactions.length } out of { totalCount } transactions that match "{this.state.query}" {buttonBack} {buttonNext}</p>
+          </div>
+        );
+      }
     } else {
       return (
         <div className="search-result-text">
