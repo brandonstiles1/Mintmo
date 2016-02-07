@@ -7,13 +7,14 @@
 }
 
 .footer-links {
-  margin: 0 auto;
+  margin: auto;
   width: 1000px;
 }
 
 .footer-links > li {
   float: left;
-  padding: 10px 50px;
+  padding: 10px 0;
+  padding-left: 220px;
 }
 
 .footer-links > li:first-child {
