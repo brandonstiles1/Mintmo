@@ -13,7 +13,6 @@ SearchResultsStore.all = function () {
 };
 
 SearchResultsStore.meta = function () {
-  debugger
   return _meta;
 };
 

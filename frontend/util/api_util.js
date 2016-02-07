@@ -115,7 +115,7 @@ var ApiUtil = {
        console.log(account.id);
      },
      error: function (data) {
-       debugger
+       
      }
    });
 

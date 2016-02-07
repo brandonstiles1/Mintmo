@@ -52,7 +52,6 @@ var UsersApiUtil = {
       dataType: 'json',
       data: user,
       success: function (user) {
-        debugger
         UserActions.receiveUserUpdate(user);
         callback && callback();
       }
