@@ -26,8 +26,8 @@ var SessionsApiUtil = {
       url: '/api/session',
       type: 'delete',
       dataType: 'json',
-      success: function () {
-        CurrentUserActions.removeCurrentUser();
+      success: function (user) {
+        CurrentUserActions.removeCurrentUser(user);
         callback && callback();
       },
       error: function (data) {

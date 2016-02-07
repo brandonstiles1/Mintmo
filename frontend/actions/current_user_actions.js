@@ -9,7 +9,7 @@ var CurrentUserActions = {
     });
   },
 
-  removeCurrentUser: function () {
+  removeCurrentUser: function (currentUser) {
     AppDispatcher.dispatch({
       actionType: CurrentUserConstants.REMOVE_CURRENT_USER,
       currentUser: currentUser
