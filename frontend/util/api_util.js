@@ -96,6 +96,7 @@ var ApiUtil = {
       success: function (account) {
         ApiActions.receiveAccount(account);
         callback && callback(account.id);
+        console.log(account.id);
       },
       error: function (data) {
         FlashActions.receiveFlash(data.responseJSON.errors);
@@ -111,6 +112,10 @@ var ApiUtil = {
      success: function () {
        ApiActions.removeAccount(account);
        callback && callback();
+       console.log(account.id);
+     },
+     error: function (data) {
+       debugger
      }
    });
 

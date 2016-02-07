@@ -30,7 +30,6 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :email, format: { with: /\A([^@\s]+)@(([-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :gender, inclusion: %w(Male Female), if: -> { gender }
   validates_uniqueness_of :uid, scope: :provider, if: -> { uid }
 
   after_initialize :ensure_session_token
@@ -71,9 +70,10 @@ class User < ActiveRecord::Base
     user = User.find_by(provider: provider, uid: uid)
     return user if user
 
-    user = user.new(provider: provider, uid: uid)
+    user = User.new(provider: provider, uid: uid)
     user.fname = auth_hash.info.name.split(" ").first || ""
     user.lname = auth_hash.info.name.split(" ").last || ""
+    user.password_digest = SecureRandom.urlsafe_base64
 
     if auth_hash.info.image
       avatar_url = process_uri(auth_hash.info.image)
@@ -82,6 +82,7 @@ class User < ActiveRecord::Base
 
     user.email = auth_hash.info.name.gsub(" ", ".").downcase + "@facebook.com"
     user.save!
+    user
   end
 
   def self.find_by_credentials(email, password)

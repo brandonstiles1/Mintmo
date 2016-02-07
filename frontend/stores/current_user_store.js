@@ -1,7 +1,8 @@
 var Store = require('flux/utils').Store;
 
 var AppDispatcher = require('../dispatcher/dispatcher'),
-    CurrentUserConstants = require('../constants/current_user_constants');
+    CurrentUserConstants = require('../constants/current_user_constants'),
+    UserConstants = require('../constants/user_constants');
 
 var _currentUser = {},
     _currentUserHasBeenFetched = false;
@@ -39,6 +40,10 @@ CurrentUserStore.__onDispatch = function (payload) {
       break;
     case CurrentUserConstants.RECEIVE_CURRENT_USER:
       CurrentUserStore.addCurrentUser(payload.currentUser);
+      CurrentUserStore.__emitChange();
+      break;
+    case UserConstants.RECEIVE_USER_UPDATE:
+      CurrentUserStore.addCurrentUser(payload.user);
       CurrentUserStore.__emitChange();
       break;
   }

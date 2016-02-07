@@ -165,7 +165,7 @@ var AccountShow = React.createClass({
   },
 
   render: function () {
-
+    
     var that = this,
         page = this.state.page,
         account = this.state.account,

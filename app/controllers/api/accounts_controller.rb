@@ -13,7 +13,6 @@ class Api::AccountsController < ApplicationController
     if @account.save
       @account.create_transactions
       @account.create_welcome_transaction
-      @account.correct_balance
       @account = Account.includes(transactions: [:institution]).find(@account.id)
       render :show
     else
@@ -37,10 +36,9 @@ class Api::AccountsController < ApplicationController
   end
 
   def destroy
-
-    @destroy_account = Account.find(params[:id])
-    @destroy_account.destroy!
-    @accounts = current_user.accounts
+    @account = Account.find(params[:id])
+    @account.destroy!
+    @accounts = current_user.accounts.includes(:institution, :transactions)
     render :index
   end
 

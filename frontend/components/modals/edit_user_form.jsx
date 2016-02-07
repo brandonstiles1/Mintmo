@@ -153,7 +153,7 @@ var EditUserFormModal = React.createClass({
     }
   },
 
-  handleUpdate: function () {
+  handleUpdate: function (e) {
     var user = new FormData(),
         userId = this.state.id;
 
