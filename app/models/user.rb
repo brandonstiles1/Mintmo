@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   #associations
-  has_many :accounts
+  has_many :accounts, dependent: :destroy
   has_many :institutions, through: :accounts, source: :institution
   has_many :transactions, through: :accounts, source: :transactions
 
