@@ -6,12 +6,15 @@
 ul.legend {
   padding: 2px;
   position: absolute;
-  top: 109px;
+  top: 63px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   background: -webkit-linear-gradient(top, #fff, #f7f7f7);
 }
 
+.pie-chart-container {
+    position: relative;
+}
 
 .legend {
   float: left;

@@ -2,8 +2,10 @@ var React = require('react'),
     PieChart = require('react-chartjs').Pie;
 
 var ComponentActions = require('../../actions/component_actions'),
-TransactionStore = require('../../stores/transaction'),
-ApiUtil  = require('../../util/api_util');
+    TransactionStore = require('../../stores/transaction'),
+    ApiUtil  = require('../../util/api_util'),
+    FlashStore = require('../../stores/flash'),
+    FlashActions = require('../../actions/flash_actions');
 
 var chartOptions = {
   animation: true,
@@ -41,6 +43,10 @@ var TransactionsPieChart = React.createClass({
 
   getInitialState: function () {
     return { transactions: TransactionStore.all() };
+  },
+
+  _updateFlash: function () {
+    this.setState({flash: FlashStore.all()});
   },
 
   componentDidMount: function () {
@@ -98,23 +104,10 @@ var TransactionsPieChart = React.createClass({
     return _colors[index];
   },
 
-  getChartOptions: function () {
-    return (
-      [{
-        scaleLabel: function (label) {
-          return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        },
-        multiTooltipTemplate: function (label) {
-          return label.datasetLabel + ': ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-      }]
-    );
-  },
-
   render: function() {
 
     return (
-      <div className="group">
+      <div className="pie-chart-container group">
         <h1 className="chart-header group">Top 5 Transaction Categories</h1>
         <PieChart data={this.getChartData()} options={chartOptions} className="chart" width="550" height="200"/>
         <ul className="legend">

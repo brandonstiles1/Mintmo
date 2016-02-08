@@ -54,6 +54,8 @@ var UsersApiUtil = {
       success: function (user) {
         UserActions.receiveUserUpdate(user);
         callback && callback();
+      },
+      errors: function (data) {
       }
     });
   }

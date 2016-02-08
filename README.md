@@ -22,28 +22,44 @@ utilizing React.js/flux architecture. Mintmo allows users to:
 ## Overall Structure
 #### Back end
 #### Front end
+
 #### Libraries
 
 Mintmo uses:
 - [React.js][React]
 - [Flux][Flux]
-- [Chart.js](http://www.chartjs.org/)
-- [react-chartjs](https://github.com/jhudson8/react-chartjs)
+- [Chart.js][Chart.js]
+- [react-chartjs][react-chartjs]
 - [Bcrypt](https://github.com/codahale/bcrypt-ruby) for authorization
 - [Paperclip](https://github.com/thoughtbot/paperclip) to store user profile images using Amazon Web Services
 - [figaro](https://github.com/laserlemon/figaro) to securely store keys and other important data.
-- [pg_search](https://github.com/Casecommons/pg_search) to search transactions
+- [pg_search][pg_search] to search transactions
 - [accounting.js](https://github.com/openexchangerates/accounting.js) to format amounts into currency
-- [OmniAuth Facebook](https://github.com/mkdynamic/omniauth-facebook)
+- [OmniAuth Facebook][OmniAuth Facebook]
 
 ## Primary Components
 
 #### User Authorization
+User authentication is handled in Rails using BCrypt for password hashing. Passwords are not saved to the database, only password hashes. When users log in, the password they provide is rehashed and checked against the original encrypted password hash to verify credentials.
+
 #### OmniAuth
+Mintmo uses [OmniAuth Facebook][OmniAuth Facebook] to allow users to sign in using their Facebook credentials. Data including profile pictures, emails, and names are retrieved from the OmniAuth info hash to populate new user profiles.
+
 #### Financial Accounts
+Financial institutions don't have public APIs that allow third-party sites to access account information such as transaction history and balance. In fact, Mint.com uses a data aggregation agent, Intuit, to do this for them. Therefore, this feature is only a demo simulation. You can provide fake account data, and Mintmo will populate an account with transactions and a balance.
+
 #### Transactions
+Transactions are the heart of Mintmo, and are designed to be extremely flexible.
+
+
 #### Search
+Mintmo utilizes [pg_search][pg_search] multisearch to search for transactions across single accounts, by account type, and by attributes including amount, description, category, and more.
 
 
+
+[Chart.js]:http://www.chartjs.org/
+[react-chartjs]:https://github.com/jhudson8/react-chartjs
+[pg_search]:https://github.com/Casecommons/pg_search
+[OmniAuth Facebook]:https://github.com/mkdynamic/omniauth-facebook
 [React]:https://facebook.github.io/react/
 [Flux]:https://facebook.github.io/flux/
