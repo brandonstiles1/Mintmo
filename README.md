@@ -6,7 +6,7 @@
 
 ## Summary
 
-[Mintmo][mintmo] is a web application inspired by Mint built using Ruby on Rails
+[Mintmo][mintmo] is a single-page web application inspired by Mint built using Ruby on Rails
 utilizing React.js/flux architecture. Mintmo allows users to:
 
 - [ ] Create an account
@@ -20,8 +20,12 @@ utilizing React.js/flux architecture. Mintmo allows users to:
 - [ ] Search for transactions within accounts, by account type, and throughout all accounts
 
 ## Overall Structure
+
 #### Back end
+The app was built using Ruby on Rails on the back end with a postgreSQL database. Back end structure is RESTful and all  the data requests use AJAX and are fulfilled with a JSON API. Associations are used to prefetch data in order to minimize SQL queries to the database.
+
 #### Front end
+The front end is built completely in [React.js][React] and JavaScript and utilizes React's [Flux][Flux] architecture. React's virtual DOM allows for lightnight-quick rerendering without requiring new pages to be sent from the server. Even modals appear/disappear using React rather than toggling CSS display properties.
 
 #### Libraries
 
@@ -49,7 +53,7 @@ Mintmo uses [OmniAuth Facebook][OmniAuth Facebook] to allow users to sign in usi
 Financial institutions don't have public APIs that allow third-party sites to access account information such as transaction history and balance. In fact, Mint.com uses a data aggregation agent, Intuit, to do this for them. Therefore, this feature is only a demo simulation. You can provide fake account data, and Mintmo will populate an account with transactions and a balance.
 
 #### Transactions
-Transactions are the heart of Mintmo, and are designed to be extremely flexible.
+Transactions are the heart of Mintmo, and are designed to be extremely flexible. Users can edit, sort, and filter transactions on the fly. Just by typing in the transaction description and category columns, users can update their transaction details quickly and easily.
 
 
 #### Search
