@@ -34,7 +34,7 @@ Mintmo uses:
 - [Flux][Flux]
 - [Chart.js][Chart.js]
 - [react-chartjs][react-chartjs]
-- [Bcrypt](https://github.com/codahale/bcrypt-ruby) for authorization
+- [BCrypt](https://github.com/codahale/bcrypt-ruby) for authorization
 - [Paperclip](https://github.com/thoughtbot/paperclip) to store user profile images using Amazon Web Services
 - [figaro](https://github.com/laserlemon/figaro) to securely store keys and other important data.
 - [pg_search][pg_search] to search transactions
