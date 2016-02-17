@@ -65,10 +65,11 @@ var AccountShow = React.createClass({
 
     if (typeof AccountStore.find(newId) === "undefined") {
       this.history.pushState(null, '/', {});
-    } else {
-      ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
+    } else if ( this.state.account && parseInt(newProps.params.accountId) !== this.state.account.id ){
+      // ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
+      // ApiUtil.fetchAccount(parseInt(newProps.params.accountId));
       ApiUtil.fetchAccountTransactions(newProps.params.accountId);
-      this.setState({formIndex: 0, inSearch: false});
+      this.setState({formIndex: 0, inSearch: false, account: AccountStore.find(newProps.params.accountId.accountId)});
     }
   },
 
