@@ -25,7 +25,7 @@ utilizing React.js/flux architecture. Mintmo allows users to:
 The app was built using Ruby on Rails on the back end with a postgreSQL database. Back end structure is RESTful and all  the data requests use AJAX and are fulfilled with a JSON API. Associations are used to prefetch data in order to minimize SQL queries to the database.
 
 #### Front end
-The front end is built completely in [React.js][React] and JavaScript and utilizes React's [Flux][Flux] architecture. React's virtual DOM allows for lightnight-quick rerendering without requiring new pages to be sent from the server. Even modals appear/disappear using React rather than toggling CSS display properties.
+The front end is built completely in [React.js][React] and JavaScript and utilizes React's [Flux][Flux] architecture. React's virtual DOM allows for lightning-quick rerendering without requiring new pages to be sent from the server. Even modals appear/disappear using React rather than toggling CSS display properties.
 
 #### Libraries
 
