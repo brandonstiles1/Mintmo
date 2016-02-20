@@ -7,10 +7,10 @@ var Footer = React.createClass({
     return (
       <footer className="footer">
         <ul className="footer-links group">
-          <li><a href="https://github.com/stevendikowitz">About Mintmo</a></li>
-          <li><a href="https://github.com/stevendikowitz">Terms of Use</a></li>
-          <li><a href="https://github.com/stevendikowitz">Privacy</a></li>
-          <li><a href="https://github.com/stevendikowitz">Steven Dikowitz</a></li>
+          <li><a href="https://github.com/stevendikowitz/Mintmo">About Mintmo</a></li>
+          <li><a href="https://github.com/stevendikowitz/Mintmo">Terms of Use</a></li>
+          <li><a href="https://github.com/stevendikowitz/Mintmo">Privacy</a></li>
+          <li><a href="https://github.com/stevendikowitz/Mintmo">Steven Dikowitz</a></li>
         </ul>
       </footer>
     );

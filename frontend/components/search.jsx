@@ -61,6 +61,12 @@ var Search = React.createClass({
     }
   },
 
+  handleKeyDown: function (e) {
+    if (e.keyCode === 13) {
+      this.search();
+    }
+  },
+
   nextPage: function () {
     var nextPage = this.state.page + 1;
     SearchApiUtil.search(this.state.query, nextPage);
@@ -82,12 +88,12 @@ var Search = React.createClass({
         totalCount = this.state.totalCount,
         query = this.state.query;
 
-
     return (
       <div className="search-component">
         <input
           type="text"
           onChange={this.handleInput} value={query}
+          onKeyDown={this.handleKeyDown}
           placeholder="Search for a transaction" />
         <button className="search-button" onClick={this.search}>Search</button>
       </div>
