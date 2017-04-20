@@ -4,7 +4,13 @@
 
 
 <script type="text/javascript">
-$(function () {
+  $(function () {
     window.init();
   })
+</script>
+
+<script type="text/javascript">
+  var host = "stevendikowitz.com";
+  if ((host == window.location.host) && (window.location.protocol != "https:"))
+      window.location.protocol = "https";
 </script>
